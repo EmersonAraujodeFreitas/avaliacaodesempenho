@@ -1,0 +1,817 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<title>Avaliação do Consultor</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: formulário em abas à esquerda do fluxo; relatório como folha A4 na tela, pronto para impressão */
+:root{
+  --bg:#EDF1F6; --surface:#FFFFFF; --ink:#132235; --muted:#566578; --line:#D5DDE7; --soft:#F4F7FB;
+  --accent:#0B5FA5; --accent-soft:#E1ECF7; --accent-ink:#FFFFFF; --amber:#A8701A;
+  --good:#2C7A4B; --good-soft:#E3F2E9; --warn:#A8701A; --warn-soft:#F8EEDC; --bad:#B0372F; --bad-soft:#F8E4E2;
+  --d:#C0392B; --i:#C9971A; --s:#2E8B57; --c:#2C6CB0;
+  --f-display:"Montserrat","Segoe UI",Arial,sans-serif; --brand:#003158; --gold:#F2B705; --brand-ink:#FFFFFF;
+  --f-body:"Source Sans 3","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E151B; --surface:#16212A; --ink:#E4EAF0; --muted:#98A6B3; --line:#2A3843; --soft:#1B2832;
+  --accent:#5AA9E6; --accent-soft:#16304A; --accent-ink:#0E151B; --amber:#E0A64A;
+  --good:#5DBE86; --good-soft:#173326; --warn:#E0A64A; --warn-soft:#3A2D16; --bad:#E57369; --bad-soft:#3A1E1C;
+  --d:#E2675A; --i:#E3BC48; --s:#5DBE86; --c:#6FA3E0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E151B; --surface:#16212A; --ink:#E4EAF0; --muted:#98A6B3; --line:#2A3843; --soft:#1B2832;
+  --accent:#5AA9E6; --accent-soft:#16304A; --accent-ink:#0E151B; --amber:#E0A64A;
+  --good:#5DBE86; --good-soft:#173326; --warn:#E0A64A; --warn-soft:#3A2D16; --bad:#E57369; --bad-soft:#3A1E1C;
+  --d:#E2675A; --i:#E3BC48; --s:#5DBE86; --c:#6FA3E0; color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+.wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:0 48px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Cabeçalho */
+.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:12px;padding-block:28px 18px}
+.eyebrow{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.top h1{font-size:clamp(26px,4vw,36px);font-weight:800}
+.top h1 span{color:var(--accent)}
+.actions{display:flex;flex-wrap:wrap;gap:8px}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;cursor:pointer;font-weight:600;font-size:14px}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.confirm{margin-top:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:var(--bad-soft);border:1px solid var(--bad);border-radius:8px;padding:8px 12px;font-size:14px}
+
+
+/* Marca */
+.brand{background:var(--brand);color:var(--brand-ink);border-bottom:4px solid var(--gold)}
+.brand-in{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:12px;display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between}
+.brand-id{display:flex;align-items:center;gap:18px;min-width:0}
+.brand img{height:72px;width:auto;display:block;flex:none}
+.brand .sep{width:1px;align-self:stretch;background:rgba(255,255,255,.25)}
+.brand .eyebrow{color:#A9CBEA}
+.brand h1{color:#fff;font-size:clamp(19px,2.6vw,26px);font-weight:700}
+.brand h1 span{color:var(--gold)}
+.brand .btn{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.brand .btn:hover{border-color:var(--gold)}
+.brand .btn.danger{color:#FFC2BC;border-color:rgba(255,194,188,.55)}
+.why{display:block;font-size:13px;color:var(--muted);margin-top:3px;line-height:1.4}
+.why b{font-weight:600;color:var(--accent)}
+.item .q{font-weight:600}
+.item .q .why{font-weight:400}
+.help{font-size:12.5px;color:var(--muted);line-height:1.35}
+.chip{font-size:11px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:3px 9px;border-radius:20px;background:var(--accent-soft);color:var(--accent)}
+.chip.pot{background:var(--warn-soft);color:var(--warn)}
+.dim-card{border-top:4px solid var(--accent)}
+.dim-card.pot{border-top-color:var(--gold)}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px}
+.how div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;min-width:0}
+.how b{display:flex;align-items:center;gap:8px;font-family:var(--f-display);font-size:14px;margin-bottom:4px}
+.how b i{font-style:normal;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font-size:12px;flex:none}
+.how p{margin:0;font-size:13.5px;color:var(--muted)}
+.scale-legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-bottom:16px}
+.scale-legend div{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--c);border-radius:8px;padding:9px 12px;font-size:12.5px;color:var(--muted);min-width:0}
+.scale-legend b{display:block;color:var(--ink);font-size:13.5px}
+.disc-intro{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;margin-bottom:16px}
+.disc-intro div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:13.5px;color:var(--muted);min-width:0}
+.disc-intro b{display:flex;align-items:center;gap:8px;color:var(--ink);font-family:var(--f-display);margin-bottom:3px}
+.disc-intro b i{font-style:normal;width:26px;height:26px;border-radius:6px;color:#fff;display:grid;place-items:center}
+.scale input:checked+label[data-v="1"]{background:var(--bad);border-color:var(--bad);color:#fff}
+.scale input:checked+label[data-v="2"]{background:var(--warn);border-color:var(--warn);color:#fff}
+.scale input:checked+label[data-v="3"]{background:#64748B;border-color:#64748B;color:#fff}
+.scale input:checked+label[data-v="5"]{background:var(--good);border-color:var(--good);color:#fff}
+.scale input:checked+label[data-v="0"]{background:var(--muted);border-color:var(--muted);color:var(--surface)}
+.tabs{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding-inline:6px;margin-top:18px}
+.tab[aria-selected="true"]{color:var(--brand)}
+.r-logo{background:var(--brand);border-radius:6px;padding:6px 10px;display:flex;align-items:center}
+.r-logo img{height:54px;width:auto;display:block}
+.r-head{border-bottom-color:var(--brand)}
+
+/* Abas */
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
+.tab{border:0;background:none;padding:12px 14px;cursor:pointer;font-weight:600;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap;display:flex;gap:8px;align-items:center}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tab .n{font-family:var(--f-mono);font-size:11px;background:var(--soft);border:1px solid var(--line);border-radius:20px;padding:1px 7px;color:var(--muted)}
+.tab .n.ok{background:var(--good-soft);color:var(--good);border-color:transparent}
+.panel{padding-top:22px}
+.intro{color:var(--muted);max-width:68ch;margin:0 0 18px}
+
+/* Formulário */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px 18px}
+.field{display:flex;flex-direction:column;gap:5px;min-width:0}
+.field label{font-size:13px;font-weight:600;color:var(--muted)}
+.field input,.field select,.field textarea{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:9px 11px;width:100%}
+.field textarea{min-height:92px;resize:vertical}
+.field.full{grid-column:1/-1}
+.stack{display:flex;flex-direction:column;gap:16px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:10px 14px;margin-bottom:16px}
+.legend b{font-family:var(--f-mono);color:var(--ink)}
+.dim-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:4px}
+.dim-head h2{font-size:21px}
+.dim-head .avg{font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.dim-desc{color:var(--muted);font-size:14px;margin:0 0 10px}
+.item{display:grid;grid-template-columns:1fr auto;gap:10px 18px;align-items:center;padding-block:11px;border-top:1px solid var(--line)}
+.item .q{min-width:0}
+.item .q small{font-family:var(--f-mono);color:var(--muted);margin-right:6px;font-size:11.5px}
+.scale{display:flex;gap:4px}
+.scale input{position:absolute;opacity:0;pointer-events:none}
+.scale label{min-width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--line);border-radius:7px;cursor:pointer;font-family:var(--f-mono);font-size:13px;background:var(--soft);user-select:none}
+.scale label.na{min-width:42px;font-size:11px}
+.scale input:checked+label{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-weight:500}
+.scale input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px}
+@media (max-width:680px){.item{grid-template-columns:1fr}}
+
+/* DISC form */
+.disc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.dg{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
+.dg.done{border-color:var(--accent)}
+.dg h3{font-size:13px;font-family:var(--f-mono);font-weight:500;color:var(--muted);margin-bottom:8px;display:flex;justify-content:space-between}
+.dg table{width:100%;border-collapse:collapse;font-size:14px}
+.dg th{font-size:11px;font-weight:600;color:var(--muted);text-align:center;padding-bottom:4px}
+.dg th:first-child{text-align:left}
+.dg td{padding:3px 0;border-top:1px solid var(--line)}
+.dg td.c{text-align:center;width:52px}
+.dg input[type=radio]{width:18px;height:18px;accent-color:var(--accent);cursor:pointer;margin:0}
+.dg input:disabled{opacity:.25;cursor:not-allowed}
+.next-row{display:flex;justify-content:space-between;gap:10px;margin-top:18px;flex-wrap:wrap}
+.btn.big{padding:11px 20px;font-size:15px}
+.progress{height:4px;background:var(--line);border-radius:4px;margin-top:-1px;overflow:hidden}
+.progress div{height:100%;background:var(--accent);width:0;transition:width .3s}
+.errbox{margin-top:16px;border:1px solid var(--bad);background:var(--bad-soft);color:var(--ink);border-radius:8px;padding:10px 14px;font-size:14px}
+.errbox b{color:var(--bad)}
+.errbox ul{margin:6px 0 0;padding-left:18px}
+.item.miss{background:var(--bad-soft);border-radius:6px;padding-inline:8px}
+.dg.miss{border-color:var(--bad);background:var(--bad-soft)}
+.field.miss input{border-color:var(--bad)}
+.field.miss label{color:var(--bad)}
+
+/* Ferramentas do relatório */
+.toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+.note{font-size:13.5px;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:8px;padding:10px 12px;flex:1 1 320px}
+details.xfer{margin-top:22px}
+details.xfer summary{cursor:pointer;font-weight:600;color:var(--muted)}
+details.xfer textarea{width:100%;min-height:90px;font-family:var(--f-mono);font-size:12px;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:8px}
+.msg{font-size:13px;color:var(--good)}
+
+/* Relatório (folha) */
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:4px;max-width:900px;margin:0 auto;padding:clamp(18px,4vw,44px);box-shadow:0 1px 2px rgba(0,0,0,.06),0 8px 24px rgba(20,32,43,.06)}
+.r-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;border-bottom:3px solid var(--ink);padding-bottom:14px;margin-bottom:18px}
+.r-head h1{font-size:clamp(24px,4vw,32px);font-weight:800}
+.r-head .doc{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);text-align:right;line-height:1.6}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px 20px;font-size:13.5px;margin-bottom:22px}
+.meta div{border-left:2px solid var(--line);padding-left:10px;min-width:0}
+.meta span{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:22px}
+.kpi{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:12px}
+.kpi span{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kpi b{display:block;font-family:var(--f-display);font-size:28px;line-height:1.1;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi small{color:var(--muted);font-size:12.5px}
+.kpi .pill{white-space:normal}
+.r-sec{margin-top:28px}
+.r-sec>h2{font-size:19px;padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:12px;display:flex;gap:10px;align-items:baseline}
+.r-sec>h2 i{font-style:normal;font-family:var(--f-mono);font-size:12px;color:var(--accent);font-weight:500}
+.r-sec p{margin:0 0 10px;max-width:75ch}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;align-items:start}
+.two>*{min-width:0}
+.radar svg{width:100%;height:auto;display:block}
+.radar text{font-family:var(--f-body);font-size:12px;fill:var(--ink)}
+.radar .tick{font-family:var(--f-mono);font-size:9.5px;fill:var(--muted)}
+.bars{display:flex;flex-direction:column;gap:9px}
+.bar-row{display:grid;grid-template-columns:minmax(90px,150px) 1fr 38px;gap:10px;align-items:center;font-size:13.5px}
+.bar-track{position:relative;height:14px;background:var(--soft);border:1px solid var(--line);border-radius:3px}
+.bar-fill{position:absolute;inset:0 auto 0 0;border-radius:2px}
+.bar-meta{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed var(--ink);opacity:.55}
+.bar-row b{font-family:var(--f-mono);font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.cap{font-size:12px;color:var(--muted);margin-top:8px}
+.tbl-wrap{overflow-x:auto}
+table.t{width:100%;border-collapse:collapse;font-size:13.5px}
+table.t th{text-align:left;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:6px 8px;border-bottom:2px solid var(--line)}
+table.t td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+table.t td.num{font-family:var(--f-mono);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
+.pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:20px;white-space:nowrap}
+.p5{background:var(--good-soft);color:var(--good)}
+.p4{background:var(--accent-soft);color:var(--accent)}
+.p3{background:var(--soft);color:var(--ink);border:1px solid var(--line)}
+.p2{background:var(--warn-soft);color:var(--warn)}
+.p1{background:var(--bad-soft);color:var(--bad)}
+.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.list li{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:start;font-size:14px}
+.list li .sc{font-family:var(--f-mono);font-weight:500;text-align:center;border-radius:6px;padding:3px 0}
+.list li small{display:block;color:var(--muted);font-size:12px}
+.box-h{font-family:var(--f-display);font-size:15px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.box-h::before{content:"";width:10px;height:10px;border-radius:2px;background:var(--c-dot,var(--accent))}
+.alert{border:1px solid var(--bad);background:var(--bad-soft);border-radius:8px;padding:10px 14px;font-size:14px;margin-top:14px}
+.alert b{color:var(--bad)}
+.nine{display:grid;grid-template-columns:22px repeat(3,1fr);grid-template-rows:repeat(3,auto) 22px;gap:4px;font-size:12px}
+.nine .cell{border:1px solid var(--line);border-radius:6px;padding:8px;min-height:62px;background:var(--soft);color:var(--muted)}
+.nine .cell b{display:block;color:var(--ink);font-size:12.5px}
+.nine .cell.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.nine .cell.on b{color:var(--accent-ink)}
+.nine .ax{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;justify-content:center}
+.nine .ay{writing-mode:vertical-rl;transform:rotate(180deg)}
+.disc-bars{display:flex;flex-direction:column;gap:10px}
+.disc-row{display:grid;grid-template-columns:120px 1fr 44px;gap:10px;align-items:center;font-size:13.5px}
+.disc-row .lt{display:flex;align-items:center;gap:8px;font-weight:600}
+.disc-row .lt i{font-style:normal;width:24px;height:24px;border-radius:5px;display:grid;place-items:center;color:#fff;font-family:var(--f-display);font-size:13px}
+.disc-hero{display:flex;flex-wrap:wrap;gap:16px;align-items:center;background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
+.disc-hero .code{font-family:var(--f-display);font-weight:800;font-size:54px;line-height:1;letter-spacing:.02em}
+.disc-hero .code span{display:inline-block}
+.disc-hero div{min-width:0;flex:1 1 280px}
+.disc-hero h3{font-size:20px;margin-bottom:4px}
+.grid-desc{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px 22px;margin-top:14px}
+.grid-desc>div{min-width:0}
+.grid-desc h4{margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.grid-desc p,.grid-desc ul{margin:0;font-size:14px}
+.grid-desc ul{padding-left:18px}
+.quote{border-left:3px solid var(--accent);background:var(--soft);padding:10px 14px;border-radius:0 8px 8px 0;font-size:14px;white-space:pre-wrap;margin-bottom:10px}
+.quote h4{margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:normal}
+.sign{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px;margin-top:56px}
+.sign div{border-top:1px solid var(--ink);padding-top:6px;font-size:12.5px;text-align:center;color:var(--muted)}
+.foot{margin-top:28px;font-size:11px;color:var(--muted);font-family:var(--f-mono);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.empty{color:var(--muted);font-style:italic}
+
+@media print{
+  :root,:root[data-theme="dark"],:root:not([data-theme="light"]){
+    --bg:#fff; --surface:#fff; --ink:#14202B; --muted:#596673; --line:#D6DDE4; --soft:#F5F7F9;
+    --accent:#1D5E7E; --accent-soft:#E2EDF3; --accent-ink:#fff; --good:#2C7A4B; --good-soft:#E3F2E9;
+    --warn:#A8701A; --warn-soft:#F8EEDC; --bad:#B0372F; --bad-soft:#F8E4E2;
+    --d:#C0392B; --i:#C9971A; --s:#2E8B57; --c:#2C6CB0; color-scheme:light}
+  @page{size:A4;margin:14mm 12mm}
+  body{background:#fff;font-size:12.5px}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .brand,.top,.tabs,.progress,.toolbar,.no-print,details.xfer,.panel:not(#tab-painel){display:none!important}
+  #tab-painel{display:block!important;padding:0}
+  .wrap{max-width:none;padding:0}
+  .sheet{border:0;box-shadow:none;padding:0;max-width:none}
+  .kpis,.two>*,.grid-desc>div,.quote,.sign,.disc-hero,tr{break-inside:avoid}
+  .r-sec>h2,.box-h{break-after:avoid}
+  .kpi .pill{white-space:normal}
+  .pb{break-before:page}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<header class="brand">
+  <div class="brand-in">
+    <div class="brand-id"><img src="data:image/png;base64,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" alt="Inovação Casa" id="logo"><span class="sep"></span>
+      <div><div class="eyebrow">Gestão de desempenho · Qualidade e Inovação</div><h1>Avaliação de Desempenho <span>do Consultor</span></h1></div></div>
+    <div class="actions">
+      <button class="btn" id="b_exemplo" type="button">Ver exemplo preenchido</button>
+      <button class="btn danger" id="b_limpar" type="button">Nova avaliação</button>
+    </div>
+  </div>
+</header>
+<div class="wrap">
+  <div class="confirm" id="confirmBox" hidden>
+    <span>Apagar todas as respostas e começar uma avaliação em branco?</span>
+    <button class="btn danger" id="b_confirmar" type="button">Apagar e começar</button>
+    <button class="btn" id="b_cancelar" type="button">Cancelar</button>
+  </div>
+
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" data-tab="dados" id="t_dados">1 · Identificação</button>
+    <button class="tab" role="tab" data-tab="comp" id="t_comp">2 · Competências <span class="n" id="n_comp"></span></button>
+    <button class="tab" role="tab" data-tab="disc" id="t_disc">3 · Perfil DISC <span class="n" id="n_disc"></span></button>
+    <button class="tab" role="tab" data-tab="obs" id="t_obs">4 · Considerações</button>
+    <button class="tab" role="tab" data-tab="painel" id="t_painel">5 · Resultado</button>
+  </nav>
+  <div class="progress" aria-hidden="true"><div id="progBar"></div></div>
+
+  <section class="panel" id="tab-dados">
+    <div class="how">
+      <div><b><i>1</i>Identificação</b><p>Dados do consultor e do ciclo. Aparecem no cabeçalho do relatório.</p></div>
+      <div><b><i>2</i>Competências</b><p>35 comportamentos em 7 dimensões, notas de 1 a 5. Formam a nota geral, as forças e as oportunidades.</p></div>
+      <div><b><i>3</i>Perfil DISC</b><p>12 grupos de palavras que revelam o estilo de comportamento no trabalho.</p></div>
+      <div><b><i>4</i>Considerações</b><p>Evidências, metas e parecer final. Fecham a avaliação e geram o resultado.</p></div>
+    </div>
+    <p class="intro">Preencha o formulário em 4 etapas e clique em <b>Ver resultado</b> no final. Campos com * são obrigatórios. As respostas ficam salvas neste navegador enquanto você preenche.</p>
+    <div class="card">
+      <div class="grid">
+        <div class="field"><label for="f_nome">Consultor avaliado *</label><input id="f_nome" data-k="info.nome" data-req="Informe o nome do consultor avaliado"></div>
+        <div class="field"><label for="f_cargo">Cargo / função *</label><input id="f_cargo" data-k="info.cargo" data-req="Informe o cargo"></div>
+        <div class="field"><label for="f_area">Área / setor</label><input id="f_area" data-k="info.area"></div>
+        <div class="field"><label for="f_tempo">Tempo na função</label><input id="f_tempo" data-k="info.tempo"></div>
+        <div class="field"><label for="f_avaliador">Avaliador (gestor) *</label><input id="f_avaliador" data-k="info.avaliador" data-req="Informe o avaliador"></div>
+        <div class="field"><label for="f_periodo">Período avaliado</label><input id="f_periodo" data-k="info.periodo"></div>
+        <div class="field"><label for="f_data">Data da avaliação</label><input id="f_data" type="date" data-k="info.data"></div>
+        <div class="field"><label for="f_tipo">Tipo de avaliação</label>
+          <select id="f_tipo" data-k="info.tipo">
+            <option>Avaliação do gestor (90°)</option><option>Autoavaliação</option><option>Avaliação 180°</option><option>Avaliação 360°</option>
+          </select></div>
+      </div>
+    </div>
+    <div class="errbox" id="err_dados" hidden></div>
+    <div class="next-row"><span></span><button class="btn primary" data-go="comp" type="button">Continuar →</button></div>
+  </section>
+
+  <section class="panel" id="tab-comp" hidden>
+    <p class="intro">Avalie cada comportamento com base em fatos observados no período. Use N/A quando não houve oportunidade de observar.</p>
+    <div class="scale-legend">
+      <div style="--c:var(--bad)"><b>1 · Insatisfatório</b>Não atende ao mínimo esperado; exige ação imediata.</div>
+      <div style="--c:var(--warn)"><b>2 · Abaixo do esperado</b>Atende parcialmente; precisa de desenvolvimento.</div>
+      <div style="--c:#64748B"><b>3 · Atende</b>Cumpre o esperado para o cargo de forma consistente.</div>
+      <div style="--c:var(--accent)"><b>4 · Supera</b>Vai além do esperado com frequência. É a meta da área.</div>
+      <div style="--c:var(--good)"><b>5 · Excepcional</b>Referência para a equipe; ensina outros.</div>
+      <div style="--c:var(--line)"><b>N/A · Não observado</b>Sem oportunidade de avaliar; não entra na média.</div>
+    </div>
+    <div class="stack" id="compForm"></div>
+    <div class="errbox" id="err_comp" hidden></div>
+    <div class="next-row"><button class="btn" data-go="dados" type="button">← Voltar</button><button class="btn primary" data-go="disc" type="button">Continuar →</button></div>
+  </section>
+
+  <section class="panel" id="tab-disc" hidden>
+    <p class="intro">Em cada grupo, marque a palavra que <b>mais</b> descreve o comportamento do consultor no trabalho e a que <b>menos</b> o descreve. Responda pela observação do dia a dia, sem pensar demais.</p>
+    <div class="disc-intro">
+      <div><b><i style="background:var(--d)">D</i>Dominância</b>Como lida com problemas e desafios: decisão, firmeza e foco em resultado.</div>
+      <div><b><i style="background:var(--i)">I</i>Influência</b>Como lida com pessoas: comunicação, entusiasmo e persuasão.</div>
+      <div><b><i style="background:var(--s)">S</i>Estabilidade</b>Como lida com ritmo e mudanças: constância, paciência e cooperação.</div>
+      <div><b><i style="background:var(--c)">C</i>Conformidade</b>Como lida com regras e procedimentos: precisão, análise e qualidade.</div>
+    </div>
+    <p class="intro" style="margin-top:-4px">Serve para entender <b>como</b> o consultor trabalha, não <b>quanto</b> entrega. Não existe perfil certo ou errado: o resultado orienta a forma de liderar, comunicar e desenvolver essa pessoa.</p>
+    <div class="disc-grid" id="discForm"></div>
+    <div class="errbox" id="err_disc" hidden></div>
+    <div class="next-row"><button class="btn" data-go="comp" type="button">← Voltar</button><button class="btn primary" data-go="obs" type="button">Continuar →</button></div>
+  </section>
+
+  <section class="panel" id="tab-obs" hidden>
+    <p class="intro">Registre evidências e combinados. Esses textos entram no relatório como foram escritos.</p>
+    <div class="card">
+      <div class="grid">
+        <div class="field full"><label for="f_fortes">Principais realizações e pontos fortes observados</label><textarea id="f_fortes" data-k="obs.fortes"></textarea></div>
+        <div class="field full"><label for="f_melhorar">Pontos de melhoria e fatos que os evidenciam</label><textarea id="f_melhorar" data-k="obs.melhorar"></textarea></div>
+        <div class="field full"><label for="f_metas">Metas e compromissos para o próximo ciclo</label><textarea id="f_metas" data-k="obs.metas"></textarea></div>
+        <div class="field full"><label for="f_avaliado">Comentário do avaliado</label><textarea id="f_avaliado" data-k="obs.avaliado"></textarea></div>
+        <div class="field"><label for="f_parecer">Parecer final</label>
+          <select id="f_parecer" data-k="obs.parecer">
+            <option>Manter na função com plano de desenvolvimento</option>
+            <option>Apto a assumir novos desafios / promoção</option>
+            <option>Acompanhamento próximo por 90 dias</option>
+            <option>Plano de recuperação de desempenho</option>
+          </select></div>
+      </div>
+    </div>
+    <div class="next-row"><button class="btn" data-go="disc" type="button">← Voltar</button><button class="btn primary big" data-go="painel" type="button">Ver resultado da avaliação ✓</button></div>
+  </section>
+
+  <section class="panel" id="tab-painel" hidden>
+    <div class="toolbar">
+      <button class="btn" data-go="dados" type="button">← Editar respostas</button>
+      <button class="btn primary" id="b_print" type="button">Imprimir / Salvar em PDF</button>
+      <div class="note" id="printNote" hidden>Para imprimir ou salvar em PDF, abra o arquivo <b>avaliacao-consultor.html</b> no navegador (Chrome, Edge) e use o botão <b>Imprimir / Salvar em PDF</b>. Para levar as respostas daqui para lá, use “Transferir respostas” no fim desta página.</div>
+    </div>
+    <article class="sheet" id="report"></article>
+    <details class="xfer" id="xfer">
+      <summary>Transferir respostas para outro navegador ou arquivo</summary>
+      <div class="two" style="margin-top:12px">
+        <div class="field"><label for="x_out">Código das respostas desta avaliação</label><textarea id="x_out" readonly></textarea>
+          <div><button class="btn" id="b_copy" type="button">Copiar código</button> <span class="msg" id="m_copy"></span></div></div>
+        <div class="field"><label for="x_in">Colar código de outra avaliação</label><textarea id="x_in"></textarea>
+          <div><button class="btn" id="b_import" type="button">Importar respostas</button> <span class="msg" id="m_import"></span></div></div>
+      </div>
+    </details>
+  </section>
+</div>
+
+<script>
+(function(){
+const DIMS=[
+ {id:'Q',nome:'Qualidade e Melhoria Contínua',curto:'Qualidade',grupo:'des',desc:'Domínio das ferramentas da qualidade, conformidade com requisitos e uso de dados para melhorar processos.',itens:[
+  ['q1','Aplica métodos de melhoria contínua (PDCA, DMAIC, Kaizen) no dia a dia.','Conduzir um ciclo PDCA completo em um processo da área, com registro das quatro etapas.'],
+  ['q2','Identifica a causa raiz de problemas com ferramentas da qualidade (Ishikawa, 5 Porquês, Pareto).','Fazer treinamento prático de análise de causa raiz e aplicar em duas não conformidades reais.'],
+  ['q3','Segue procedimentos, normas e requisitos (ISO 9001, POPs, auditorias) com rigor.','Revisar os POPs da área com o gestor e participar de uma auditoria interna como observador.'],
+  ['q4','Monitora indicadores (KPIs) e usa dados para tomar decisões.','Montar e manter um painel mensal com 3 a 5 indicadores do seu escopo.'],
+  ['q5','Entrega trabalhos sem retrabalho e com atenção aos detalhes.','Adotar checklist de verificação antes de cada entrega e medir a taxa de retrabalho.'],
+  ['q6','Trata não conformidades e reclamações com ações corretivas e preventivas eficazes.','Verificar a eficácia das ações corretivas 30 e 60 dias após a implantação.']]},
+ {id:'N',nome:'Inovação e Criatividade',curto:'Inovação',grupo:'pot',desc:'Capacidade de gerar ideias, experimentar, adaptar-se e usar tecnologia para criar valor.',itens:[
+  ['n1','Propõe ideias novas para melhorar processos, produtos ou serviços.','Submeter ao menos uma proposta de melhoria por trimestre ao programa de ideias.'],
+  ['n2','Testa soluções em pequena escala (pilotos, protótipos) antes de expandir.','Conduzir um piloto com hipótese, métrica de sucesso e prazo definidos.'],
+  ['n3','Adapta-se rapidamente a mudanças e novas prioridades.','Assumir um projeto de mudança com acompanhamento do gestor e retrospectiva ao final.'],
+  ['n4','Utiliza tecnologia, automação e dados para gerar ganhos.','Mapear uma tarefa manual repetitiva e propor a sua automação.'],
+  ['n5','Questiona o status quo de forma construtiva, com argumentos e evidências.','Apresentar à equipe uma análise crítica de um processo atual com proposta alternativa.'],
+  ['n6','Busca referências externas (benchmarking, tendências, boas práticas).','Realizar um benchmarking e compartilhar os aprendizados com a equipe.']]},
+ {id:'C',nome:'Foco no Cliente',curto:'Cliente',grupo:'des',desc:'Compreensão das necessidades dos clientes internos e externos e qualidade do atendimento.',itens:[
+  ['c1','Entende as necessidades e expectativas do cliente interno e externo.','Entrevistar três clientes-chave e documentar suas expectativas.'],
+  ['c2','Responde às demandas com agilidade e qualidade.','Definir e cumprir um prazo padrão de resposta para as demandas do seu escopo.'],
+  ['c3','Usa o feedback do cliente para melhorar as entregas.','Implantar uma pesquisa curta de satisfação (NPS ou CSAT) ao final dos atendimentos.'],
+  ['c4','Mantém postura profissional e cordial em situações difíceis.','Fazer treinamento em atendimento consultivo e gestão de clientes difíceis.']]},
+ {id:'R',nome:'Resultados e Produtividade',curto:'Resultados',grupo:'des',desc:'Entrega de metas e prazos, organização do trabalho e responsabilidade pelos resultados.',itens:[
+  ['r1','Cumpre metas e objetivos acordados.','Desdobrar as metas em entregas semanais e revisar com o gestor a cada quinze dias.'],
+  ['r2','Cumpre prazos e avisa com antecedência sobre riscos de atraso.','Usar cronograma com marcos e sinalizar riscos ao primeiro sinal de desvio.'],
+  ['r3','Organiza e prioriza as atividades de forma eficiente.','Aplicar matriz de prioridades (Eisenhower ou GUT) no planejamento semanal.'],
+  ['r4','Trabalha com autonomia, sem necessidade de supervisão constante.','Assumir uma entrega de ponta a ponta com pontos de controle combinados.'],
+  ['r5','Assume a responsabilidade pelos resultados, inclusive pelos erros.','Conduzir uma análise de lições aprendidas sobre um resultado abaixo do esperado.']]},
+ {id:'M',nome:'Comunicação e Relacionamento',curto:'Comunicação',grupo:'pot',desc:'Clareza na comunicação, colaboração, feedback e gestão de conflitos.',itens:[
+  ['m1','Comunica-se com clareza e objetividade, oralmente e por escrito.','Estruturar relatórios e e-mails em contexto, fato e ação; pedir retorno sobre a clareza.'],
+  ['m2','Colabora com a equipe e com outras áreas.','Participar de um projeto multidisciplinar com outra área.'],
+  ['m3','Dá e recebe feedback de forma construtiva.','Praticar feedback no modelo Situação–Comportamento–Impacto nas reuniões individuais.'],
+  ['m4','Lida com conflitos de forma madura e busca consenso.','Fazer treinamento em negociação e mediação de conflitos.'],
+  ['m5','Escuta ativamente e considera outros pontos de vista.','Nas reuniões, resumir o ponto do outro antes de apresentar o próprio argumento.']]},
+ {id:'L',nome:'Liderança e Desenvolvimento',curto:'Liderança',grupo:'pot',desc:'Iniciativa, influência, aprendizado contínuo e disposição para desenvolver outras pessoas.',itens:[
+  ['l1','Toma iniciativa sem esperar ser solicitado.','Identificar e liderar uma melhoria por iniciativa própria no próximo ciclo.'],
+  ['l2','Influencia pessoas e engaja a equipe em torno de objetivos.','Conduzir uma reunião de alinhamento ou um workshop com a equipe.'],
+  ['l3','Busca aprendizado contínuo e desenvolvimento profissional.','Definir uma trilha de capacitação (curso ou certificação) com prazo de conclusão.'],
+  ['l4','Compartilha conhecimento e apoia o desenvolvimento dos colegas.','Ministrar um treinamento interno ou atuar como mentor de um colega.'],
+  ['l5','Toma decisões com base em análise e assume riscos calculados.','Registrar as decisões relevantes com critérios, alternativas e riscos avaliados.']]},
+ {id:'E',nome:'Conduta e Ética',curto:'Conduta',grupo:'des',desc:'Integridade, comprometimento, pontualidade e cuidado com informações.',itens:[
+  ['e1','Age com integridade, transparência e ética.','Revisar o código de conduta e discutir dilemas práticos com o gestor.'],
+  ['e2','Demonstra comprometimento com a empresa e seus valores.','Conectar as metas individuais aos valores e objetivos estratégicos da empresa.'],
+  ['e3','É assíduo, pontual e cumpre os compromissos assumidos.','Acompanhar a própria pontualidade e o cumprimento de compromissos por 60 dias.'],
+  ['e4','Zela pela segurança da informação e pela confidencialidade.','Fazer o treinamento de segurança da informação e LGPD.']]}
+];
+const ITEMS={};DIMS.forEach(d=>d.itens.forEach(([id,t,a])=>ITEMS[id]={id,t,a,dim:d}));
+const NITEMS=Object.keys(ITEMS).length;
+
+const DISC_G=[
+ [['Decidido','D'],['Entusiasmado','I'],['Paciente','S'],['Preciso','C']],
+ [['Comunicativo','I'],['Analítico','C'],['Direto','D'],['Calmo','S']],
+ [['Leal','S'],['Competitivo','D'],['Cauteloso','C'],['Persuasivo','I']],
+ [['Detalhista','C'],['Prestativo','S'],['Otimista','I'],['Ousado','D']],
+ [['Exigente','D'],['Disciplinado','C'],['Sociável','I'],['Estável','S']],
+ [['Inspirador','I'],['Assertivo','D'],['Cooperativo','S'],['Criterioso','C']],
+ [['Ponderado','S'],['Organizado','C'],['Determinado','D'],['Expressivo','I']],
+ [['Perfeccionista','C'],['Carismático','I'],['Independente','D'],['Previsível','S']],
+ [['Pioneiro','D'],['Bom ouvinte','S'],['Lógico','C'],['Espontâneo','I']],
+ [['Animado','I'],['Metódico','C'],['Conciliador','S'],['Firme','D']],
+ [['Constante','S'],['Orientado a resultados','D'],['Influente','I'],['Rigoroso','C']],
+ [['Sistemático','C'],['Tolerante','S'],['Ágil para decidir','D'],['Envolvente','I']]
+];
+
+const DISC={
+ D:{nome:'Dominância',arq:'Executor',
+  resumo:'Perfil orientado a resultados, desafios e ação. Toma decisões com rapidez, assume o controle das situações e prefere objetividade. Valoriza autonomia, metas claras e velocidade de execução.',
+  fortes:['Decisão rápida e senso de urgência','Foco em metas e resultados','Coragem para enfrentar problemas e desafiar o status quo','Disposição para assumir riscos e liderar mudanças'],
+  atencao:['Pode ser percebido como impaciente ou autoritário','Tende a pular detalhes e etapas de verificação','Pode ouvir pouco antes de decidir','Baixa tolerância a rotinas e processos lentos'],
+  pressao:'Torna-se mais exigente, direto e controlador; pode atropelar processos e pessoas para garantir o resultado.',
+  motiva:'Desafios, autonomia, metas ambiciosas, poder de decisão e reconhecimento por resultados.',
+  comunicar:'Seja breve e objetivo. Vá direto ao ponto, apresente opções e consequências e deixe a decisão com ele.',
+  feedback:'Foque em fatos e no impacto sobre o resultado. Evite rodeios e conecte a melhoria a ganhos concretos.',
+  ambiente:'Dinâmico, com liberdade de ação, desafios constantes e pouca microgestão.',
+  qi:'Na Qualidade, acelera a implantação de ações corretivas e cobra prazos. Na Inovação, é um bom patrocinador de mudanças e pilotos. Rende mais quando apoiado por perfis C, que garantem rigor de verificação, e S, que sustentam a mudança.',
+  dev:['Praticar escuta ativa antes de decidir','Incluir etapas de verificação nas entregas','Envolver a equipe nas decisões que a afetam']},
+ I:{nome:'Influência',arq:'Comunicador',
+  resumo:'Perfil comunicativo, otimista e persuasivo. Engaja pessoas com facilidade, gera ideias e cria um clima positivo. Valoriza reconhecimento, interação e liberdade de expressão.',
+  fortes:['Comunicação envolvente e persuasão','Criatividade e geração de ideias','Facilidade para criar redes de relacionamento','Entusiasmo que mobiliza a equipe'],
+  atencao:['Pode se dispersar e iniciar mais do que conclui','Tende a subestimar detalhes, prazos e controles','Pode ser otimista demais nas estimativas','Evita conflitos e conversas difíceis'],
+  pressao:'Pode ficar desorganizado, falar em excesso ou buscar aprovação; tende a contornar o problema apoiando-se nas relações.',
+  motiva:'Reconhecimento público, contato com pessoas, projetos novos e ambiente descontraído.',
+  comunicar:'Seja caloroso e aberto. Dê espaço para ideias, use exemplos e confirme os combinados por escrito.',
+  feedback:'Comece pelo que funciona, seja específico sobre o comportamento e combine os próximos passos com datas.',
+  ambiente:'Colaborativo, variado, com contato frequente com pessoas e espaço para criatividade.',
+  qi:'Na Inovação, é gerador de ideias e excelente mobilizador de workshops e programas de sugestões. Na Qualidade, engaja equipes em mudanças e auditorias, mas precisa de estrutura (checklists, cronogramas) para garantir disciplina de execução e registro.',
+  dev:['Usar ferramentas de organização e priorização','Fechar ciclos antes de iniciar novos','Sustentar argumentos com dados']},
+ S:{nome:'Estabilidade',arq:'Apoiador',
+  resumo:'Perfil calmo, consistente e cooperativo. Trabalha bem em equipe, é leal, paciente e confiável na execução de rotinas. Valoriza segurança, previsibilidade e harmonia.',
+  fortes:['Constância e confiabilidade na execução','Escuta atenta e colaboração','Paciência e equilíbrio emocional','Sustentação de processos e padronização de rotinas'],
+  atencao:['Resistência a mudanças bruscas','Dificuldade para dizer não e se posicionar','Pode ser lento nas decisões','Evita confrontos e guarda discordâncias'],
+  pressao:'Tende a ceder e se retrair; pode concordar na aparência e resistir de forma passiva às mudanças.',
+  motiva:'Segurança, reconhecimento sincero, clareza de papéis, tempo para se adaptar e clima harmônico.',
+  comunicar:'Seja cordial e paciente. Explique o porquê das mudanças, dê tempo para assimilação e ofereça apoio.',
+  feedback:'Em ambiente reservado e com tom acolhedor. Reforce a confiança e ofereça um plano passo a passo.',
+  ambiente:'Estável e cooperativo, com processos claros e mudanças planejadas e comunicadas com antecedência.',
+  qi:'Na Qualidade, é o guardião da padronização e da manutenção dos ganhos (a etapa Agir do PDCA). Na Inovação, precisa ser envolvido desde o início para aderir; quando convencido, garante a sustentação das novas práticas.',
+  dev:['Expor opiniões e discordâncias de forma assertiva','Encarar pequenas mudanças como experimentos','Ganhar velocidade na tomada de decisão']},
+ C:{nome:'Conformidade',arq:'Analista',
+  resumo:'Perfil analítico, preciso e orientado à qualidade. Busca exatidão, segue padrões e decide com base em dados e lógica. Valoriza procedimentos claros, informação completa e excelência técnica.',
+  fortes:['Rigor técnico e atenção aos detalhes','Pensamento analítico e lógico','Cumprimento de normas e procedimentos','Capacidade de antecipar riscos e falhas'],
+  atencao:['Perfeccionismo que pode atrasar entregas','Excesso de análise antes de decidir','Pode parecer crítico ou distante','Desconforto com ambiguidade e improviso'],
+  pressao:'Torna-se mais crítico, detalhista e reservado; pode se isolar e buscar mais dados antes de agir.',
+  motiva:'Padrões claros, tempo para análise, reconhecimento pela qualidade técnica e autonomia na sua especialidade.',
+  comunicar:'Seja preciso e preparado. Traga dados, fatos e lógica; evite exageros e responda às perguntas com detalhes.',
+  feedback:'Use evidências e critérios objetivos. Seja específico, explique o padrão esperado e dê tempo para reflexão.',
+  ambiente:'Organizado, com regras e expectativas claras, foco em qualidade e pouca pressão por improviso.',
+  qi:'É o perfil mais aderente à área de Qualidade: domina normas, indicadores e análise de causa raiz. Na Inovação, contribui com experimentos bem desenhados e análise de riscos, mas pode precisar de estímulo para testar soluções ainda imperfeitas (mentalidade de piloto e MVP).',
+  dev:['Definir o "bom o suficiente" de cada entrega','Decidir com informação suficiente, não completa','Desenvolver uma comunicação mais próxima e calorosa']}
+};
+const COMBO={
+ DI:['Realizador inspirador','Combina foco em resultados com poder de persuasão. Lidera pelo exemplo e mobiliza pessoas para metas ambiciosas.'],
+ DS:['Realizador persistente','Determinado e prático, alia força de execução à constância. Conduz as entregas até o fim com firmeza.'],
+ DC:['Desafiador estratégico','Exigente consigo e com os outros, une rapidez de decisão a um alto padrão de qualidade.'],
+ ID:['Promotor persuasivo','Carismático e voltado à ação, convence e acelera iniciativas, especialmente em momentos de mudança.'],
+ IS:['Conselheiro','Caloroso e colaborativo, constrói relações de confiança e é referência no apoio às pessoas.'],
+ IC:['Avaliador comunicativo','Une criatividade e senso crítico; apresenta ideias de forma estruturada e convincente.'],
+ SD:['Executor confiável','Estável e focado, entrega resultados consistentes com determinação silenciosa.'],
+ SI:['Colaborador agregador','Paciente e sociável, fortalece o trabalho em equipe e o clima do grupo.'],
+ SC:['Especialista metódico','Consistente e cuidadoso, é referência em padronização, rotinas e confiabilidade.'],
+ CD:['Analista objetivo','Combina rigor técnico com assertividade para cobrar padrões e resolver problemas.'],
+ CI:['Analista comunicador','Preciso e articulado, traduz informações técnicas com clareza para públicos diferentes.'],
+ CS:['Perfeccionista estável','Meticuloso e paciente, garante exatidão e conformidade em processos críticos.']
+};
+const NIVEL={
+ D:['Prefere consenso e decisões compartilhadas; evita confronto direto.','Equilibra iniciativa e consideração pelo grupo; decide quando necessário.','Assume o controle, decide rápido e busca desafios.'],
+ I:['Reservado e objetivo; prefere fatos à persuasão emocional.','Sociável quando necessário; alterna interação e foco individual.','Expansivo, persuasivo e motivador; busca interação constante.'],
+ S:['Inquieto e ágil; gosta de variedade e mudanças rápidas.','Adapta-se a mudanças com algum planejamento; ritmo equilibrado.','Paciente, constante e leal; valoriza estabilidade e previsibilidade.'],
+ C:['Independente de regras; prioriza agilidade a detalhes.','Atento a padrões, mas flexível quando o contexto pede.','Preciso, analítico e orientado a normas e qualidade.']
+};
+const NINE={
+ 'a-b':['Enigma','Alto potencial ainda não convertido em resultado. Investigar barreiras, clarear expectativas e dar acompanhamento próximo.'],
+ 'a-m':['Forte potencial','Pronto para crescer. Oferecer desafios maiores e projetos de inovação com metas claras.'],
+ 'a-a':['Talento-chave','Referência da área. Reter, dar visibilidade e preparar para sucessão ou liderança.'],
+ 'm-b':['Questionável','Desempenho abaixo do esperado. Plano de ação com metas de curto prazo e revisão em 90 dias.'],
+ 'm-m':['Mantenedor','Contribui de forma consistente. Desenvolver competências específicas para elevar desempenho e potencial.'],
+ 'm-a':['Forte desempenho','Entrega muito bem. Ampliar escopo e estimular inovação e liderança para crescer.'],
+ 'b-b':['Insuficiente','Desempenho e potencial abaixo do esperado. Plano de recuperação formal e reavaliação de adequação à função.'],
+ 'b-m':['Eficaz','Cumpre a função. Reforçar rotinas, capacitação técnica e acompanhamento regular.'],
+ 'b-a':['Profissional comprometido','Especialista que entrega acima da média. Valorizar a expertise e incentivar o compartilhamento de conhecimento.']
+};
+
+const WHY={
+ q1:'se o consultor usa um método estruturado para melhorar processos, em vez de agir por tentativa e erro.',
+ q2:'a capacidade de resolver problemas na origem, evitando que voltem a acontecer.',
+ q3:'a disciplina com padrões e requisitos, base para certificações e auditorias.',
+ q4:'se as decisões são tomadas com base em números e não apenas em percepção.',
+ q5:'a qualidade da entrega final e o custo de retrabalho que ela gera.',
+ q6:'se as falhas são tratadas até o fim, com ações que realmente funcionam.',
+ n1:'a contribuição ativa do consultor com melhorias e novidades para a empresa.',
+ n2:'a capacidade de validar ideias com baixo risco e baixo custo antes de investir.',
+ n3:'a flexibilidade diante de mudanças de cenário, prioridade ou tecnologia.',
+ n4:'o uso de ferramentas digitais para ganhar produtividade e precisão.',
+ n5:'a postura crítica e propositiva, essencial para inovar sem gerar atrito.',
+ n6:'se o consultor traz conhecimento de fora para dentro da empresa.',
+ c1:'se o trabalho é orientado ao que o cliente realmente precisa.',
+ c2:'a velocidade e a qualidade do atendimento às solicitações.',
+ c3:'se a opinião do cliente é usada como fonte de melhoria.',
+ c4:'o equilíbrio emocional e o profissionalismo no relacionamento com clientes.',
+ r1:'a entrega dos resultados combinados no período.',
+ r2:'a confiabilidade nos prazos e a transparência sobre riscos.',
+ r3:'a gestão do próprio tempo e o foco no que é mais importante.',
+ r4:'o grau de independência e a necessidade de acompanhamento.',
+ r5:'a maturidade para assumir resultados, bons ou ruins, sem transferir a culpa.',
+ m1:'se as mensagens são entendidas sem ruído e sem retrabalho.',
+ m2:'a disposição para trabalhar junto e integrar áreas.',
+ m3:'a maturidade para contribuir com os outros e aprender com eles.',
+ m4:'a capacidade de resolver divergências sem desgastar as relações.',
+ m5:'a abertura para ideias diferentes antes de chegar a uma conclusão.',
+ l1:'a proatividade: agir antes do problema ou da cobrança.',
+ l2:'a capacidade de mobilizar pessoas, mesmo sem cargo de liderança.',
+ l3:'o investimento do consultor no próprio crescimento.',
+ l4:'a contribuição para o desenvolvimento do time.',
+ l5:'a qualidade das decisões e o equilíbrio entre ousadia e cautela.',
+ e1:'a conduta ética, base da confiança da empresa e dos clientes.',
+ e2:'o alinhamento do consultor com a cultura e os objetivos da empresa.',
+ e3:'a confiabilidade no cumprimento de horários e acordos.',
+ e4:'o cuidado com dados sensíveis da empresa e dos clientes (LGPD).'};
+const HELP={
+ 'info.nome':'Quem está sendo avaliado.','info.cargo':'Define o nível de exigência esperado.','info.area':'Setor em que o consultor atua.',
+ 'info.tempo':'Ajuda a calibrar a maturidade esperada.','info.avaliador':'Responsável pela avaliação e pela devolutiva.',
+ 'info.periodo':'Intervalo de tempo considerado nas respostas.','info.data':'Data da reunião de avaliação.',
+ 'info.tipo':'Indica quem respondeu: gestor, o próprio consultor ou vários avaliadores.',
+ 'obs.fortes':'Registre fatos e entregas concretas. Serve como reconhecimento e evidência da nota.',
+ 'obs.melhorar':'Descreva situações reais. Ajuda o consultor a entender exatamente o que mudar.',
+ 'obs.metas':'Compromissos mensuráveis, com prazo, para o próximo ciclo. São a base do acompanhamento.',
+ 'obs.avaliado':'Espaço para o consultor registrar a própria visão sobre a avaliação.',
+ 'obs.parecer':'Conclusão formal da avaliação, encaminhada ao RH.'};
+document.querySelectorAll('[data-k]').forEach(el=>{const h=HELP[el.dataset.k];if(h){const s=document.createElement('small');s.className='help';s.textContent=h;el.closest('.field').appendChild(s)}});
+const KEY='avaliacao-consultor-v2';
+function blank(){return{info:{nome:'',cargo:'',area:'Qualidade e Inovação',tempo:'',avaliador:'',periodo:'',data:new Date().toISOString().slice(0,10),tipo:'Avaliação do gestor (90°)'},notas:{},disc:{},obs:{fortes:'',melhorar:'',metas:'',avaliado:'',parecer:'Manter na função com plano de desenvolvimento'}}}
+function exemplo(){
+ const s=blank();
+ s.info={nome:'Mariana Costa (exemplo)',cargo:'Consultora de Qualidade Pleno',area:'Qualidade e Inovação',tempo:'2 anos e 4 meses',avaliador:'Ricardo Almeida',periodo:'Janeiro a setembro de 2026',data:'2026-10-13',tipo:'Avaliação do gestor (90°)'};
+ Object.assign(s.notas,{q1:4,q2:5,q3:5,q4:4,q5:4,q6:3,n1:3,n2:2,n3:3,n4:3,n5:2,n6:3,c1:4,c2:4,c3:3,c4:4,r1:4,r2:5,r3:4,r4:4,r5:4,m1:3,m2:4,m3:2,m4:3,m5:3,l1:3,l2:2,l3:4,l4:3,l5:4,e1:5,e2:5,e3:4,e4:5});
+ const mais=['C','C','D','C','D','C','D','C','D','C','C','D'],menos=['I','I','I','I','I','I','I','I','S','S','S','S'];
+ DISC_G.forEach((g,i)=>s.disc['g'+i]={mais:mais[i],menos:menos[i]});
+ s.obs={fortes:'Conduziu a auditoria de recertificação ISO 9001 sem não conformidades maiores. Reduziu em 18% o índice de retrabalho da linha de inspeção com análise de Pareto e revisão de POPs.',
+  melhorar:'Propostas de inovação ainda são pontuais e pouco testadas na prática. Em reuniões com outras áreas, o retorno às pessoas costuma ser técnico e pouco acolhedor, o que gerou resistência no projeto de padronização do setor de compras.',
+  metas:'Liderar um piloto de automação da coleta de indicadores até março de 2027. Concluir o curso de Green Belt até o fim do 1º semestre. Conduzir mensalmente uma reunião de feedback com a equipe de inspeção.',
+  avaliado:'Concordo com a avaliação. Quero me desenvolver em inovação e em liderar pessoas.',parecer:'Manter na função com plano de desenvolvimento'};
+ return s;
+}
+function load(){try{const v=localStorage.getItem(KEY);if(v)return JSON.parse(v)}catch(e){}return null}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}}
+let state=load()||blank();
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=(v,d=1)=>v==null||isNaN(v)?'–':v.toFixed(d).replace('.',',');
+
+/* ---------- formulários ---------- */
+function renderComp(){
+ $('#compForm').innerHTML=DIMS.map(d=>`<div class="card dim-card ${d.grupo}"><div class="dim-head"><h2>${d.nome}</h2><span class="chip ${d.grupo}">Eixo ${d.grupo==='des'?'Desempenho':'Potencial'}</span></div><p class="dim-desc"><b>Para que serve:</b> ${d.desc} <span class="avg" id="avg_${d.id}"></span></p>
+ ${d.itens.map(([id,t],k)=>`<div class="item"><div class="q"><small>${d.id}${k+1}</small>${t}<span class="why"><b>Avalia:</b> ${WHY[id]}</span></div><div class="scale" role="radiogroup" aria-label="${esc(t)}">
+  ${[1,2,3,4,5,0].map(v=>`<input type="radio" name="${id}" id="${id}_${v}" value="${v}"><label for="${id}_${v}" data-v="${v}" class="${v?'':'na'}" title="${['Não observado','Insatisfatório','Abaixo do esperado','Atende às expectativas','Supera as expectativas','Excepcional'][v]}">${v||'N/A'}</label>`).join('')}
+ </div></div>`).join('')}</div>`).join('');
+ $('#compForm').addEventListener('change',e=>{const t=e.target;if(t.type!=='radio')return;state.notas[t.name]=+t.value;t.closest('.item').classList.remove('miss');save();progress()});
+}
+function renderDisc(){
+ $('#discForm').innerHTML=DISC_G.map((g,i)=>`<div class="dg" id="dg${i}"><h3><span>Grupo ${String(i+1).padStart(2,'0')}</span><span id="dgs${i}"></span></h3><table><tr><th>Palavra</th><th>Mais</th><th>Menos</th></tr>
+ ${g.map(([w,f])=>`<tr><td>${w}</td><td class="c"><input type="radio" name="dm${i}" id="dm${i}${f}" value="${f}" aria-label="Mais: ${w}"></td><td class="c"><input type="radio" name="dl${i}" id="dl${i}${f}" value="${f}" aria-label="Menos: ${w}"></td></tr>`).join('')}</table></div>`).join('');
+ $('#discForm').addEventListener('change',e=>{const t=e.target,m=t.name.match(/^d([ml])(\d+)$/);if(!m)return;const g='g'+m[2];state.disc[g]=state.disc[g]||{};state.disc[g][m[1]==='m'?'mais':'menos']=t.value;if(state.disc[g].mais&&state.disc[g].menos)t.closest('.dg').classList.remove('miss');save();syncDisc();progress()});
+}
+function syncDisc(){
+ DISC_G.forEach((g,i)=>{const a=state.disc['g'+i]||{};
+  g.forEach(([w,f])=>{const m=$('#dm'+i+f),l=$('#dl'+i+f);m.checked=a.mais===f;l.checked=a.menos===f;m.disabled=a.menos===f;l.disabled=a.mais===f});
+  const ok=a.mais&&a.menos;$('#dg'+i).classList.toggle('done',!!ok);$('#dgs'+i).textContent=ok?'completo':''});
+}
+function fill(){
+ document.querySelectorAll('[data-k]').forEach(el=>{const[a,b]=el.dataset.k.split('.');el.value=state[a][b]??''});
+ document.querySelectorAll('#compForm input[type=radio]').forEach(r=>r.checked=state.notas[r.name]===+r.value);
+ syncDisc();progress();
+}
+document.addEventListener('input',e=>{const k=e.target.dataset&&e.target.dataset.k;if(!k)return;const[a,b]=k.split('.');state[a][b]=e.target.value;const f=e.target.closest('.field');if(f&&e.target.value.trim())f.classList.remove('miss');save()});
+
+function progress(){
+ const n=Object.keys(state.notas).filter(k=>ITEMS[k]).length,d=discDone();
+ const nc=$('#n_comp');nc.textContent=n+'/'+NITEMS;nc.classList.toggle('ok',n===NITEMS);
+ const nd=$('#n_disc');nd.textContent=d+'/12';nd.classList.toggle('ok',d===12);
+ calc().dims.forEach(s=>{const el=$('#avg_'+s.d.id);if(el)el.textContent=s.n?`média ${fmt(s.m)} · ${s.n}/${s.d.itens.length}`:''});
+}
+const discDone=()=>DISC_G.filter((g,i)=>{const a=state.disc['g'+i];return a&&a.mais&&a.menos}).length;
+
+/* ---------- cálculos ---------- */
+function cls(m){if(m==null)return['Sem dados','p3'];if(m>=4.5)return['Excepcional','p5'];if(m>=3.75)return['Supera as expectativas','p4'];if(m>=2.75)return['Atende às expectativas','p3'];if(m>=1.75)return['Abaixo do esperado','p2'];return['Insatisfatório','p1']}
+const mean=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+function calc(){
+ const dims=DIMS.map(d=>{const v=d.itens.map(([id])=>state.notas[id]).filter(x=>x>0);return{d,m:mean(v),n:v.length}});
+ const all=Object.entries(state.notas).filter(([k,v])=>ITEMS[k]&&v>0);
+ const m=mean(all.map(x=>x[1]));
+ const items=all.map(([k,v])=>({...ITEMS[k],v}));
+ const des=mean(dims.filter(x=>x.d.grupo==='des'&&x.m!=null).map(x=>x.m)),pot=mean(dims.filter(x=>x.d.grupo==='pot'&&x.m!=null).map(x=>x.m));
+ return{dims,m,items,des,pot,pct:m==null?null:(m-1)/4*100};
+}
+function discCalc(){
+ const r={D:0,I:0,S:0,C:0};let n=0;
+ DISC_G.forEach((g,i)=>{const a=state.disc['g'+i];if(a&&a.mais&&a.menos){r[a.mais]++;r[a.menos]--;n++}});
+ if(!n)return null;
+ const sc={};for(const f in r)sc[f]=Math.round((r[f]+n)/(2*n)*100);
+ const ord=Object.keys(sc).sort((a,b)=>sc[b]-sc[a]);
+ const p=ord[0],s=sc[ord[1]]>=50?ord[1]:null;
+ return{sc,p,s,n,ord};
+}
+const lvl=v=>v<2.75?'b':v<3.75?'m':'a';
+
+/* ---------- gráficos ---------- */
+function radar(dims){
+ const W=460,H=380,cx=230,cy=192,R=128,n=dims.length,ang=i=>(-90+i*360/n)*Math.PI/180;
+ const pt=(i,v)=>[cx+Math.cos(ang(i))*R*v/5,cy+Math.sin(ang(i))*R*v/5];
+ let g='';
+ for(let v=1;v<=5;v++)g+=`<polygon points="${dims.map((_,i)=>pt(i,v).join(',')).join(' ')}" fill="none" stroke="var(--line)" stroke-width="1"/>`;
+ dims.forEach((_,i)=>{const[x,y]=pt(i,5);g+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--line)"/>`});
+ for(let v=1;v<=5;v++)g+=`<text class="tick" x="${cx+4}" y="${cy-R*v/5+3}">${v}</text>`;
+ g+=`<polygon points="${dims.map((_,i)=>pt(i,4).join(',')).join(' ')}" fill="none" stroke="var(--ink)" stroke-opacity=".5" stroke-dasharray="4 4" stroke-width="1.2"/>`;
+ g+=`<polygon points="${dims.map((s,i)=>pt(i,s.m||0).join(',')).join(' ')}" fill="var(--accent)" fill-opacity=".22" stroke="var(--accent)" stroke-width="2.2" stroke-linejoin="round"/>`;
+ dims.forEach((s,i)=>{const[x,y]=pt(i,s.m||0);g+=`<circle cx="${x}" cy="${y}" r="3.6" fill="var(--accent)"/>`;
+  const c=Math.cos(ang(i)),sn=Math.sin(ang(i)),lx=cx+c*(R+16),ly=cy+sn*(R+16)+(sn>0.5?10:sn<-0.5?-4:4);
+  const an=c>0.2?'start':c<-0.2?'end':'middle';
+  g+=`<text x="${lx}" y="${ly}" text-anchor="${an}">${s.d.curto} <tspan font-weight="700">${fmt(s.m)}</tspan></text>`});
+ return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Radar de competências">${g}</svg>`;
+}
+function barColor(m){return m==null?'var(--line)':m>=4.5?'var(--good)':m>=3.75?'var(--accent)':m>=2.75?'var(--muted)':m>=1.75?'var(--warn)':'var(--bad)'}
+function bars(dims){
+ const sorted=[...dims].sort((a,b)=>(b.m||0)-(a.m||0));
+ return `<div class="bars">${sorted.map(s=>`<div class="bar-row"><span>${s.d.curto}</span><div class="bar-track"><div class="bar-fill" style="width:${(s.m||0)/5*100}%;background:${barColor(s.m)}"></div><div class="bar-meta" style="left:80%"></div></div><b>${fmt(s.m)}</b></div>`).join('')}</div><div class="cap">Escala de 1 a 5. A linha tracejada marca o nível esperado (4,0 — supera as expectativas).</div>`;
+}
+
+/* ---------- relatório ---------- */
+function report(){
+ const st=calc(),dc=discCalc(),I=state.info,O=state.obs;
+ if(!st.items.length){$('#report').innerHTML='<p class="empty">Ainda não há respostas. Avalie as competências na aba 2 para gerar o painel.</p>';return}
+ const[cl,cp]=cls(st.m);
+ const ranked=st.dims.filter(s=>s.m!=null).sort((a,b)=>b.m-a.m);
+ const best=ranked[0],worst=ranked[ranked.length-1];
+ const fortes=[...st.items].filter(x=>x.v>=4).sort((a,b)=>b.v-a.v).slice(0,6);
+ const opp=[...st.items].filter(x=>x.v<4).sort((a,b)=>a.v-b.v||((st.dims.find(s=>s.d===a.dim).m||0)-(st.dims.find(s=>s.d===b.dim).m||0))).slice(0,7);
+ const crit=st.items.filter(x=>x.v<=2);
+ const nb=st.des!=null&&st.pot!=null?lvl(st.pot)+'-'+lvl(st.des):null;
+ const nome=I.nome||'O consultor';
+ const discCode=dc?dc.p+(dc.s||''):'—';
+ const today=new Date().toLocaleDateString('pt-BR');
+ const dataAv=I.data?new Date(I.data+'T12:00:00').toLocaleDateString('pt-BR'):'—';
+
+ const resumo=`${esc(nome)} obteve nota geral <b>${fmt(st.m)}</b> de 5 (${fmt(st.pct,0)}% de aproveitamento), resultado classificado como <b>${cl.toLowerCase()}</b>. `+
+  (best?`O melhor desempenho está em <b>${best.d.nome}</b> (${fmt(best.m)})${ranked[1]?` e em <b>${ranked[1].d.nome}</b> (${fmt(ranked[1].m)})`:''}. `:'')+
+  (worst&&worst!==best?`A maior oportunidade de desenvolvimento está em <b>${worst.d.nome}</b> (${fmt(worst.m)})${ranked.length>2?`, seguida de <b>${ranked[ranked.length-2].d.nome}</b> (${fmt(ranked[ranked.length-2].m)})`:''}. `:'')+
+  (crit.length?`Foram identificados <b>${crit.length}</b> comportamento(s) com nota 2 ou inferior, que pedem ação prioritária. `:'Nenhum comportamento foi avaliado abaixo do esperado de forma crítica. ')+
+  (nb?`Na matriz desempenho × potencial, o consultor se posiciona como <b>${NINE[nb][0]}</b>. `:'')+
+  (dc?`O perfil comportamental predominante é <b>${DISC[dc.p].nome}</b>${dc.s?` com traço secundário de <b>${DISC[dc.s].nome}</b>`:''}.`:'');
+
+ const dimRows=st.dims.map(s=>{const[c,p]=cls(s.m);return`<tr><td>${s.d.nome}</td><td class="num">${fmt(s.m)}</td><td class="num">${s.m==null?'–':fmt((s.m-1)/4*100,0)+'%'}</td><td><span class="pill ${p}">${c}</span></td><td class="num">${s.n}/${s.d.itens.length}</td></tr>`}).join('');
+
+ const li=(x,good)=>`<li><span class="sc ${good?'p5':x.v<=2?'p1':'p2'}">${x.v}</span><div>${x.t}<small>${x.dim.nome}</small></div></li>`;
+
+ const pdi=opp.slice(0,6).map(x=>{const pr=x.v<=2?['Alta','p1','30 dias']:x.v===3?['Média','p2','60 dias']:['Baixa','p3','90 dias'];
+  return`<tr><td>${x.t}<br><small style="color:var(--muted)">${x.dim.nome}</small></td><td class="num">${x.v} → 4</td><td><span class="pill ${pr[1]}">${pr[0]}</span></td><td>${x.a}</td><td class="num">${pr[2]}</td></tr>`}).join('');
+
+ const nineHtml=nb?(()=>{const rows=['a','m','b'],cols=['b','m','a'];let h='<div class="nine"><div class="ax ay" style="grid-row:1/4">Potencial →</div>';
+  rows.forEach(r=>cols.forEach(c=>{const k=r+'-'+c;h+=`<div class="cell${k===nb?' on':''}"><b>${NINE[k][0]}</b>${k===nb?'Posição atual':''}</div>`}));
+  h+='<div></div><div class="ax" style="grid-column:2/5">Desempenho →</div></div>';return h})():'<p class="empty">Dados insuficientes.</p>';
+
+ let discHtml='<p class="empty">O questionário DISC não foi respondido.</p>';
+ if(dc){const P=DISC[dc.p],cb=dc.s?COMBO[dc.p+dc.s]:null,col={D:'var(--d)',I:'var(--i)',S:'var(--s)',C:'var(--c)'};
+  discHtml=`<div class="disc-hero"><span class="code">${[dc.p,dc.s].filter(Boolean).map(f=>`<span style="color:${col[f]}">${f}</span>`).join('')}</span>
+   <div><h3>${P.nome} — perfil ${P.arq}${cb?` · ${cb[0]}`:''}</h3><p style="margin:0">${P.resumo}${cb?' '+cb[1]:''}</p></div></div>
+   <div class="two"><div><div class="box-h">Intensidade dos fatores</div><div class="disc-bars">
+   ${['D','I','S','C'].map(f=>`<div class="disc-row"><span class="lt"><i style="background:${col[f]}">${f}</i>${DISC[f].nome}</span><div class="bar-track"><div class="bar-fill" style="width:${dc.sc[f]}%;background:${col[f]}"></div><div class="bar-meta" style="left:50%"></div></div><b style="font-family:var(--f-mono);font-weight:500;text-align:right">${dc.sc[f]}</b></div>`).join('')}
+   </div><div class="cap">Índice de 0 a 100 (escolhas “mais” menos escolhas “menos”). A linha marca o ponto médio. Base: ${dc.n} de 12 grupos respondidos.</div></div>
+   <div><div class="box-h">Leitura por fator</div><table class="t"><tbody>${['D','I','S','C'].map(f=>{const v=dc.sc[f],k=v>=67?2:v>=34?1:0;return`<tr><td style="width:96px"><b>${DISC[f].nome}</b><br><small style="color:var(--muted)">${['Baixo','Moderado','Alto'][k]}</small></td><td>${NIVEL[f][k]}</td></tr>`}).join('')}</tbody></table></div></div>
+   <div class="grid-desc">
+    <div><h4>Pontos fortes do perfil</h4><ul>${P.fortes.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div><h4>Pontos de atenção</h4><ul>${P.atencao.map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div><h4>Comportamento sob pressão</h4><p>${P.pressao}</p></div>
+    <div><h4>O que o motiva</h4><p>${P.motiva}</p></div>
+    <div><h4>Como se comunicar</h4><p>${P.comunicar}</p></div>
+    <div><h4>Como dar feedback</h4><p>${P.feedback}</p></div>
+    <div><h4>Ambiente ideal</h4><p>${P.ambiente}</p></div>
+    <div><h4>Para desenvolver</h4><ul>${P.dev.map(x=>`<li>${x}</li>`).join('')}${dc.s?DISC[dc.s].dev.slice(0,1).map(x=>`<li>${x}</li>`).join(''):''}</ul></div>
+   </div>
+   <div class="quote" style="margin-top:16px"><h4>Contribuição para Qualidade e Inovação</h4>${P.qi}</div>
+   <p class="cap">O DISC descreve estilo de comportamento observável, não capacidade técnica nem caráter. Nesta avaliação ele foi respondido pelo avaliador a partir da observação do dia a dia e deve ser usado como apoio ao diálogo e ao plano de desenvolvimento, de preferência comparado a uma autoavaliação do consultor.</p>`;
+ }
+
+ const quotes=[['Realizações e pontos fortes',O.fortes],['Pontos de melhoria e evidências',O.melhorar],['Metas e compromissos para o próximo ciclo',O.metas],['Comentário do avaliado',O.avaliado]].filter(x=>x[1]&&x[1].trim()).map(([h,t])=>`<div class="quote"><h4>${h}</h4>${esc(t)}</div>`).join('')||'<p class="empty">Sem considerações registradas.</p>';
+
+ const detalhe=DIMS.map(d=>`<tr class="grp"><td colspan="2">${d.nome}</td></tr>`+d.itens.map(([id,t],k)=>{const v=state.notas[id];return`<tr><td>${d.id}${k+1}. ${t}</td><td class="num">${v>0?v:v===0?'N/A':'–'}</td></tr>`}).join('')).join('');
+
+ $('#report').innerHTML=`
+ <header class="r-head"><div class="r-logo"><img src="${document.getElementById('logo').src}" alt="Inovação Casa"></div><div style="flex:1 1 260px;min-width:0"><div class="eyebrow">Relatório de avaliação de desempenho · Qualidade e Inovação</div><h1>${esc(I.nome||'Consultor não identificado')}</h1></div>
+  <div class="doc">${esc(I.tipo||'')}<br>Avaliado em ${dataAv}<br>Emitido em ${today}</div></header>
+ <div class="meta">
+  <div><span>Cargo</span>${esc(I.cargo||'—')}</div><div><span>Área</span>${esc(I.area||'—')}</div><div><span>Tempo na função</span>${esc(I.tempo||'—')}</div>
+  <div><span>Avaliador</span>${esc(I.avaliador||'—')}</div><div><span>Período</span>${esc(I.periodo||'—')}</div><div><span>Parecer final</span>${esc(O.parecer||'—')}</div></div>
+ <div class="kpis">
+  <div class="kpi"><span>Nota geral</span><b>${fmt(st.m)}<small> / 5</small></b><small>${st.items.length} de ${NITEMS} itens avaliados</small></div>
+  <div class="kpi"><span>Aproveitamento</span><b>${fmt(st.pct,0)}%</b><span class="pill ${cp}">${cl}</span></div>
+  <div class="kpi"><span>Desempenho × potencial</span><b>${fmt(st.des)} × ${fmt(st.pot)}</b><small>${nb?NINE[nb][0]:'—'}</small></div>
+  <div class="kpi"><span>Perfil DISC</span><b>${discCode}</b><small>${dc?DISC[dc.p].nome+(dc.s?' / '+DISC[dc.s].nome:''):'não respondido'}</small></div>
+ </div>
+ <section class="r-sec"><h2><i>01</i>Resumo executivo</h2><p>${resumo}</p></section>
+ <section class="r-sec"><h2><i>02</i>Desempenho por competência</h2>
+  <div class="two"><div class="radar">${radar(st.dims)}</div><div><div class="box-h">Ranking das dimensões</div>${bars(st.dims)}</div></div>
+  <div class="tbl-wrap" style="margin-top:14px"><table class="t"><thead><tr><th>Dimensão</th><th style="text-align:right">Média</th><th style="text-align:right">Aproveit.</th><th>Classificação</th><th style="text-align:right">Itens</th></tr></thead><tbody>${dimRows}</tbody></table></div></section>
+ <section class="r-sec"><h2><i>03</i>Forças e oportunidades</h2>
+  <div class="two"><div style="--c-dot:var(--good)"><div class="box-h">Principais forças</div>${fortes.length?`<ul class="list">${fortes.map(x=>li(x,1)).join('')}</ul>`:'<p class="empty">Nenhum item com nota 4 ou 5.</p>'}</div>
+  <div style="--c-dot:var(--warn)"><div class="box-h">Principais oportunidades de melhoria</div>${opp.length?`<ul class="list">${opp.map(x=>li(x,0)).join('')}</ul>`:'<p class="empty">Todos os itens estão no nível esperado ou acima.</p>'}</div></div>
+  ${crit.length?`<div class="alert"><b>Pontos de atenção (nota ≤ 2):</b> ${crit.map(x=>esc(x.t.replace(/\.$/,''))).join('; ')}.</div>`:''}</section>
+ <section class="r-sec"><h2><i>04</i>Análise de oportunidade</h2>
+  <div class="two"><div>${nineHtml}</div><div>
+   <p><b>Desempenho ${fmt(st.des)}</b> — média de Qualidade, Foco no Cliente, Resultados e Conduta. <b>Potencial ${fmt(st.pot)}</b> — média de Inovação, Comunicação e Liderança.</p>
+   ${nb?`<p><b>${NINE[nb][0]}:</b> ${NINE[nb][1]}</p>`:''}
+   ${worst?`<p>Elevar <b>${worst.d.nome}</b> de ${fmt(worst.m)} para 4,0 aumentaria a nota geral para cerca de <b>${fmt(mean(st.dims.filter(s=>s.m!=null).map(s=>s===worst?Math.max(4,s.m):s.m)))}</b> (média das dimensões).</p>`:''}
+  </div></div></section>
+ <section class="r-sec"><h2><i>05</i>Plano de desenvolvimento individual (PDI)</h2>
+  ${pdi?`<div class="tbl-wrap"><table class="t"><thead><tr><th>Competência</th><th style="text-align:right">Nota → meta</th><th>Prioridade</th><th>Ação recomendada</th><th style="text-align:right">Prazo</th></tr></thead><tbody>${pdi}</tbody></table></div>
+  <p class="cap">Sugestão de equilíbrio 70-20-10: 70% de aprendizado na prática (projetos e desafios), 20% com outras pessoas (mentoria e feedback) e 10% em cursos formais.</p>`:'<p class="empty">Sem lacunas abaixo da meta.</p>'}</section>
+ <section class="r-sec pb"><h2><i>06</i>Perfil comportamental DISC</h2>${discHtml}</section>
+ <section class="r-sec"><h2><i>07</i>Considerações do avaliador</h2>${quotes}</section>
+ <section class="r-sec"><h2><i>08</i>Detalhamento das respostas</h2><div class="tbl-wrap"><table class="t"><thead><tr><th>Comportamento avaliado</th><th style="text-align:right">Nota</th></tr></thead><tbody>${detalhe}</tbody></table></div></section>
+ <div class="sign"><div>${esc(I.avaliador||'Avaliador')}<br>Avaliador</div><div>${esc((I.nome||'Avaliado').replace(/ \(exemplo\)$/,''))}<br>Avaliado</div><div>Recursos Humanos</div></div>
+ <div class="foot"><span>Escala: 1 Insatisfatório · 2 Abaixo · 3 Atende · 4 Supera · 5 Excepcional</span><span>Documento confidencial</span></div>`;
+ $('#x_out').value=JSON.stringify(state);
+}
+
+/* ---------- navegação e ações ---------- */
+const ORDER=['dados','comp','disc','obs','painel'];
+function check(step){
+ const e=[];
+ if(step==='dados')document.querySelectorAll('#tab-dados [data-req]').forEach(el=>{const bad=!el.value.trim();el.closest('.field').classList.toggle('miss',bad);if(bad)e.push(el.dataset.req)});
+ if(step==='comp')DIMS.forEach(d=>d.itens.forEach(([id],k)=>{const bad=state.notas[id]==null;const it=document.getElementById(id+'_1').closest('.item');it.classList.toggle('miss',bad);if(bad)e.push(`${d.id}${k+1} — ${d.curto}`)}));
+ if(step==='disc')DISC_G.forEach((g,i)=>{const a=state.disc['g'+i]||{},bad=!(a.mais&&a.menos);$('#dg'+i).classList.toggle('miss',bad);if(bad)e.push('Grupo '+(i+1))});
+ const box=$('#err_'+step);
+ if(box){box.hidden=!e.length;box.innerHTML=e.length?(step==='dados'?`<b>Preencha os campos obrigatórios:</b><ul>${e.map(x=>`<li>${x}</li>`).join('')}</ul>`:step==='comp'?`<b>Faltam ${e.length} pergunta(s) sem resposta.</b> Marque uma nota ou N/A nos itens destacados: ${e.join(', ')}.`:`<b>Faltam ${e.length} grupo(s) do DISC.</b> Marque “mais” e “menos” em: ${e.join(', ')}.`):''}
+ return e;
+}
+function go(t){
+ const ti=ORDER.indexOf(t),cur=ORDER.findIndex(s=>!$('#tab-'+s).hidden);
+ if(ti>cur)for(let i=0;i<ti;i++){if(check(ORDER[i]).length){show(ORDER[i]);const f=document.querySelector('#tab-'+ORDER[i]+' .miss');if(f)f.scrollIntoView({block:'center'});return}}
+ show(t);
+}
+function show(t){
+ $('#progBar').style.width=(ORDER.indexOf(t)/(ORDER.length-1)*100)+'%';
+ document.querySelectorAll('.tab').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===t));
+ document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!=='tab-'+t);
+ if(t==='painel')report();
+ try{localStorage.setItem(KEY+'-tab',t)}catch(e){}
+ window.scrollTo({top:0});
+}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>go(b.dataset.tab)));
+document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+
+const framed=(()=>{try{return window.self!==window.top}catch(e){return true}})();
+if(framed){$('#b_print').hidden=true;$('#printNote').hidden=false}
+$('#b_print').addEventListener('click',()=>{report();window.print()});
+window.addEventListener('beforeprint',report);
+
+$('#b_exemplo').addEventListener('click',()=>{state=exemplo();save();fill();document.querySelectorAll('.miss').forEach(x=>x.classList.remove('miss'));document.querySelectorAll('.errbox').forEach(x=>x.hidden=true);show('painel')});
+$('#b_limpar').addEventListener('click',()=>{$('#confirmBox').hidden=false});
+$('#b_cancelar').addEventListener('click',()=>{$('#confirmBox').hidden=true});
+$('#b_confirmar').addEventListener('click',()=>{state=blank();save();fill();document.querySelectorAll('.miss').forEach(x=>x.classList.remove('miss'));document.querySelectorAll('.errbox').forEach(x=>x.hidden=true);$('#confirmBox').hidden=true;show('dados')});
+$('#b_copy').addEventListener('click',()=>{const t=$('#x_out');t.value=JSON.stringify(state);
+ const ok=()=>$('#m_copy').textContent='Código copiado.',fb=()=>{t.focus();t.select();$('#m_copy').textContent='Selecionado: use Ctrl+C para copiar.'};
+ try{navigator.clipboard.writeText(t.value).then(ok,fb)}catch(e){fb()}});
+$('#b_import').addEventListener('click',()=>{try{const s=JSON.parse($('#x_in').value);if(!s.info||!s.notas)throw 0;state=Object.assign(blank(),s);save();fill();report();$('#m_import').textContent='Respostas importadas.'}catch(e){$('#m_import').textContent='Código inválido. Cole o código completo copiado da outra avaliação.'}});
+
+renderComp();renderDisc();fill();
+let start='dados';try{start=localStorage.getItem(KEY+'-tab')||'dados'}catch(e){}
+go(start);
+})();
+</script>
+
+</body>
+</html>
