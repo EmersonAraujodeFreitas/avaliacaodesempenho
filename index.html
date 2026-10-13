@@ -920,9 +920,16 @@ function pdfDownload(){
 
  const n=doc.getNumberOfPages();for(let p=1;p<=n;p++){doc.setPage(p);D(PC.line);doc.setLineWidth(.3);doc.line(M,287,W-M,287);Fo('normal',7.5);T(PC.muted);doc.text('Inovação Casa  ·  Avaliação de Desempenho  ·  Documento confidencial',M,291.5);doc.text(`Página ${p} de ${n}`,W-M,291.5,{align:'right'})}
  const slug=nome.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^\w]+/g,'_').replace(/^_|_$/g,'');
- doc.save(`Avaliacao_${slug||'Consultor'}.pdf`);
+ const fn=`Avaliacao_${slug||'Consultor'}.pdf`;deliver(fn,doc.output('blob'),()=>doc.save(fn),'PDF');
 }
-function alertMsg(t){const el=$('#pdfMsg');el.textContent=t;el.hidden=false;setTimeout(()=>el.hidden=true,6000)}
+function alertMsg(t,ok){const el=$('#pdfMsg');el.textContent=t;el.style.color=ok?'var(--good)':'var(--bad)';el.hidden=false;setTimeout(()=>el.hidden=true,6000)}
+async function deliver(fn,blob,fallback,what){
+ if(!framed){fallback();return}
+ const dl=window.claude&&window.claude.use?await window.claude.use('downloads'):null;
+ if(!dl){alertMsg('Não foi possível baixar aqui. Use o site: emersonaraujodefreitas.github.io/avaliacaodesempenho');return}
+ try{await dl.save({filename:fn,data:blob});alertMsg(what+' salvo.',true)}
+ catch(e){if(e&&e.code==='declined')return;if(e&&e.code==='rate_limited'){alertMsg('Já existe uma confirmação aberta. Conclua-a e tente de novo.');return}alertMsg('Não foi possível salvar o '+what+' aqui. Use o site: emersonaraujodefreitas.github.io/avaliacaodesempenho')}
+}
 
 /* ---------- navegação e ações ---------- */
 const ORDER=['dados','comp','disc','obs','painel'];
@@ -953,7 +960,8 @@ document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>go(b
 document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 
 const framed=(()=>{try{return window.self!==window.top}catch(e){return true}})();
-if(framed){$('#b_print').hidden=true;$('#b_pdf').hidden=true;$('#printNote').hidden=false}
+if(framed){$('#b_print').hidden=true;$('#b_pdf').hidden=true;$('#printNote').hidden=false;
+ if(window.claude&&window.claude.use)window.claude.use('downloads').then(dl=>{if(dl){$('#b_pdf').hidden=false;$('#b_bkp').hidden=false;$('#printNote').innerHTML='Use <b>Baixar PDF</b> para salvar uma cópia do relatório. A impressão direta funciona no site: <b>emersonaraujodefreitas.github.io/avaliacaodesempenho</b>.'}}).catch(()=>{})}
 $('#b_pdf').addEventListener('click',pdfDownload);
 $('#b_print').addEventListener('click',()=>{report();window.print()});
 window.addEventListener('beforeprint',report);
@@ -978,7 +986,7 @@ $('#histList').addEventListener('click',e=>{const o=e.target.closest('[data-open
  if(o){const r=histLoad().find(x=>x.id===o.dataset.open);if(r){state=norm(JSON.parse(JSON.stringify(r.s)));save();fill();show('painel')}}
  if(d){if(d.dataset.sure){histSave(histLoad().filter(x=>x.id!==d.dataset.del));renderHist();$('#m_hist').textContent='Avaliação excluída do histórico.'}else{d.dataset.sure='1';d.textContent='Confirmar exclusão'}}});
 $('#b_hist').addEventListener('click',()=>show('hist'));
-$('#b_bkp').addEventListener('click',()=>{try{const b=new Blob([JSON.stringify(histLoad(),null,1)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='historico-avaliacoes-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();$('#m_hist').textContent='Backup baixado.'}catch(e){$('#m_hist').textContent='Não foi possível baixar o backup neste ambiente.'}});
+$('#b_bkp').addEventListener('click',()=>{const fn='historico-avaliacoes-'+new Date().toISOString().slice(0,10)+'.json',b=new Blob([JSON.stringify(histLoad(),null,1)],{type:'application/json'});deliver(fn,b,()=>{const a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=fn;document.body.appendChild(a);a.click();a.remove();$('#m_hist').textContent='Backup baixado.'},'Backup')});
 $('#f_bkp').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return;const rd=new FileReader();rd.onload=()=>{try{const inc=JSON.parse(rd.result);if(!Array.isArray(inc))throw 0;const l=histLoad();inc.forEach(r=>{if(!r||!r.id||!r.s)return;const i=l.findIndex(x=>x.id===r.id);if(i>=0)l[i]=r;else l.push(r)});histSave(l);renderHist();$('#m_hist').textContent=inc.length+' avaliação(ões) restaurada(s).'}catch(err){$('#m_hist').textContent='Arquivo inválido. Use um backup baixado por este site.'}e.target.value=''};rd.readAsText(f)});
 if(framed){$('#b_bkp').hidden=true}
 renderComp();renderDisc();fill();
