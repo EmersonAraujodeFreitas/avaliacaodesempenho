@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Avaliação do Consultor</title>
 </head>
 <body>
 <title>Avaliação do Consultor</title>
@@ -365,8 +366,10 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
   <section class="panel" id="tab-painel" hidden>
     <div class="toolbar">
       <button class="btn" data-go="dados" type="button">← Editar respostas</button>
-      <button class="btn primary" id="b_print" type="button">Imprimir / Salvar em PDF</button>
-      <div class="note" id="printNote" hidden>Para imprimir ou salvar em PDF, abra o arquivo <b>avaliacao-consultor.html</b> no navegador (Chrome, Edge) e use o botão <b>Imprimir / Salvar em PDF</b>. Para levar as respostas daqui para lá, use “Transferir respostas” no fim desta página.</div>
+      <button class="btn primary" id="b_pdf" type="button">Baixar PDF</button>
+      <button class="btn" id="b_print" type="button">Imprimir</button>
+      <span class="msg" id="pdfMsg" hidden style="color:var(--bad)"></span>
+      <div class="note" id="printNote" hidden>Para baixar o PDF ou imprimir, use o site: <b>emersonaraujodefreitas.github.io/avaliacaodesempenho</b>. Esta pré-visualização não permite downloads. Para levar as respostas daqui para lá, use “Transferir respostas” no fim desta página.</div>
     </div>
     <article class="sheet" id="report"></article>
     <details class="xfer" id="xfer">
@@ -381,6 +384,7 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
   </section>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
 (function(){
 const DIMS=[
@@ -448,7 +452,7 @@ const DISC_G=[
 const DISC={
  D:{nome:'Dominância',arq:'Executor',
   resumo:'Perfil orientado a resultados, desafios e ação. Toma decisões com rapidez, assume o controle das situações e prefere objetividade. Valoriza autonomia, metas claras e velocidade de execução.',
-  fortes:['Decisão rápida e senso de urgência','Foco em metas e resultados','Coragem para enfrentar problemas e desafiar o status quo','Disposição para assumir riscos e liderar mudanças'],
+  fortes:['Decisão rápida e senso de urgência','Foco em metas e resultados','Coragem para enfrentar problemas e questionar o jeito atual de fazer','Disposição para assumir riscos e liderar mudanças'],
   atencao:['Pode ser percebido como impaciente ou autoritário','Tende a pular detalhes e etapas de verificação','Pode ouvir pouco antes de decidir','Baixa tolerância a rotinas e processos lentos'],
   pressao:'Torna-se mais exigente, direto e controlador; pode atropelar processos e pessoas para garantir o resultado.',
   motiva:'Desafios, autonomia, metas ambiciosas, poder de decisão e reconhecimento por resultados.',
@@ -470,7 +474,7 @@ const DISC={
   dev:['Usar ferramentas de organização e priorização','Fechar ciclos antes de iniciar novos','Sustentar argumentos com dados']},
  S:{nome:'Estabilidade',arq:'Apoiador',
   resumo:'Perfil calmo, consistente e cooperativo. Trabalha bem em equipe, é leal, paciente e confiável na execução de rotinas. Valoriza segurança, previsibilidade e harmonia.',
-  fortes:['Constância e confiabilidade na execução','Escuta atenta e colaboração','Paciência e equilíbrio emocional','Sustentação de processos e padronização de rotinas'],
+  fortes:['Constância e confiabilidade na execução','Escuta atenta e colaboração','Paciência e equilíbrio emocional','Mantém rotinas e padrões funcionando'],
   atencao:['Resistência a mudanças bruscas','Dificuldade para dizer não e se posicionar','Pode ser lento nas decisões','Evita confrontos e guarda discordâncias'],
   pressao:'Tende a ceder e se retrair; pode concordar na aparência e resistir de forma passiva às mudanças.',
   motiva:'Segurança, reconhecimento sincero, clareza de papéis, tempo para se adaptar e clima harmônico.',
@@ -482,13 +486,13 @@ const DISC={
  C:{nome:'Conformidade',arq:'Analista',
   resumo:'Perfil analítico, preciso e orientado à qualidade. Busca exatidão, segue padrões e decide com base em dados e lógica. Valoriza procedimentos claros, informação completa e excelência técnica.',
   fortes:['Rigor técnico e atenção aos detalhes','Pensamento analítico e lógico','Cumprimento de normas e procedimentos','Capacidade de antecipar riscos e falhas'],
-  atencao:['Perfeccionismo que pode atrasar entregas','Excesso de análise antes de decidir','Pode parecer crítico ou distante','Desconforto com ambiguidade e improviso'],
+  atencao:['Perfeccionismo que pode atrasar entregas','Excesso de análise antes de decidir','Pode parecer crítico ou distante','Desconforto com situações sem regras claras'],
   pressao:'Torna-se mais crítico, detalhista e reservado; pode se isolar e buscar mais dados antes de agir.',
   motiva:'Padrões claros, tempo para análise, reconhecimento pela qualidade técnica e autonomia na sua especialidade.',
   comunicar:'Seja preciso e preparado. Traga dados, fatos e lógica; evite exageros e responda às perguntas com detalhes.',
   feedback:'Use evidências e critérios objetivos. Seja específico, explique o padrão esperado e dê tempo para reflexão.',
   ambiente:'Organizado, com regras e expectativas claras, foco em qualidade e pouca pressão por improviso.',
-  qi:'Na Inovação, contribui com experimentos bem desenhados, métricas claras e análise de riscos, o que dá credibilidade aos projetos. Pode precisar de estímulo para testar soluções ainda imperfeitas (mentalidade de piloto e MVP) e para decidir sem ter todas as informações.',
+  qi:'Na Inovação, contribui com experimentos bem desenhados, métricas claras e análise de riscos, o que dá credibilidade aos projetos. Pode precisar de estímulo para testar soluções ainda imperfeitas em pequena escala e para decidir sem ter todas as informações.',
   dev:['Definir o "bom o suficiente" de cada entrega','Decidir com informação suficiente, não completa','Desenvolver uma comunicação mais próxima e calorosa']}
 };
 const COMBO={
@@ -512,16 +516,17 @@ const NIVEL={
  C:['Independente de regras; prioriza agilidade a detalhes.','Atento a padrões, mas flexível quando o contexto pede.','Preciso, analítico e orientado a normas e qualidade.']
 };
 const NINE={
- 'a-b':['Enigma','Alto potencial ainda não convertido em resultado. Investigar barreiras, clarear expectativas e dar acompanhamento próximo.'],
- 'a-m':['Forte potencial','Pronto para crescer. Oferecer desafios maiores e projetos de inovação com metas claras.'],
- 'a-a':['Talento-chave','Referência da área. Reter, dar visibilidade e preparar para sucessão ou liderança.'],
- 'm-b':['Questionável','Desempenho abaixo do esperado. Plano de ação com metas de curto prazo e revisão em 90 dias.'],
- 'm-m':['Mantenedor','Contribui de forma consistente. Desenvolver competências específicas para elevar desempenho e potencial.'],
- 'm-a':['Forte desempenho','Entrega muito bem. Ampliar escopo e estimular inovação e liderança para crescer.'],
- 'b-b':['Insuficiente','Desempenho e potencial abaixo do esperado. Plano de recuperação formal e reavaliação de adequação à função.'],
- 'b-m':['Eficaz','Cumpre a função. Reforçar rotinas, capacitação técnica e acompanhamento regular.'],
- 'b-a':['Profissional comprometido','Especialista que entrega acima da média. Valorizar a expertise e incentivar o compartilhamento de conhecimento.']
+ 'a-b':['Potencial escondido','Tem capacidade, mas ainda não entrega o esperado. Entender o que atrapalha e acompanhar de perto.'],
+ 'a-m':['Em crescimento','Está pronto para crescer. Dar desafios maiores, com metas claras.'],
+ 'a-a':['Destaque','É referência na área. Valorizar e preparar para novos cargos.'],
+ 'm-b':['Precisa melhorar','Entrega abaixo do esperado. Fazer um plano com metas curtas e rever em 90 dias.'],
+ 'm-m':['Consistente','Entrega o esperado. Trabalhar pontos específicos para crescer.'],
+ 'm-a':['Bom desempenho','Entrega muito bem. Dar mais responsabilidade e estimular novas ideias.'],
+ 'b-b':['Atenção','Entrega e crescimento abaixo do esperado. Plano de recuperação e nova avaliação.'],
+ 'b-m':['Cumpre a função','Faz o que é pedido. Reforçar treinamento e acompanhamento.'],
+ 'b-a':['Especialista','Entrega acima da média na função. Valorizar e incentivar que ensine os colegas.']
 };
+const JEITO={D:'direto e focado em resultado',I:'comunicativo e animado',S:'calmo e colaborativo',C:'analítico e cuidadoso'};
 
 const WHY={
  q1:'se o consultor usa um método estruturado para melhorar processos, em vez de agir por tentativa e erro.',
@@ -666,7 +671,7 @@ function radar(dims){
 function barColor(m){return m==null?'var(--line)':m>=4.5?'var(--good)':m>=3.75?'var(--accent)':m>=2.75?'var(--muted)':m>=1.75?'var(--warn)':'var(--bad)'}
 function bars(dims){
  const sorted=[...dims].sort((a,b)=>(b.m||0)-(a.m||0));
- return `<div class="bars">${sorted.map(s=>`<div class="bar-row"><span>${s.d.curto}</span><div class="bar-track"><div class="bar-fill" style="width:${(s.m||0)/5*100}%;background:${barColor(s.m)}"></div><div class="bar-meta" style="left:80%"></div></div><b>${fmt(s.m)}</b></div>`).join('')}</div><div class="cap">Escala de 1 a 5. A linha tracejada marca o nível esperado (4,0 — supera as expectativas).</div>`;
+ return `<div class="bars">${sorted.map(s=>`<div class="bar-row"><span>${s.d.curto}</span><div class="bar-track"><div class="bar-fill" style="width:${(s.m||0)/5*100}%;background:${barColor(s.m)}"></div><div class="bar-meta" style="left:80%"></div></div><b>${fmt(s.m)}</b></div>`).join('')}</div><div class="cap">Notas de 1 a 5. A linha tracejada é a meta (4,0).</div>`;
 }
 
 /* ---------- relatório ---------- */
@@ -676,8 +681,8 @@ function report(){
  const[cl,cp]=cls(st.m);
  const ranked=st.dims.filter(s=>s.m!=null).sort((a,b)=>b.m-a.m);
  const best=ranked[0],worst=ranked[ranked.length-1];
- const fortes=[...st.items].filter(x=>x.v>=4).sort((a,b)=>b.v-a.v).slice(0,6);
- const opp=[...st.items].filter(x=>x.v<4).sort((a,b)=>a.v-b.v||((st.dims.find(s=>s.d===a.dim).m||0)-(st.dims.find(s=>s.d===b.dim).m||0))).slice(0,7);
+ const fortes=[...st.items].filter(x=>x.v>=4).sort((a,b)=>b.v-a.v).slice(0,4);
+ const opp=[...st.items].filter(x=>x.v<4).sort((a,b)=>a.v-b.v||((st.dims.find(s=>s.d===a.dim).m||0)-(st.dims.find(s=>s.d===b.dim).m||0))).slice(0,5);
  const crit=st.items.filter(x=>x.v<=2);
  const nb=st.des!=null&&st.pot!=null?lvl(st.pot)+'-'+lvl(st.des):null;
  const nome=I.nome||'O consultor';
@@ -685,18 +690,18 @@ function report(){
  const today=new Date().toLocaleDateString('pt-BR');
  const dataAv=I.data?new Date(I.data+'T12:00:00').toLocaleDateString('pt-BR'):'—';
 
- const resumo=`${esc(nome)} obteve nota geral <b>${fmt(st.m)}</b> de 5 (${fmt(st.pct,0)}% de aproveitamento), resultado classificado como <b>${cl.toLowerCase()}</b>. `+
-  (best?`O melhor desempenho está em <b>${best.d.nome}</b> (${fmt(best.m)})${ranked[1]?` e em <b>${ranked[1].d.nome}</b> (${fmt(ranked[1].m)})`:''}. `:'')+
-  (worst&&worst!==best?`A maior oportunidade de desenvolvimento está em <b>${worst.d.nome}</b> (${fmt(worst.m)})${ranked.length>2?`, seguida de <b>${ranked[ranked.length-2].d.nome}</b> (${fmt(ranked[ranked.length-2].m)})`:''}. `:'')+
-  (crit.length?`Foram identificados <b>${crit.length}</b> comportamento(s) com nota 2 ou inferior, que pedem ação prioritária. `:'Nenhum comportamento foi avaliado abaixo do esperado de forma crítica. ')+
-  (nb?`Na matriz desempenho × potencial, o consultor se posiciona como <b>${NINE[nb][0]}</b>. `:'')+
-  (dc?`O perfil comportamental predominante é <b>${DISC[dc.p].nome}</b>${dc.s?` com traço secundário de <b>${DISC[dc.s].nome}</b>`:''}.`:'');
+ const resumo=`${esc(nome)} teve nota <b>${fmt(st.m)}</b> de 5 (${fmt(st.pct,0)}%), ou seja, <b>${cl.toLowerCase()}</b>. `+
+  (best?`Vai melhor em <b>${best.d.nome}</b> (${fmt(best.m)})${ranked[1]?` e <b>${ranked[1].d.nome}</b> (${fmt(ranked[1].m)})`:''}. `:'')+
+  (worst&&worst!==best?`Precisa melhorar principalmente em <b>${worst.d.nome}</b> (${fmt(worst.m)}). `:'')+
+  (crit.length?`<b>${crit.length}</b> ponto(s) tiveram nota 2 ou menos e precisam de atenção. `:'')+
+  (nb?`Na matriz de entrega e crescimento, está como <b>${NINE[nb][0]}</b>. `:'')+
+  (dc?`No DISC, o perfil principal é <b>${DISC[dc.p].nome}</b>: ${JEITO[dc.p]}.`:'');
 
  const dimRows=st.dims.map(s=>{const[c,p]=cls(s.m);return`<tr><td>${s.d.nome}</td><td class="num">${fmt(s.m)}</td><td class="num">${s.m==null?'–':fmt((s.m-1)/4*100,0)+'%'}</td><td><span class="pill ${p}">${c}</span></td><td class="num">${s.n}/${s.d.itens.length}</td></tr>`}).join('');
 
  const li=(x,good)=>`<li><span class="sc ${good?'p5':x.v<=2?'p1':'p2'}">${x.v}</span><div>${x.t}<small>${x.dim.nome}</small></div></li>`;
 
- const pdi=opp.slice(0,6).map(x=>{const pr=x.v<=2?['Alta','p1','30 dias']:x.v===3?['Média','p2','60 dias']:['Baixa','p3','90 dias'];
+ const pdi=opp.slice(0,4).map(x=>{const pr=x.v<=2?['Alta','p1','30 dias']:x.v===3?['Média','p2','60 dias']:['Baixa','p3','90 dias'];
   return`<tr><td>${x.t}<br><small style="color:var(--muted)">${x.dim.nome}</small></td><td class="num">${x.v} → 4</td><td><span class="pill ${pr[1]}">${pr[0]}</span></td><td>${x.a}</td><td class="num">${pr[2]}</td></tr>`}).join('');
 
  const nineHtml=nb?(()=>{const rows=['a','m','b'],cols=['b','m','a'];let h='<div class="nine"><div class="ax ay" style="grid-row:1/4">Potencial →</div>';
@@ -707,22 +712,18 @@ function report(){
  if(dc){const P=DISC[dc.p],cb=dc.s?COMBO[dc.p+dc.s]:null,col={D:'var(--d)',I:'var(--i)',S:'var(--s)',C:'var(--c)'};
   discHtml=`<div class="disc-hero"><span class="code">${[dc.p,dc.s].filter(Boolean).map(f=>`<span style="color:${col[f]}">${f}</span>`).join('')}</span>
    <div><h3>${P.nome} — perfil ${P.arq}${cb?` · ${cb[0]}`:''}</h3><p style="margin:0">${P.resumo}${cb?' '+cb[1]:''}</p></div></div>
-   <div class="two"><div><div class="box-h">Intensidade dos fatores</div><div class="disc-bars">
+   <div><div class="box-h">Intensidade de cada fator</div><div class="disc-bars">
    ${['D','I','S','C'].map(f=>`<div class="disc-row"><span class="lt"><i style="background:${col[f]}">${f}</i>${DISC[f].nome}</span><div class="bar-track"><div class="bar-fill" style="width:${dc.sc[f]}%;background:${col[f]}"></div><div class="bar-meta" style="left:50%"></div></div><b style="font-family:var(--f-mono);font-weight:500;text-align:right">${dc.sc[f]}</b></div>`).join('')}
-   </div><div class="cap">Índice de 0 a 100 (escolhas “mais” menos escolhas “menos”). A linha marca o ponto médio. Base: ${dc.n} de 12 grupos respondidos.</div></div>
-   <div><div class="box-h">Leitura por fator</div><table class="t"><tbody>${['D','I','S','C'].map(f=>{const v=dc.sc[f],k=v>=67?2:v>=34?1:0;return`<tr><td style="width:96px"><b>${DISC[f].nome}</b><br><small style="color:var(--muted)">${['Baixo','Moderado','Alto'][k]}</small></td><td>${NIVEL[f][k]}</td></tr>`}).join('')}</tbody></table></div></div>
+   </div><div class="cap">De 0 a 100. Acima de 50, o traço aparece com força no dia a dia.</div></div>
    <div class="grid-desc">
-    <div><h4>Pontos fortes do perfil</h4><ul>${P.fortes.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-    <div><h4>Pontos de atenção</h4><ul>${P.atencao.map(x=>`<li>${x}</li>`).join('')}</ul></div>
-    <div><h4>Comportamento sob pressão</h4><p>${P.pressao}</p></div>
-    <div><h4>O que o motiva</h4><p>${P.motiva}</p></div>
-    <div><h4>Como se comunicar</h4><p>${P.comunicar}</p></div>
-    <div><h4>Como dar feedback</h4><p>${P.feedback}</p></div>
-    <div><h4>Ambiente ideal</h4><p>${P.ambiente}</p></div>
-    <div><h4>Para desenvolver</h4><ul>${P.dev.map(x=>`<li>${x}</li>`).join('')}${dc.s?DISC[dc.s].dev.slice(0,1).map(x=>`<li>${x}</li>`).join(''):''}</ul></div>
+    <div><h4>Pontos fortes</h4><ul>${P.fortes.slice(0,3).map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div><h4>Pontos de atenção</h4><ul>${P.atencao.slice(0,3).map(x=>`<li>${x}</li>`).join('')}</ul></div>
+    <div><h4>O que motiva</h4><p>${P.motiva}</p></div>
+    <div><h4>Como conversar e dar retorno</h4><p>${P.comunicar}</p></div>
    </div>
-   <div class="quote" style="margin-top:16px"><h4>Contribuição para a Inovação</h4>${P.qi}</div>
-   <p class="cap">O DISC descreve estilo de comportamento observável, não capacidade técnica nem caráter. Nesta avaliação ele foi respondido pelo avaliador a partir da observação do dia a dia e deve ser usado como apoio ao diálogo e ao plano de desenvolvimento, de preferência comparado a uma autoavaliação do consultor.</p>`;
+   <div class="quote" style="margin-top:16px"><h4>Na Inovação</h4>${P.qi}</div>
+   <div class="quote"><h4>O que desenvolver</h4>${P.dev.join('. ')}.</div>
+   <p class="cap">O DISC mostra o jeito de trabalhar, não a competência técnica. Não existe perfil certo ou errado.</p>`;
  }
 
  const quotes=[['Realizações e pontos fortes',O.fortes],['Pontos de melhoria e evidências',O.melhorar],['Metas e compromissos para o próximo ciclo',O.metas],['Comentário do avaliado',O.avaliado]].filter(x=>x[1]&&x[1].trim()).map(([h,t])=>`<div class="quote"><h4>${h}</h4>${esc(t)}</div>`).join('')||'<p class="empty">Sem considerações registradas.</p>';
@@ -737,34 +738,142 @@ function report(){
   <div><span>Avaliador</span>${esc(I.avaliador||'—')}</div><div><span>Período</span>${esc(I.periodo||'—')}</div><div><span>Parecer final</span>${esc(O.parecer||'—')}</div></div>
  <div class="kpis">
   <div class="kpi"><span>Nota geral</span><b>${fmt(st.m)}<small> / 5</small></b><small>${st.items.length} de ${NITEMS} itens avaliados</small></div>
-  <div class="kpi"><span>Aproveitamento</span><b>${fmt(st.pct,0)}%</b><span class="pill ${cp}">${cl}</span></div>
-  <div class="kpi"><span>Desempenho × potencial</span><b>${fmt(st.des)} × ${fmt(st.pot)}</b><small>${nb?NINE[nb][0]:'—'}</small></div>
+  <div class="kpi"><span>Percentual</span><b>${fmt(st.pct,0)}%</b><span class="pill ${cp}">${cl}</span></div>
+  <div class="kpi"><span>Entrega × crescimento</span><b>${fmt(st.des)} × ${fmt(st.pot)}</b><small>${nb?NINE[nb][0]:'—'}</small></div>
   <div class="kpi"><span>Perfil DISC</span><b>${discCode}</b><small>${dc?DISC[dc.p].nome+(dc.s?' / '+DISC[dc.s].nome:''):'não respondido'}</small></div>
  </div>
- <section class="r-sec"><h2><i>01</i>Resumo executivo</h2><p>${resumo}</p></section>
- <section class="r-sec"><h2><i>02</i>Desempenho por competência</h2>
-  <div class="two"><div class="radar">${radar(st.dims)}</div><div><div class="box-h">Ranking das dimensões</div>${bars(st.dims)}</div></div>
-  <div class="tbl-wrap" style="margin-top:14px"><table class="t"><thead><tr><th>Dimensão</th><th style="text-align:right">Média</th><th style="text-align:right">Aproveit.</th><th>Classificação</th><th style="text-align:right">Itens</th></tr></thead><tbody>${dimRows}</tbody></table></div></section>
- <section class="r-sec"><h2><i>03</i>Forças e oportunidades</h2>
-  <div class="two"><div style="--c-dot:var(--good)"><div class="box-h">Principais forças</div>${fortes.length?`<ul class="list">${fortes.map(x=>li(x,1)).join('')}</ul>`:'<p class="empty">Nenhum item com nota 4 ou 5.</p>'}</div>
-  <div style="--c-dot:var(--warn)"><div class="box-h">Principais oportunidades de melhoria</div>${opp.length?`<ul class="list">${opp.map(x=>li(x,0)).join('')}</ul>`:'<p class="empty">Todos os itens estão no nível esperado ou acima.</p>'}</div></div>
-  ${crit.length?`<div class="alert"><b>Pontos de atenção (nota ≤ 2):</b> ${crit.map(x=>esc(x.t.replace(/\.$/,''))).join('; ')}.</div>`:''}</section>
- <section class="r-sec"><h2><i>04</i>Análise de oportunidade</h2>
+ <section class="r-sec"><h2><i>01</i>Resumo</h2><p>${resumo}</p></section>
+ <section class="r-sec"><h2><i>02</i>Notas por área</h2>
+  <div class="two"><div class="radar">${radar(st.dims)}</div><div><div class="box-h">Da maior para a menor nota</div>${bars(st.dims)}</div></div></section>
+ <section class="r-sec"><h2><i>03</i>O que vai bem e o que melhorar</h2>
+  <div class="two"><div style="--c-dot:var(--good)"><div class="box-h">Vai bem</div>${fortes.length?`<ul class="list">${fortes.map(x=>li(x,1)).join('')}</ul>`:'<p class="empty">Nenhum item com nota 4 ou 5.</p>'}</div>
+  <div style="--c-dot:var(--warn)"><div class="box-h">Precisa melhorar</div>${opp.length?`<ul class="list">${opp.map(x=>li(x,0)).join('')}</ul>`:'<p class="empty">Todos os itens estão no nível esperado ou acima.</p>'}</div></div>
+  ${crit.length?`<div class="alert"><b>Atenção (nota 2 ou menos):</b> ${crit.map(x=>esc(x.t.replace(/\.$/,''))).join('; ')}.</div>`:''}</section>
+ <section class="r-sec"><h2><i>04</i>Entrega × crescimento</h2>
   <div class="two"><div>${nineHtml}</div><div>
-   <p><b>Desempenho ${fmt(st.des)}</b> — média de Qualidade, Foco no Cliente, Resultados e Conduta. <b>Potencial ${fmt(st.pot)}</b> — média de Inovação, Comunicação e Liderança.</p>
+   <p><b>Entrega ${fmt(st.des)}:</b> média de Qualidade, Cliente, Resultados e Conduta.<br><b>Crescimento ${fmt(st.pot)}:</b> média de Inovação, Comunicação e Liderança.</p>
    ${nb?`<p><b>${NINE[nb][0]}:</b> ${NINE[nb][1]}</p>`:''}
-   ${worst?`<p>Elevar <b>${worst.d.nome}</b> de ${fmt(worst.m)} para 4,0 aumentaria a nota geral para cerca de <b>${fmt(mean(st.dims.filter(s=>s.m!=null).map(s=>s===worst?Math.max(4,s.m):s.m)))}</b> (média das dimensões).</p>`:''}
+   ${worst?`<p>Se a nota de <b>${worst.d.nome}</b> subir para 4,0, a média geral sobe para cerca de <b>${fmt(mean(st.dims.filter(s=>s.m!=null).map(s=>s===worst?Math.max(4,s.m):s.m)))}</b>.</p>`:''}
   </div></div></section>
- <section class="r-sec"><h2><i>05</i>Plano de desenvolvimento individual (PDI)</h2>
-  ${pdi?`<div class="tbl-wrap"><table class="t"><thead><tr><th>Competência</th><th style="text-align:right">Nota → meta</th><th>Prioridade</th><th>Ação recomendada</th><th style="text-align:right">Prazo</th></tr></thead><tbody>${pdi}</tbody></table></div>
-  <p class="cap">Sugestão de equilíbrio 70-20-10: 70% de aprendizado na prática (projetos e desafios), 20% com outras pessoas (mentoria e feedback) e 10% em cursos formais.</p>`:'<p class="empty">Sem lacunas abaixo da meta.</p>'}</section>
- <section class="r-sec pb"><h2><i>06</i>Perfil comportamental DISC</h2>${discHtml}</section>
- <section class="r-sec"><h2><i>07</i>Considerações do avaliador</h2>${quotes}</section>
- <section class="r-sec"><h2><i>08</i>Detalhamento das respostas</h2><div class="tbl-wrap"><table class="t"><thead><tr><th>Comportamento avaliado</th><th style="text-align:right">Nota</th></tr></thead><tbody>${detalhe}</tbody></table></div></section>
+ <section class="r-sec"><h2><i>05</i>Plano de ação</h2>
+  ${pdi?`<div class="tbl-wrap"><table class="t"><thead><tr><th>O que melhorar</th><th style="text-align:right">Nota → meta</th><th>Prioridade</th><th>O que fazer</th><th style="text-align:right">Prazo</th></tr></thead><tbody>${pdi}</tbody></table></div>`:'<p class="empty">Nenhum ponto abaixo da meta.</p>'}</section>
+ <section class="r-sec pb"><h2><i>06</i>Perfil DISC (jeito de trabalhar)</h2>${discHtml}</section>
+ <section class="r-sec"><h2><i>07</i>Comentários</h2>${quotes}</section>
  <div class="sign"><div>${esc(I.avaliador||'Avaliador')}<br>Avaliador</div><div>${esc((I.nome||'Avaliado').replace(/ \(exemplo\)$/,''))}<br>Avaliado</div><div>Recursos Humanos</div></div>
  <div class="foot"><span>Escala: 1 Insatisfatório · 2 Abaixo · 3 Atende · 4 Supera · 5 Excepcional</span><span>Documento confidencial</span></div>`;
  $('#x_out').value=JSON.stringify(state);
 }
+
+/* ---------- PDF padronizado ---------- */
+const PC={navy:[0,49,88],gold:[242,183,5],blue:[11,95,165],ink:[19,34,53],muted:[86,101,120],line:[213,221,231],soft:[244,247,251],good:[44,122,75],warn:[168,112,26],bad:[176,55,47],gray:[100,116,139],white:[255,255,255],
+ D:[192,57,43],I:[201,151,26],S:[46,139,87],C:[44,108,176],goodS:[227,242,233],warnS:[248,238,220],badS:[248,228,226],blueS:[225,236,247]};
+const lvlC=m=>m==null?PC.line:m>=4.5?PC.good:m>=3.75?PC.blue:m>=2.75?PC.gray:m>=1.75?PC.warn:PC.bad;
+function pdfDownload(){
+ if(!window.jspdf){alertMsg('O gerador de PDF não carregou. Verifique a conexão com a internet e tente de novo.');return}
+ const st=calc(),dc=discCalc(),I=state.info,O=state.obs;
+ if(!st.items.length){alertMsg('Responda as competências antes de baixar o PDF.');return}
+ report();
+ const resumo=($('#report .r-sec p')||{}).textContent||'';
+ const doc=new window.jspdf.jsPDF({unit:'mm',format:'a4'});doc.setLineHeightFactor(1.35);
+ const W=210,M=14,CW=W-2*M,BOT=280;let y=0;
+ const F=c=>doc.setFillColor(...c),D=c=>doc.setDrawColor(...c),T=c=>doc.setTextColor(...c),Fo=(s,z)=>{doc.setFont('helvetica',s);doc.setFontSize(z)};
+ const lh=z=>z*0.3528*1.35;
+ const logo=document.getElementById('logo').src,nome=I.nome||'Consultor não identificado';
+ const hoje=new Date().toLocaleDateString('pt-BR'),dataAv=I.data?new Date(I.data+'T12:00:00').toLocaleDateString('pt-BR'):'—';
+ const head=first=>{
+  F(PC.navy);doc.rect(0,0,W,first?36:17,'F');F(PC.gold);doc.rect(0,first?36:17,W,1.2,'F');
+  if(first){doc.addImage(logo,'PNG',M,4.5,39,26.8);T(PC.white);Fo('bold',17);doc.text('Relatório de Avaliação de Desempenho',M+46,15);
+   Fo('normal',10.5);T(PC.gold);doc.text('Inovação Casa  ·  Área de Inovação',M+46,22.5);Fo('normal',8.5);T([190,210,230]);doc.text(`${I.tipo||''}  ·  Avaliado em ${dataAv}  ·  Emitido em ${hoje}`,M+46,29);y=46}
+  else{doc.addImage(logo,'PNG',M,2,21,14.4);T(PC.white);Fo('bold',10);doc.text('Relatório de Avaliação de Desempenho',M+26,8);Fo('normal',8.5);T([190,210,230]);doc.text(nome,M+26,13);y=27}
+ };
+ const need=h=>{if(y+h>BOT){doc.addPage();head(false)}};
+ const sec=(t,h=0)=>{y+=3;need(16+h);Fo('bold',12.5);T(PC.navy);doc.text(t,M,y);F(PC.gold);doc.rect(M,y+2,16,1,'F');D(PC.line);doc.setLineWidth(.25);doc.line(M+17,y+2.5,W-M,y+2.5);y+=9};
+ const para=(t,z=10,c=PC.ink,w=CW,x=M)=>{Fo('normal',z);T(c);const ls=doc.splitTextToSize(t,w);need(ls.length*lh(z));doc.text(ls,x,y+z*0.3);y+=ls.length*lh(z)+2};
+ const badge=(x,yy,v)=>{const c=v>=5?PC.good:v>=4?PC.blue:v>=3?PC.gray:v>=2?PC.warn:PC.bad;F(c);doc.roundedRect(x,yy,7,5.2,1,1,'F');T(PC.white);Fo('bold',9);doc.text(String(v),x+3.5,yy+3.8,{align:'center'})};
+
+ head(true);
+ Fo('bold',21);T(PC.ink);doc.text(doc.splitTextToSize(nome,CW)[0],M,y+3);y+=10;
+ const info=[['Cargo',I.cargo],['Área',I.area],['Tempo na função',I.tempo],['Avaliador',I.avaliador],['Período',I.periodo],['Parecer final',O.parecer]];
+ const cw=CW/3;info.forEach(([k,v],i)=>{const x=M+(i%3)*cw,yy=y+Math.floor(i/3)*13;F(PC.gold);doc.rect(x,yy,0.8,10,'F');Fo('bold',7);T(PC.muted);doc.text(k.toUpperCase(),x+3,yy+3);Fo('normal',9.5);T(PC.ink);doc.text(doc.splitTextToSize(v||'—',cw-6).slice(0,2),x+3,yy+7.5)});
+ y+=29;
+ const[cl]=cls(st.m),nb=st.des!=null&&st.pot!=null?lvl(st.pot)+'-'+lvl(st.des):null;
+ const kp=[['NOTA GERAL',fmt(st.m),'de 5  ·  '+st.items.length+' itens',lvlC(st.m)],['PERCENTUAL',fmt(st.pct,0)+'%',cl,lvlC(st.m)],['ENTREGA × CRESCIMENTO',fmt(st.des)+' × '+fmt(st.pot),nb?NINE[nb][0]:'—',PC.navy],['PERFIL DISC',dc?dc.p+(dc.s||''):'—',dc?DISC[dc.p].nome+(dc.s?' / '+DISC[dc.s].nome:''):'não respondido',dc?PC[dc.p]:PC.gray]];
+ const kw=(CW-9)/4;kp.forEach(([l,v,s,c],i)=>{const x=M+i*(kw+3);F(PC.soft);D(PC.line);doc.setLineWidth(.2);doc.roundedRect(x,y,kw,26,1.5,1.5,'FD');F(c);doc.rect(x,y,kw,1.6,'F');
+  Fo('bold',6.8);T(PC.muted);doc.text(l,x+3.5,y+7);Fo('bold',19);T(PC.ink);doc.text(v,x+3.5,y+16.5);Fo('normal',7.8);T(c===PC.navy?PC.muted:c);doc.text(doc.splitTextToSize(s,kw-6)[0],x+3.5,y+22.5)});
+ y+=34;
+
+ sec('Resumo');para(resumo,10);y+=2;
+
+ sec('Notas por área');
+ const rk=[...st.dims].sort((a,b)=>(b.m||0)-(a.m||0)),lx=M+54,tw=CW-54-14;
+ rk.forEach(s=>{need(8);Fo('normal',9.5);T(PC.ink);doc.text(s.d.nome,M,y+3.6);F(PC.soft);D(PC.line);doc.roundedRect(lx,y,tw,4.6,1,1,'FD');
+  if(s.m){F(lvlC(s.m));doc.roundedRect(lx,y,tw*s.m/5,4.6,1,1,'F')}D(PC.ink);doc.setLineDashPattern([0.8,0.8],0);doc.setLineWidth(.3);doc.line(lx+tw*.8,y-1,lx+tw*.8,y+5.6);doc.setLineDashPattern([],0);
+  Fo('bold',9.5);T(PC.ink);doc.text(fmt(s.m),W-M,y+3.6,{align:'right'});y+=7.5});
+ Fo('normal',7.5);T(PC.muted);doc.text('Notas de 1 a 5. A linha tracejada é a meta (4,0).',M,y+1.5);y+=8;
+
+ const fortes=[...st.items].filter(x=>x.v>=4).sort((a,b)=>b.v-a.v).slice(0,4);
+ const opp=[...st.items].filter(x=>x.v<4).sort((a,b)=>a.v-b.v||((st.dims.find(s=>s.d===a.dim).m||0)-(st.dims.find(s=>s.d===b.dim).m||0))).slice(0,4);
+ const crit=st.items.filter(x=>x.v<=2);
+ const colW=(CW-8)/2,itemH=x=>{Fo('normal',9);return doc.splitTextToSize(x.t,colW-10).length*lh(9)+5};
+ const hL=fortes.reduce((a,x)=>a+itemH(x)+2,9),hR=opp.reduce((a,x)=>a+itemH(x)+2,9);
+ sec('O que vai bem e o que melhorar',Math.max(hL,hR));
+ const col=(list,x,title,c,empty)=>{let yy=y;F(c);doc.rect(x,yy-3,2.6,2.6,'F');Fo('bold',10);T(PC.ink);doc.text(title,x+4.5,yy-0.6);yy+=5;
+  if(!list.length){Fo('italic',9);T(PC.muted);doc.text(empty,x,yy+2);return yy+6}
+  list.forEach(it=>{badge(x,yy,it.v);Fo('normal',9);T(PC.ink);const ls=doc.splitTextToSize(it.t,colW-10);doc.text(ls,x+10,yy+3.6);const hh=ls.length*lh(9);Fo('normal',7.5);T(PC.muted);doc.text(it.dim.nome,x+10,yy+hh+2.8);yy+=hh+7});return yy};
+ const yE=Math.max(col(fortes,M,'Vai bem',PC.good,'Nenhum item com nota 4 ou 5.'),col(opp,M+colW+8,'Precisa melhorar',PC.warn,'Tudo no nível esperado ou acima.'));y=yE+2;
+ if(crit.length){Fo('normal',9);const t='Atenção (nota 2 ou menos): '+crit.map(x=>x.t.replace(/\.$/,'')).join('; ')+'.';const ls=doc.splitTextToSize(t,CW-8);const h=ls.length*lh(9)+5;need(h);F(PC.badS);D(PC.bad);doc.roundedRect(M,y,CW,h,1.5,1.5,'FD');T(PC.bad);doc.text(ls,M+4,y+5);y+=h+5}
+
+ sec('Entrega × crescimento',50);
+ const gx=M+7,gw=22,gh=13,y0=y;
+ Fo('bold',6.5);T(PC.muted);doc.text('CRESCIMENTO',M+2.5,y0+3*gh+1,{angle:90});doc.text('ENTREGA',gx+1.5*gw+2,y0+3*(gh+1.5)+4,{align:'center'});
+ ['a','m','b'].forEach((r,ri)=>['b','m','a'].forEach((c,ci)=>{const k=r+'-'+c,x=gx+ci*(gw+1.5),yy=y0+ri*(gh+1.5),on=k===nb;F(on?PC.navy:PC.soft);D(on?PC.navy:PC.line);doc.roundedRect(x,yy,gw,gh,1.2,1.2,'FD');
+  Fo('bold',6.8);T(on?PC.white:PC.muted);doc.text(doc.splitTextToSize(NINE[k][0],gw-3),x+gw/2,yy+gh/2-(NINE[k][0].length>13?1:-1),{align:'center'})}));
+ const tx=gx+3*(gw+1.5)+6,tW=W-M-tx;y=y0+1;
+ para(`Entrega ${fmt(st.des)}: média de Qualidade, Cliente, Resultados e Conduta. Crescimento ${fmt(st.pot)}: média de Inovação, Comunicação e Liderança.`,9,PC.muted,tW,tx);
+ if(nb){Fo('bold',10.5);T(PC.navy);doc.text(NINE[nb][0],tx,y+3);y+=5.5;para(NINE[nb][1],9.5,PC.ink,tW,tx)}
+ y=Math.max(y,y0+3*(gh+1.5)+8);
+
+ const pdi=opp.slice(0,4);sec('Plano de ação');
+ if(!pdi.length)para('Nenhum ponto abaixo da meta.',9.5,PC.muted);else{
+  const cols=[['O que melhorar',56],['Nota',17],['Prioridade',20],['O que fazer',CW-56-17-20-17],['Prazo',17]];
+  need(9);F(PC.navy);doc.rect(M,y,CW,7,'F');let x=M;Fo('bold',8);T(PC.white);cols.forEach(([h,w])=>{doc.text(h,x+2,y+4.7);x+=w});y+=7;
+  pdi.forEach((it,i)=>{const pr=it.v<=2?['Alta',PC.bad,'30 dias']:it.v===3?['Média',PC.warn,'60 dias']:['Baixa',PC.gray,'90 dias'];Fo('normal',8.5);
+   const a=doc.splitTextToSize(it.t,cols[0][1]-4),b=doc.splitTextToSize(it.a,cols[3][1]-4),h=Math.max(a.length,b.length)*lh(8.5)+4;need(h);
+   F(i%2?PC.white:PC.soft);doc.rect(M,y,CW,h,'F');D(PC.line);doc.line(M,y+h,W-M,y+h);let x=M;T(PC.ink);doc.text(a,x+2,y+4.3);x+=cols[0][1];
+   Fo('bold',8.5);doc.text(it.v+'  >  4',x+2,y+4.3);x+=cols[1][1];F(pr[1]);doc.roundedRect(x+2,y+1.6,14,4.4,2,2,'F');T(PC.white);Fo('bold',7.5);doc.text(pr[0],x+9,y+4.6,{align:'center'});x+=cols[2][1];
+   Fo('normal',8.5);T(PC.ink);doc.text(b,x+2,y+4.3);x+=cols[3][1];doc.text(pr[2],x+2,y+4.3);y+=h});y+=4}
+
+ if(dc){doc.addPage();head(false);sec('Perfil DISC (jeito de trabalhar)');
+  const P=DISC[dc.p],cb=dc.s?COMBO[dc.p+dc.s]:null;
+  Fo('normal',9.5);const rl=doc.splitTextToSize(P.resumo+(cb?' '+cb[1]:''),CW-46);const hh=Math.max(30,rl.length*lh(9.5)+15);
+  F(PC.soft);D(PC.line);doc.roundedRect(M,y,CW,hh,2,2,'FD');Fo('bold',38);let lx2=M+5;[dc.p,dc.s].filter(Boolean).forEach(f=>{T(PC[f]);doc.text(f,lx2,y+18);lx2+=doc.getTextWidth(f)+1});
+  Fo('bold',12.5);T(PC.ink);doc.text(`${P.nome}  ·  perfil ${P.arq}${cb?'  ·  '+cb[0]:''}`,M+42,y+8);Fo('normal',9.5);T(PC.ink);doc.text(rl,M+42,y+14);y+=hh+7;
+  Fo('bold',10);T(PC.ink);doc.text('Intensidade de cada fator',M,y);y+=5;
+  ['D','I','S','C'].forEach(f=>{F(PC[f]);doc.roundedRect(M,y,6,6,1,1,'F');T(PC.white);Fo('bold',9);doc.text(f,M+3,y+4.3,{align:'center'});Fo('normal',9.5);T(PC.ink);doc.text(DISC[f].nome,M+9,y+4.3);
+   const bx=M+42,bw=CW-42-14;F(PC.soft);D(PC.line);doc.roundedRect(bx,y+1,bw,4.4,1,1,'FD');F(PC[f]);doc.roundedRect(bx,y+1,bw*dc.sc[f]/100,4.4,1,1,'F');
+   D(PC.ink);doc.setLineDashPattern([0.8,0.8],0);doc.line(bx+bw/2,y,bx+bw/2,y+6.4);doc.setLineDashPattern([],0);Fo('bold',9.5);doc.text(String(dc.sc[f]),W-M,y+4.4,{align:'right'});y+=8.5});
+  Fo('normal',7.5);T(PC.muted);doc.text('De 0 a 100. Acima de 50, o traço aparece com força no dia a dia.',M,y+1);y+=8;
+  const blocks=[['Pontos fortes',P.fortes.slice(0,3),PC.good],['Pontos de atenção',P.atencao.slice(0,3),PC.warn],['O que motiva',P.motiva,PC.blue],['Como conversar e dar retorno',P.comunicar,PC.blue]];
+  const bw2=(CW-6)/2;for(let r=0;r<2;r++){const pair=blocks.slice(r*2,r*2+2);const lines=pair.map(([t,c])=>{Fo('normal',9);return Array.isArray(c)?c.flatMap(x=>doc.splitTextToSize('•  '+x,bw2-8)):doc.splitTextToSize(c,bw2-8)});
+   const h=Math.max(...lines.map(l=>l.length))*lh(9)+12;need(h);pair.forEach(([t,,c],i)=>{const x=M+i*(bw2+6);D(PC.line);F(PC.white);doc.roundedRect(x,y,bw2,h,1.5,1.5,'FD');F(c);doc.rect(x,y,bw2,1.4,'F');
+    Fo('bold',8);T(c);doc.text(t.toUpperCase(),x+4,y+6.5);Fo('normal',9);T(PC.ink);doc.text(lines[i],x+4,y+11.5)});y+=h+5}
+  [['Na Inovação',P.qi,PC.navy],['O que desenvolver',P.dev.join('. ')+'.',PC.gold]].forEach(([t,c,cc])=>{Fo('normal',9.5);const ls=doc.splitTextToSize(c,CW-10);const h=ls.length*lh(9.5)+11;need(h);
+   F(PC.soft);doc.rect(M,y,CW,h,'F');F(cc);doc.rect(M,y,1.6,h,'F');Fo('bold',8);T(PC.navy);doc.text(t.toUpperCase(),M+5,y+5.8);Fo('normal',9.5);T(PC.ink);doc.text(ls,M+5,y+10.6);y+=h+4});
+  Fo('italic',8);T(PC.muted);need(6);doc.text('O DISC mostra o jeito de trabalhar, não a competência técnica. Não existe perfil certo ou errado.',M,y+2);y+=8}
+
+ const qs=[['Realizações e pontos fortes',O.fortes],['Pontos de melhoria',O.melhorar],['Metas para o próximo ciclo',O.metas],['Comentário do avaliado',O.avaliado]].filter(x=>x[1]&&x[1].trim());
+ sec('Comentários');
+ if(!qs.length)para('Sem comentários registrados.',9.5,PC.muted);
+ qs.forEach(([t,c])=>{Fo('normal',9.5);const ls=doc.splitTextToSize(c,CW-10);const h=ls.length*lh(9.5)+11;need(h);F(PC.soft);doc.rect(M,y,CW,h,'F');F(PC.blue);doc.rect(M,y,1.6,h,'F');
+  Fo('bold',8);T(PC.muted);doc.text(t.toUpperCase(),M+5,y+5.8);Fo('normal',9.5);T(PC.ink);doc.text(ls,M+5,y+10.6);y+=h+4});
+ need(12);Fo('bold',10);T(PC.ink);doc.text('Parecer final: ',M,y+4);const pw=doc.getTextWidth('Parecer final: ');Fo('normal',10);doc.text(O.parecer||'—',M+pw,y+4);y+=10;
+ need(30);y+=16;const sw=(CW-16)/3;[[I.avaliador||'Avaliador','Avaliador'],[(I.nome||'Avaliado').replace(/ \(exemplo\)$/,''),'Avaliado'],['','Recursos Humanos']].forEach(([n,r],i)=>{const x=M+i*(sw+8);D(PC.ink);doc.setLineWidth(.3);doc.line(x,y,x+sw,y);Fo('bold',8.5);T(PC.ink);if(n)doc.text(n,x+sw/2,y+4.5,{align:'center'});Fo('normal',7.5);T(PC.muted);doc.text(r,x+sw/2,y+(n?8.5:4.5),{align:'center'})});
+
+ const n=doc.getNumberOfPages();for(let p=1;p<=n;p++){doc.setPage(p);D(PC.line);doc.setLineWidth(.3);doc.line(M,287,W-M,287);Fo('normal',7.5);T(PC.muted);doc.text('Inovação Casa  ·  Avaliação de Desempenho  ·  Documento confidencial',M,291.5);doc.text(`Página ${p} de ${n}`,W-M,291.5,{align:'right'})}
+ const slug=nome.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^\w]+/g,'_').replace(/^_|_$/g,'');
+ doc.save(`Avaliacao_${slug||'Consultor'}.pdf`);
+}
+function alertMsg(t){const el=$('#pdfMsg');el.textContent=t;el.hidden=false;setTimeout(()=>el.hidden=true,6000)}
 
 /* ---------- navegação e ações ---------- */
 const ORDER=['dados','comp','disc','obs','painel'];
@@ -794,7 +903,8 @@ document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>go(b
 document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 
 const framed=(()=>{try{return window.self!==window.top}catch(e){return true}})();
-if(framed){$('#b_print').hidden=true;$('#printNote').hidden=false}
+if(framed){$('#b_print').hidden=true;$('#b_pdf').hidden=true;$('#printNote').hidden=false}
+$('#b_pdf').addEventListener('click',pdfDownload);
 $('#b_print').addEventListener('click',()=>{report();window.print()});
 window.addEventListener('beforeprint',report);
 
