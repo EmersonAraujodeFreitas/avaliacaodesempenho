@@ -11,7 +11,7 @@
 <style>
 /* Layout: formulário em abas à esquerda do fluxo; relatório como folha A4 na tela, pronto para impressão */
 :root{
-  --bg:#FFFFFF; --surface:#FFFFFF; --ink:#132235; --muted:#566578; --line:#D5DDE7; --soft:#F4F7FB;
+  --bg:#E9EEF4; --surface:#FFFFFF; --ink:#0F1E30; --muted:#465568; --line:#D5DDE7; --soft:#F4F7FB;
   --accent:#0B5FA5; --accent-soft:#E1ECF7; --accent-ink:#FFFFFF; --amber:#A8701A;
   --good:#2C7A4B; --good-soft:#E3F2E9; --warn:#A8701A; --warn-soft:#F8EEDC; --bad:#B0372F; --bad-soft:#F8E4E2;
   --d:#C0392B; --i:#C9971A; --s:#2E8B57; --c:#2C6CB0;
@@ -23,7 +23,7 @@
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.5}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.55}
 .wrap{max-width:1040px;margin:0 auto;padding-inline:16px;padding-block:0 48px}
 h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.15}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -154,37 +154,40 @@ details.xfer textarea{width:100%;min-height:90px;font-family:var(--f-mono);font-
 .msg{font-size:13px;color:var(--good)}
 
 /* Relatório (folha) */
-.sheet{background:var(--surface);border:1px solid var(--line);border-radius:4px;max-width:900px;margin:0 auto;padding:clamp(18px,4vw,44px);box-shadow:0 1px 2px rgba(0,0,0,.06),0 8px 24px rgba(20,32,43,.06)}
+.sheet{background:var(--surface);border:1px solid var(--line);border-radius:8px;max-width:960px;margin:0 auto;padding:clamp(18px,4vw,44px);box-shadow:0 1px 2px rgba(0,0,0,.06),0 8px 24px rgba(20,32,43,.06)}
 .r-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;border-bottom:3px solid var(--ink);padding-bottom:14px;margin-bottom:18px}
 .r-head h1{font-size:clamp(24px,4vw,32px);font-weight:800}
 .r-head .doc{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);text-align:right;line-height:1.6}
-.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px 20px;font-size:13.5px;margin-bottom:22px}
+.meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 20px;font-size:15px;margin-bottom:22px}
 .meta div{border-left:2px solid var(--line);padding-left:10px;min-width:0}
 .meta span{display:block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:22px}
 .kpi{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:12px}
-.kpi span{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.kpi b{display:block;font-family:var(--f-display);font-size:28px;line-height:1.1;margin-top:4px;font-variant-numeric:tabular-nums}
+.kpi span{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.kpi b{display:block;font-family:var(--f-display);font-size:32px;line-height:1.1;margin-top:4px;font-variant-numeric:tabular-nums}
 .kpi small{color:var(--muted);font-size:12.5px}
 .kpi .pill{white-space:normal}
 .r-sec{margin-top:28px}
-.r-sec>h2{font-size:19px;padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:12px;display:flex;gap:10px;align-items:baseline}
+.r-sec>h2{font-size:21px;padding-bottom:6px;border-bottom:1px solid var(--line);margin-bottom:12px;display:flex;gap:10px;align-items:baseline}
 .r-sec>h2 i{font-style:normal;font-family:var(--f-mono);font-size:12px;color:var(--accent);font-weight:500}
-.r-sec p{margin:0 0 10px;max-width:75ch}
+.r-sec p{margin:0 0 10px;max-width:75ch;font-size:16px}
+.r-resumo{background:var(--accent-soft);border-left:5px solid var(--gold);border-radius:10px;padding:18px 22px}
+.r-resumo>h2{border-bottom-color:rgba(0,49,88,.18)}
+.r-resumo p{font-size:17.5px;line-height:1.65;max-width:none;margin:0}
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px;align-items:start}
 .two>*{min-width:0}
 .radar svg{width:100%;height:auto;display:block}
-.radar text{font-family:var(--f-body);font-size:12px;fill:var(--ink)}
+.radar text{font-family:var(--f-body);font-size:13.5px;fill:var(--ink)}
 .radar .tick{font-family:var(--f-mono);font-size:9.5px;fill:var(--muted)}
 .bars{display:flex;flex-direction:column;gap:9px}
-.bar-row{display:grid;grid-template-columns:minmax(90px,150px) 1fr 38px;gap:10px;align-items:center;font-size:13.5px}
+.bar-row{display:grid;grid-template-columns:minmax(90px,150px) 1fr 38px;gap:10px;align-items:center;font-size:15px}
 .bar-track{position:relative;height:14px;background:var(--soft);border:1px solid var(--line);border-radius:3px}
 .bar-fill{position:absolute;inset:0 auto 0 0;border-radius:2px}
 .bar-meta{position:absolute;top:-4px;bottom:-4px;width:0;border-left:2px dashed var(--ink);opacity:.55}
 .bar-row b{font-family:var(--f-mono);font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
-.cap{font-size:12px;color:var(--muted);margin-top:8px}
+.cap{font-size:13.5px;color:var(--muted);margin-top:8px}
 .tbl-wrap{overflow-x:auto}
-table.t{width:100%;border-collapse:collapse;font-size:13.5px}
+table.t{width:100%;border-collapse:collapse;font-size:15px}
 table.t th{text-align:left;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600;padding:6px 8px;border-bottom:2px solid var(--line)}
 table.t td{padding:7px 8px;border-bottom:1px solid var(--line);vertical-align:top}
 table.t td.num{font-family:var(--f-mono);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
@@ -196,7 +199,7 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
 .p2{background:var(--warn-soft);color:var(--warn)}
 .p1{background:var(--bad-soft);color:var(--bad)}
 .list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
-.list li{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:start;font-size:14px}
+.list li{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:start;font-size:15.5px}
 .list li .sc{font-family:var(--f-mono);font-weight:500;text-align:center;border-radius:6px;padding:3px 0}
 .list li small{display:block;color:var(--muted);font-size:12px}
 .box-h{font-family:var(--f-display);font-size:15px;margin-bottom:8px;display:flex;align-items:center;gap:8px}
@@ -230,9 +233,9 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
 .grid-desc{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px 22px;margin-top:14px}
 .grid-desc>div{min-width:0}
 .grid-desc h4{margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
-.grid-desc p,.grid-desc ul{margin:0;font-size:14px}
+.grid-desc p,.grid-desc ul{margin:0;font-size:15px}
 .grid-desc ul{padding-left:18px}
-.quote{border-left:3px solid var(--accent);background:var(--soft);padding:10px 14px;border-radius:0 8px 8px 0;font-size:14px;white-space:pre-wrap;margin-bottom:10px}
+.quote{border-left:3px solid var(--accent);background:var(--soft);padding:10px 14px;border-radius:0 8px 8px 0;font-size:15px;white-space:pre-wrap;margin-bottom:10px}
 .quote h4{margin:0 0 4px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:normal}
 .sign{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:28px;margin-top:56px}
 .sign div{border-top:1px solid var(--ink);padding-top:6px;font-size:12.5px;text-align:center;color:var(--muted)}
@@ -783,7 +786,7 @@ function report(){
   <div class="kpi"><span>Entrega × crescimento</span><b>${fmt(st.des)} × ${fmt(st.pot)}</b><small>${nb?NINE[nb][0]:'—'}</small></div>
   <div class="kpi"><span>Perfil DISC</span><b>${discCode}</b><small>${dc?DISC[dc.p].nome+(dc.s?' / '+DISC[dc.s].nome:''):'não respondido'}</small></div>
  </div>
- <section class="r-sec"><h2><i>01</i>Resumo</h2><p>${resumo}</p></section>
+ <section class="r-sec r-resumo"><h2><i>01</i>Resumo</h2><p>${resumo}</p></section>
  <section class="r-sec"><h2><i>02</i>Notas por área</h2>
   <div class="two"><div class="radar">${radar(st.dims)}</div><div><div class="box-h">Da maior para a menor nota</div>${bars(st.dims)}</div></div></section>
  <section class="r-sec"><h2><i>03</i>Evolução desde a última avaliação</h2>
@@ -803,10 +806,8 @@ function report(){
    ${nb?`<p><b>${NINE[nb][0]}:</b> ${NINE[nb][1]}</p>`:''}
    ${worst?`<p>Se a nota de <b>${worst.d.nome}</b> subir para 4,0, a média geral sobe para cerca de <b>${fmt(mean(st.dims.filter(s=>s.m!=null).map(s=>s===worst?Math.max(4,s.m):s.m)))}</b>.</p>`:''}
   </div></div></section>
- <section class="r-sec"><h2><i>06</i>Plano de ação</h2>
-  ${pdi?`<div class="tbl-wrap"><table class="t"><thead><tr><th>O que melhorar</th><th style="text-align:right">Nota → meta</th><th>Prioridade</th><th>O que fazer</th><th style="text-align:right">Prazo</th></tr></thead><tbody>${pdi}</tbody></table></div>`:'<p class="empty">Nenhum ponto abaixo da meta.</p>'}</section>
- <section class="r-sec pb"><h2><i>07</i>Perfil DISC (jeito de trabalhar)</h2>${discHtml}</section>
- <section class="r-sec"><h2><i>08</i>Comentários</h2>${quotes}</section>
+ <section class="r-sec pb"><h2><i>06</i>Perfil DISC (jeito de trabalhar)</h2>${discHtml}</section>
+ <section class="r-sec"><h2><i>07</i>Comentários</h2>${quotes}</section>
  <div class="sign"><div>${esc(I.avaliador||'Avaliador')}<br>Avaliador${I.cargoAv?' · '+esc(I.cargoAv):''}</div><div>${esc((I.nome||'Avaliado').replace(/ \(exemplo\)$/,''))}<br>Avaliado</div><div>Recursos Humanos</div></div>
  <div class="foot"><span>Escala: 1 Insatisfatório · 2 Abaixo · 3 Atende · 4 Supera · 5 Excepcional</span><span>Documento confidencial</span></div>`;
  $('#x_out').value=JSON.stringify(state);
@@ -850,7 +851,7 @@ function pdfDownload(){
   Fo('bold',6.8);T(PC.muted);doc.text(l,x+3.5,y+7);Fo('bold',19);T(PC.ink);doc.text(v,x+3.5,y+16.5);Fo('normal',7.8);T(c===PC.navy?PC.muted:c);doc.text(doc.splitTextToSize(s,kw-6)[0],x+3.5,y+22.5)});
  y+=34;
 
- sec('Resumo');para(resumo,10);y+=2;
+ sec('Resumo');{Fo('normal',10.5);const ls=doc.splitTextToSize(resumo,CW-12),h=ls.length*lh(10.5)+9;need(h);F(PC.blueS);doc.roundedRect(M,y,CW,h,2,2,'F');F(PC.gold);doc.rect(M,y,1.8,h,'F');T(PC.ink);doc.text(ls,M+7,y+6.5);y+=h+3}
 
  sec('Notas por área');
  const rk=[...st.dims].sort((a,b)=>(b.m||0)-(a.m||0)),lx=M+54,tw=CW-54-14;
@@ -890,16 +891,6 @@ function pdfDownload(){
  para(`Entrega ${fmt(st.des)}: média de Qualidade, Cliente, Resultados e Conduta. Crescimento ${fmt(st.pot)}: média de Inovação, Comunicação e Liderança.`,9,PC.muted,tW,tx);
  if(nb){Fo('bold',10.5);T(PC.navy);doc.text(NINE[nb][0],tx,y+3);y+=5.5;para(NINE[nb][1],9.5,PC.ink,tW,tx)}
  y=Math.max(y,y0+3*(gh+1.5)+8);
-
- const pdi=opp.slice(0,4);sec('Plano de ação');
- if(!pdi.length)para('Nenhum ponto abaixo da meta.',9.5,PC.muted);else{
-  const cols=[['O que melhorar',56],['Nota',17],['Prioridade',20],['O que fazer',CW-56-17-20-17],['Prazo',17]];
-  need(9);F(PC.navy);doc.rect(M,y,CW,7,'F');let x=M;Fo('bold',8);T(PC.white);cols.forEach(([h,w])=>{doc.text(h,x+2,y+4.7);x+=w});y+=7;
-  pdi.forEach((it,i)=>{const pr=it.v<=2?['Alta',PC.bad,'30 dias']:it.v===3?['Média',PC.warn,'60 dias']:['Baixa',PC.gray,'90 dias'];Fo('normal',8.5);
-   const a=doc.splitTextToSize(it.t,cols[0][1]-4),b=doc.splitTextToSize(it.a,cols[3][1]-4),h=Math.max(a.length,b.length)*lh(8.5)+4;need(h);
-   F(i%2?PC.white:PC.soft);doc.rect(M,y,CW,h,'F');D(PC.line);doc.line(M,y+h,W-M,y+h);let x=M;T(PC.ink);doc.text(a,x+2,y+4.3);x+=cols[0][1];
-   Fo('bold',8.5);doc.text(it.v+'  >  4',x+2,y+4.3);x+=cols[1][1];F(pr[1]);doc.roundedRect(x+2,y+1.6,14,4.4,2,2,'F');T(PC.white);Fo('bold',7.5);doc.text(pr[0],x+9,y+4.6,{align:'center'});x+=cols[2][1];
-   Fo('normal',8.5);T(PC.ink);doc.text(b,x+2,y+4.3);x+=cols[3][1];doc.text(pr[2],x+2,y+4.3);y+=h});y+=4}
 
  if(dc){doc.addPage();head(false);sec('Perfil DISC (jeito de trabalhar)');
   const P=DISC[dc.p],cb=dc.s?COMBO[dc.p+dc.s]:null;
