@@ -557,6 +557,9 @@ kbd{font:600 11.5px var(--f-mono);background:#fff;border:1px solid var(--line);b
 .g-awards span{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
 .g-awards b{display:block;font:800 17px var(--f-display);margin:4px 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .g-awards small{color:var(--muted);font-size:13px}
+.g-medal-s{display:inline-grid;place-items:center;min-width:34px;height:26px;border-radius:13px;font:800 12.5px var(--f-display);background:var(--soft);color:var(--muted);padding:0 6px}
+.g-medal-s.m1{background:linear-gradient(135deg,#F7D046,#D9A400);color:#4A3500}.g-medal-s.m2{background:linear-gradient(135deg,#E3E8EE,#AEB8C4);color:#2E3A47}.g-medal-s.m3{background:linear-gradient(135deg,#E9B07A,#B9773D);color:#3D2210}
+.g-reveal{max-width:760px;margin:20px auto 0;padding:60px 30px}
 .g-ptab tbody tr{cursor:pointer}
 .g-ptab tbody tr:hover td{background:var(--soft)}
 .g-ptab tbody tr.on td{background:var(--accent-soft)}
@@ -1349,7 +1352,7 @@ function report(){
  <section class="r-sec"><h2><i>07</i>Comentários</h2>${quotes}</section>
  ${(()=>{const gm=gLoad().filter(r=>nkey(r.nome)===nkey(I.nome)).sort((a,b)=>(b.data||'').localeCompare(a.data||'')||b.id.localeCompare(a.id))[0];if(!gm)return'';
   return`<section class="r-sec"><h2><i>08</i>Dinâmica gamificada</h2><div class="evo-top"><div><span>Índice</span><b>${gm.idx}/100</b><small>${GTITLE(gm.idx)}</small></div><div><span>Nível</span><b>${gm.nivel+1}</b><small>${LEVELS[gm.nivel]}</small></div><div><span>XP</span><b>${gm.xp}</b><small>em ${dataBR(gm.data)}</small></div><div><span>Conquistas</span><b>${gm.badges.length}/${BADGES.length}</b><small>${gm.badges.map(k=>(BADGES.find(b=>b[0]===k)||[0,k])[1]).join(', ')||'nenhuma'}</small></div></div>
-  <div class="bars">${DIMS.filter(d=>gm.dims[d.id]!=null).map(d=>`<div class="bar-row"><span>${d.curto}</span><div class="bar-track"><div class="bar-fill" style="width:${gm.dims[d.id]/5*100}%;background:${barColor(gm.dims[d.id])}"></div><div class="bar-meta" style="left:80%"></div></div><b>${fmt(gm.dims[d.id])}</b></div>`).join('')}</div><p class="cap">Resultado da última participação no Desafio da Inovação, na escala de 1 a 5.</p></section>`})()}
+  <div class="bars">${(CATS.some(c=>gm.dims[c.id]!=null)?CATS:DIMS).filter(d=>gm.dims[d.id]!=null).map(d=>`<div class="bar-row"><span>${d.curto}</span><div class="bar-track"><div class="bar-fill" style="width:${gm.dims[d.id]/5*100}%;background:${barColor(gm.dims[d.id])}"></div><div class="bar-meta" style="left:80%"></div></div><b>${fmt(gm.dims[d.id])}</b></div>`).join('')}</div><p class="cap">Resultado da última participação no Desafio do Conhecimento, na escala de 1 a 5.</p></section>`})()}
  <div class="sign"><div>${esc(I.avaliador||'Avaliador')}<br>Avaliador${I.cargoAv?' · '+esc(I.cargoAv):''}</div><div>${esc((I.nome||'Avaliado').replace(/ \(exemplo\)$/,''))}<br>Avaliado</div><div>Elinai Ramos<br>Gerente de Operações</div></div>
  <div class="foot"><span>Escala: 1 Insatisfatório · 2 Abaixo · 3 Atende · 4 Supera · 5 Excepcional</span><span>Documento confidencial</span></div>`;
  $('#x_out').value=JSON.stringify(state);
@@ -1459,7 +1462,7 @@ function pdfDownload(){
   Fo('bold',8);T(PC.muted);doc.text(t.toUpperCase(),M+5,y+5.8);Fo('normal',9.5);T(PC.ink);doc.text(ls,M+5,y+10.6);y+=h+4});
  {const gm=gLoad().filter(r=>nkey(r.nome)===nkey(I.nome)).sort((a,b)=>(b.data||'').localeCompare(a.data||'')||b.id.localeCompare(a.id))[0];
   if(gm){sec('Dinâmica gamificada');para(`Índice ${gm.idx} de 100 (${GTITLE(gm.idx)}) · nível ${gm.nivel+1}: ${LEVELS[gm.nivel]} · ${gm.xp} XP · ${dataBR(gm.data)}.`,10);
-   para('Por área: '+DIMS.filter(d=>gm.dims[d.id]!=null).map(d=>`${d.curto} ${fmt(gm.dims[d.id])}`).join('  ·  ')+'.',9.5,PC.muted);
+   para('Por tema: '+(CATS.some(c=>gm.dims[c.id]!=null)?CATS:DIMS).filter(d=>gm.dims[d.id]!=null).map(d=>`${d.curto} ${fmt(gm.dims[d.id])}`).join('  ·  ')+'.',9.5,PC.muted);
    if(gm.badges.length)para('Conquistas: '+gm.badges.map(k=>(BADGES.find(b=>b[0]===k)||[0,k])[1]).join(', ')+'.',9.5,PC.muted);y+=2}}
  need(12);Fo('bold',10);T(PC.ink);doc.text('Parecer final: ',M,y+4);const pw=doc.getTextWidth('Parecer final: ');Fo('normal',10);doc.text(O.parecer||'-',M+pw,y+4);y+=10;
  need(30);y+=16;const sw=(CW-16)/3;[[I.avaliador||'Avaliador','Avaliador'+(I.cargoAv?' · '+I.cargoAv:'')],[(I.nome||'Avaliado').replace(/ \(exemplo\)$/,''),'Avaliado'],['Elinai Ramos','Gerente de Operações']].forEach(([n,r],i)=>{const x=M+i*(sw+8);D(PC.ink);doc.setLineWidth(.3);doc.line(x,y,x+sw,y);Fo('bold',8.5);T(PC.ink);if(n)doc.text(n,x+sw/2,y+4.5,{align:'center'});Fo('normal',7.5);T(PC.muted);doc.text(r,x+sw/2,y+(n?8.5:4.5),{align:'center'})});
@@ -1766,136 +1769,128 @@ $('#f_bkp').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return
 if(framed){$('#b_bkp').hidden=true}
 
 /* ---------- dinâmica gamificada ---------- */
+const CATS=[{id:'G',nome:'Geografia',curto:'Geografia'},{id:'H',nome:'História',curto:'História'},{id:'C',nome:'Ciência e natureza',curto:'Ciência'},{id:'E',nome:'Esportes',curto:'Esportes'},{id:'A',nome:'Arte e cultura',curto:'Cultura'},{id:'P',nome:'Português e raciocínio',curto:'Português'},{id:'T',nome:'Atendimento ao cliente',curto:'Atendimento'}];
+const mc=(cat,t,o,exp)=>({dim:cat,t,opts:o.map((x,i)=>[x,i?0:3]),exp});
 const Q_S=[
- {dim:'Q',t:'Um processo da área gera o mesmo erro toda semana. O que você faz?',opts:[['Corrige o erro de novo sempre que ele aparece',0],['Avisa o gestor e espera uma orientação',1],['Cria um aviso para a equipe tomar cuidado',2],['Analisa a causa com dados e propõe uma correção definitiva',3]],exp:'Atacar a causa raiz com dados faz o problema parar de voltar.'},
- {dim:'Q',t:'Você precisa entregar um relatório hoje, mas encontrou dados que não batem.',opts:[['Entrega assim mesmo, ninguém vai perceber',0],['Adia a entrega sem avisar',0],['Entrega e explica o problema depois',1],['Avisa do risco, corrige os dados e entrega com uma nota explicando',3]],exp:'Qualidade é avisar cedo e entregar certo, sem esconder o problema.'},
- {dim:'Q',t:'A auditoria é amanhã e um procedimento está desatualizado.',opts:[['Muda só a data do documento',0],['Esconde o documento',0],['Espera a auditoria apontar',1],['Atualiza com o responsável e registra a revisão',3]],exp:'Documento atualizado e revisão registrada é o que a auditoria espera.'},
- {dim:'N',t:'Surgiu uma ideia que pode reduzir custos, mas ninguém testou ainda.',opts:[['Aplica a ideia em toda a empresa de uma vez',1],['Descarta, porque parece arriscado',0],['Faz um teste pequeno, com meta e prazo definidos',3],['Espera alguém de fora validar a ideia',1]],exp:'Um piloto pequeno mostra se a ideia funciona com pouco risco e pouco custo.'},
- {dim:'N',t:'Uma ferramenta nova poderia automatizar uma tarefa manual da equipe.',opts:[['Continua no manual, porque sempre funcionou',0],['Pede para a TI resolver quando puder',1],['Usa por conta própria sem contar para ninguém',1],['Calcula o ganho, testa e apresenta os números para a equipe',3]],exp:'Mostrar o ganho com números ajuda a equipe a adotar a novidade.'},
- {dim:'N',t:'Você tem uma boa ideia, mas o gestor está sempre sem tempo.',opts:[['Desiste da ideia',0],['Coloca em prática sem autorização',0],['Manda um e-mail longo explicando tudo',1],['Prepara um resumo de uma página com problema, ideia e ganho e pede 10 minutos',3]],exp:'Uma proposta curta, com ganho claro, cabe na agenda de qualquer gestor.'},
- {dim:'N',t:'O teste de uma ideia nova deu errado.',opts:[['Esconde o resultado',0],['Desiste de tentar coisas novas',0],['Culpa a ferramenta usada',1],['Registra o que aprendeu e ajusta a próxima tentativa',3]],exp:'Em inovação, um teste que falha também ensina. O importante é aprender rápido.'},
- {dim:'C',t:'Um cliente reclama, com razão, de um atraso na entrega.',opts:[['Explica que o atraso não foi culpa sua',0],['Passa a reclamação para outra área',1],['Pede desculpas, apresenta uma solução com novo prazo e acompanha',3],['Oferece um desconto sem consultar ninguém',1]],exp:'Assumir, resolver e acompanhar recupera a confiança do cliente.'},
- {dim:'C',t:'Você não sabe exatamente o que o cliente espera do projeto.',opts:[['Supõe o que ele quer e começa logo',0],['Faz perguntas, anota as expectativas e confirma com ele',3],['Copia um projeto parecido que já foi feito',1],['Espera o cliente reclamar para ajustar',0]],exp:'Entender a expectativa antes de começar evita retrabalho.'},
- {dim:'C',t:'Uma área pede, com urgência, algo fora do que foi combinado.',opts:[['Recusa sem explicar',0],['Faz tudo sem avaliar o impacto',1],['Pede para falarem com o seu gestor',1],['Entende a necessidade, mostra o impacto no prazo e combina prioridades',3]],exp:'Negociar prioridades com transparência atende o cliente sem prejudicar o resto.'},
- {dim:'C',t:'Um cliente elogiou o seu trabalho.',opts:[['Ignora o elogio',0],['Pede para ele elogiar ao seu gestor',1],['Só agradece',2],['Agradece e pergunta o que poderia ficar ainda melhor',3]],exp:'Até o elogio é uma chance de descobrir como melhorar.'},
- {dim:'R',t:'Você tem três tarefas urgentes e só dá tempo de fazer duas hoje.',opts:[['Faz primeiro a mais fácil',1],['Prioriza pelo impacto, combina novo prazo para a terceira e avisa',3],['Tenta fazer as três correndo',1],['Espera alguém decidir por você',0]],exp:'Priorizar pelo impacto e combinar prazos mantém a confiança.'},
- {dim:'R',t:'Um projeto seu não atingiu a meta.',opts:[['Procura quem foi o culpado',0],['Analisa o que deu errado e propõe ajustes',3],['Deixa para lá, na próxima melhora',0],['Pede mais prazo sem explicar o motivo',1]],exp:'Assumir o resultado e aprender com ele é o que gera melhoria.'},
- {dim:'R',t:'No meio do mês você percebe que não vai bater a meta.',opts:[['Espera o fim do mês para ver o que acontece',0],['Muda a meta por conta própria',0],['Trabalha mais horas sem falar com ninguém',1],['Avisa o gestor agora, com um plano de recuperação',3]],exp:'Avisar cedo e com um plano dá tempo de corrigir a rota.'},
- {dim:'R',t:'Você terminou suas tarefas antes do prazo.',opts:[['Fica esperando o expediente acabar',0],['Começa algo pessoal',0],['Espera alguém pedir ajuda',1],['Oferece ajuda à equipe ou adianta a próxima prioridade',3]],exp:'Tempo livre bem usado acelera o resultado de toda a equipe.'},
- {dim:'M',t:'Um colega discorda da sua proposta durante uma reunião.',opts:[['Defende sua ideia até ele desistir',0],['Ouve, entende o ponto dele e buscam uma solução juntos',3],['Muda de ideia só para evitar conflito',1],['Deixa para resolver por e-mail depois',1]],exp:'Escutar e construir junto gera soluções melhores e menos atrito.'},
- {dim:'M',t:'Você precisa dar um retorno difícil para um colega.',opts:[['Evita o assunto',0],['Fala na frente de todos para resolver logo',0],['Conversa em particular, com fatos e sugestões',3],['Pede para o gestor falar por você',1]],exp:'Retorno em particular, com fatos, ajuda o colega a melhorar.'},
- {dim:'M',t:'Uma informação importante precisa chegar a toda a equipe hoje.',opts:[['Conta para quem encontrar no corredor',0],['Espera a reunião da semana',1],['Manda um e-mail bem longo',1],['Envia uma mensagem clara com o essencial e confirma se todos entenderam',3]],exp:'Mensagem curta, clara e com confirmação evita ruído.'},
- {dim:'L',t:'Ninguém da equipe assumiu um problema que afeta todos.',opts:[['Espera alguém assumir',0],['Reclama com o gestor',1],['Resolve sozinho, sem envolver ninguém',2],['Toma a frente, organiza a equipe e divide as tarefas',3]],exp:'Liderar é mobilizar as pessoas, mesmo sem ter o cargo.'},
- {dim:'L',t:'Um colega novo tem dificuldade numa tarefa que você domina.',opts:[['Faz a tarefa por ele',1],['Ensina o passo a passo e acompanha as primeiras vezes',3],['Indica um manual para ele ler',1],['Diz que com o tempo ele aprende',0]],exp:'Ensinar e acompanhar desenvolve a equipe toda.'},
- {dim:'L',t:'A equipe está desanimada depois de um projeto difícil.',opts:[['Ignora, uma hora passa',0],['Cobra mais resultado',0],['Sugere um happy hour',1],['Reconhece o esforço, conversa sobre o que aprenderam e celebra as pequenas vitórias',3]],exp:'Reconhecer e dar sentido ao esforço recupera a energia do time.'},
- {dim:'E',t:'Você recebeu por engano um arquivo com dados pessoais de clientes.',opts:[['Repassa para quem você acha que precisa',0],['Guarda, pode ser útil depois',0],['Ignora o arquivo',1],['Avisa quem enviou e apaga o arquivo',3]],exp:'Proteger dados pessoais é obrigação de todos (LGPD).'},
- {dim:'E',t:'Você percebe que vai se atrasar para uma reunião importante.',opts:[['Chega atrasado sem avisar',0],['Avisa com antecedência e envia a sua parte',3],['Não vai e explica depois',0],['Pede para um colega cobrir sem avisar ninguém',1]],exp:'Avisar antes mostra compromisso e respeito com o time.'},
- {dim:'E',t:'Um fornecedor oferece um presente caro para fechar um contrato.',opts:[['Aceita, ninguém vai saber',0],['Aceita e divide com a equipe',0],['Aceita e avisa depois',1],['Recusa com educação e segue a política da empresa',3]],exp:'Presentes caros comprometem a imparcialidade. A política da empresa vem primeiro.'}];
+ mc('G','Qual é a capital do Brasil?',['Brasília','Rio de Janeiro','São Paulo','Salvador'],'Brasília é a capital desde 1960.'),
+ mc('G','Qual é o maior país da América do Sul?',['Brasil','Argentina','Peru','Colômbia'],'O Brasil ocupa quase metade da América do Sul.'),
+ mc('G','Qual é o maior rio do mundo em volume de água?',['Amazonas','São Francisco','Nilo','Paraná'],'O Amazonas despeja no mar mais água que qualquer outro rio.'),
+ mc('G','Em qual estado fica a cidade de Salvador?',['Bahia','Pernambuco','Sergipe','Ceará'],'Salvador foi a primeira capital do Brasil.'),
+ mc('G','Qual é o maior oceano do planeta?',['Pacífico','Atlântico','Índico','Ártico'],'O Pacífico cobre cerca de um terço da superfície da Terra.'),
+ mc('G','Quantos estados tem o Brasil?',['26','25','27','24'],'São 26 estados e mais o Distrito Federal.'),
+ mc('G','Qual país tem o formato parecido com uma bota?',['Itália','Portugal','Grécia','Chile'],'O mapa da Itália lembra uma bota.'),
+ mc('H','Em que ano os portugueses chegaram ao Brasil?',['1500','1492','1822','1600'],'A esquadra de Pedro Álvares Cabral chegou em 1500.'),
+ mc('H','Quem proclamou a Independência do Brasil?',['Dom Pedro I','Tiradentes','Dom Pedro II','Getúlio Vargas'],'Foi em 7 de setembro de 1822, às margens do Ipiranga.'),
+ mc('H','Em que ano foi assinada a Lei Áurea?',['1888','1822','1889','1900'],'A Lei Áurea aboliu a escravidão no Brasil em 1888.'),
+ mc('H','Quem foi o primeiro homem a pisar na Lua?',['Neil Armstrong','Yuri Gagarin','Buzz Aldrin','Santos Dumont'],'Foi em 1969, na missão Apollo 11.'),
+ mc('H','Qual brasileiro é chamado de “Pai da Aviação”?',['Santos Dumont','Thomas Edison','Graham Bell','Oswaldo Cruz'],'Santos Dumont voou com o 14-Bis em Paris, em 1906.'),
+ mc('C','Qual é o maior órgão do corpo humano?',['A pele','O fígado','O coração','O cérebro'],'A pele é o maior órgão em área e peso.'),
+ mc('C','Qual planeta é conhecido como planeta vermelho?',['Marte','Júpiter','Vênus','Saturno'],'O solo de Marte tem muito óxido de ferro, que dá a cor avermelhada.'),
+ mc('C','Que gás as plantas absorvem do ar para fazer fotossíntese?',['Gás carbônico','Oxigênio','Hidrogênio','Nitrogênio'],'As plantas absorvem gás carbônico e liberam oxigênio.'),
+ mc('C','Quantos ossos tem o corpo de um adulto?',['206','150','300','180'],'O bebê nasce com mais ossos, que se juntam com o tempo.'),
+ mc('C','Qual é o maior planeta do Sistema Solar?',['Júpiter','Saturno','Terra','Netuno'],'Júpiter caberia mais de mil Terras.'),
+ mc('C','Qual é a fórmula química da água?',['H2O','CO2','O2','NaCl'],'Dois átomos de hidrogênio e um de oxigênio.'),
+ mc('E','Quantas Copas do Mundo de futebol masculino o Brasil já venceu?',['5','4','6','3'],'1958, 1962, 1970, 1994 e 2002.'),
+ mc('E','Quantos jogadores cada time tem em campo no futebol?',['11','10','12','9'],'Dez na linha e um goleiro.'),
+ mc('E','Em que país surgiram os Jogos Olímpicos?',['Grécia','Itália','França','Egito'],'Os primeiros jogos aconteceram na Grécia Antiga.'),
+ mc('E','Qual piloto brasileiro ficou conhecido como “Rei de Mônaco”?',['Ayrton Senna','Rubens Barrichello','Felipe Massa','Emerson Fittipaldi'],'Senna venceu o GP de Mônaco seis vezes.'),
+ mc('E','No basquete, quanto vale uma cesta feita de trás da linha de três?',['3 pontos','2 pontos','1 ponto','4 pontos'],'Por isso ela se chama linha de três.'),
+ mc('A','Quem pintou a Mona Lisa?',['Leonardo da Vinci','Michelangelo','Van Gogh','Picasso'],'O quadro está no Museu do Louvre, em Paris.'),
+ mc('A','Quem escreveu “Dom Casmurro”?',['Machado de Assis','José de Alencar','Jorge Amado','Monteiro Lobato'],'É o livro da famosa dúvida sobre Capitu.'),
+ mc('A','Qual ritmo é a grande atração dos desfiles de Carnaval do Rio?',['Samba','Forró','Sertanejo','Frevo'],'As escolas de samba desfilam na Marquês de Sapucaí.'),
+ mc('A','Qual personagem do folclore tem uma perna só e usa gorro vermelho?',['Saci','Curupira','Boitatá','Iara'],'O Saci adora fazer travessuras.'),
+ mc('A','Quem criou a Turma da Mônica?',['Mauricio de Sousa','Ziraldo','Monteiro Lobato','Chico Anysio'],'A Mônica foi inspirada na filha do autor.'),
+ mc('A','Qual é o nome da estátua no alto do morro do Corcovado?',['Cristo Redentor','Estátua da Liberdade','Padre Cícero','São Jorge'],'É uma das Sete Maravilhas do Mundo Moderno.'),
+ mc('P','Qual é o plural de “cidadão”?',['Cidadãos','Cidadões','Cidadães','Cidadans'],'Cidadão faz o plural em “ãos”.'),
+ mc('P','Qual é o contrário de “generoso”?',['Egoísta','Bondoso','Gentil','Educado'],'Generoso é quem compartilha. Egoísta pensa só em si.'),
+ mc('P','Quantos minutos tem um dia?',['1.440','1.000','2.400','1.200'],'24 horas vezes 60 minutos dá 1.440.'),
+ mc('P','Quanto é 15% de 200?',['30','15','20','35'],'10% de 200 é 20, e 5% é 10. Somando, 30.'),
+ mc('P','Quantos lados tem um hexágono?',['6','5','7','8'],'Hexa quer dizer seis.'),
+ mc('T','O que significa a sigla SAC?',['Serviço de Atendimento ao Consumidor','Sistema de Apoio Comercial','Setor de Análise de Clientes','Serviço de Agendamento de Contatos'],'É o canal da empresa para dúvidas e reclamações.'),
+ mc('T','Qual órgão defende os direitos do consumidor nos estados e cidades?',['Procon','Detran','INSS','Receita Federal'],'O Procon orienta o consumidor e fiscaliza empresas.'),
+ mc('T','Em que ano foi criado o Código de Defesa do Consumidor?',['1990','1980','2000','1988'],'É a Lei 8.078, de 1990.'),
+ mc('T','Como se chama o cadastro para não receber ligações de telemarketing?',['Não Me Perturbe','Serasa','Cadastro Positivo','Reclame Aqui'],'Pelo Não Me Perturbe o consumidor bloqueia ofertas por telefone.'),
+ mc('T','Qual agência regula os serviços de telefonia no Brasil?',['Anatel','Anvisa','Aneel','ANS'],'A Anatel é a Agência Nacional de Telecomunicações.'),
+ mc('T','No atendimento, o que é “rapport”?',['Criar sintonia e confiança com o cliente','Encerrar a ligação rápido','Um relatório de vendas','Um tipo de reclamação'],'Rapport é a conexão que deixa a conversa mais leve e produtiva.'),
+ mc('T','O que mais ajuda a acalmar um cliente irritado?',['Ouvir sem interromper e mostrar empatia','Falar mais alto que ele','Transferir a ligação','Desligar'],'Quem se sente ouvido se acalma mais rápido.')];
 const Q_V=[
- {dim:'Q',t:'O PDCA termina quando a melhoria é implantada pela primeira vez.',v:false,exp:'O PDCA é um ciclo contínuo: depois de agir, começa de novo.'},
- {dim:'Q',t:'O diagrama de Ishikawa ajuda a encontrar as causas de um problema.',v:true,exp:'Também chamado de espinha de peixe, ele organiza as possíveis causas.'},
- {dim:'Q',t:'O gráfico de Pareto mostra que poucas causas costumam gerar a maior parte dos problemas.',v:true,exp:'É a regra 80/20: atacar poucas causas resolve a maior parte.'},
- {dim:'N',t:'Inovar é sempre criar algo totalmente novo, nunca melhorar o que já existe.',v:false,exp:'Melhorias pequenas e contínuas também são inovação.'},
- {dim:'N',t:'Um protótipo precisa estar perfeito antes de ser testado.',v:false,exp:'O protótipo serve para aprender rápido. Ele pode ser simples.'},
- {dim:'N',t:'Errar rápido e barato num teste faz parte da inovação.',v:true,exp:'Testes pequenos reduzem o custo de errar e aceleram o aprendizado.'},
- {dim:'C',t:'Cliente interno é qualquer colega ou área que depende do seu trabalho.',v:true,exp:'Quem recebe o seu trabalho dentro da empresa também é seu cliente.'},
- {dim:'C',t:'O NPS mede a chance de o cliente recomendar a empresa.',v:true,exp:'NPS significa Net Promoter Score, ou índice de recomendação.'},
- {dim:'R',t:'Uma meta SMART precisa ter prazo definido.',v:true,exp:'O T de SMART vem de “temporal”: toda meta precisa de prazo.'},
- {dim:'R',t:'Estar sempre ocupado significa ser produtivo.',v:false,exp:'Produtividade é entregar o que importa, não apenas estar ocupado.'},
- {dim:'M',t:'Escuta ativa é esperar a sua vez de falar.',v:false,exp:'Escuta ativa é prestar atenção e confirmar que entendeu.'},
- {dim:'M',t:'Um bom feedback fala do comportamento, não da pessoa.',v:true,exp:'Focar no comportamento torna o retorno útil e respeitoso.'},
- {dim:'L',t:'Só quem tem cargo de chefe pode liderar.',v:false,exp:'Liderança é atitude: qualquer pessoa pode tomar a frente e inspirar.'},
- {dim:'L',t:'Delegar é passar a tarefa e não acompanhar mais.',v:false,exp:'Delegar bem inclui combinar o resultado e acompanhar.'},
- {dim:'E',t:'A LGPD protege os dados pessoais de clientes e colaboradores.',v:true,exp:'A Lei Geral de Proteção de Dados vale para todos os dados pessoais.'},
- {dim:'E',t:'Se ninguém viu, não tem problema quebrar uma regra pequena.',v:false,exp:'Ética é fazer o certo mesmo quando ninguém está olhando.'}];
+ {dim:'G',t:'O Brasil faz fronteira com todos os países da América do Sul.',v:false,exp:'Chile e Equador não fazem fronteira com o Brasil.'},
+ {dim:'G',t:'O Monte Everest é a montanha mais alta do mundo.',v:true,exp:'Ele tem cerca de 8.849 metros de altitude.'},
+ {dim:'G',t:'A Austrália fica na Oceania.',v:true,exp:'É o maior país da Oceania.'},
+ {dim:'H',t:'Tiradentes foi um dos líderes da Inconfidência Mineira.',v:true,exp:'O dia 21 de abril é feriado em sua homenagem.'},
+ {dim:'H',t:'A Segunda Guerra Mundial terminou em 1945.',v:true,exp:'A guerra durou de 1939 a 1945.'},
+ {dim:'H',t:'Pedro Álvares Cabral chegou ao Brasil em 1600.',v:false,exp:'Ele chegou em 1500.'},
+ {dim:'C',t:'O Sol é uma estrela.',v:true,exp:'É a estrela mais próxima da Terra.'},
+ {dim:'C',t:'Os morcegos são aves.',v:false,exp:'Morcegos são mamíferos, os únicos que voam de verdade.'},
+ {dim:'C',t:'Ao nível do mar, a água ferve a 100 °C.',v:true,exp:'Em lugares altos, ela ferve a uma temperatura menor.'},
+ {dim:'C',t:'O coração humano tem quatro cavidades.',v:true,exp:'Dois átrios e dois ventrículos.'},
+ {dim:'E',t:'Pelé ganhou três Copas do Mundo.',v:true,exp:'Ele foi campeão em 1958, 1962 e 1970.'},
+ {dim:'E',t:'Uma partida oficial de futebol tem dois tempos de 45 minutos.',v:true,exp:'Fora os acréscimos.'},
+ {dim:'E',t:'No vôlei de quadra, cada time joga com 5 atletas.',v:false,exp:'São 6 atletas de cada lado.'},
+ {dim:'A',t:'Tarsila do Amaral pintou o quadro Abaporu.',v:true,exp:'O Abaporu, de 1928, é símbolo do Modernismo brasileiro.'},
+ {dim:'A',t:'O Carnaval acontece sempre no mês de julho.',v:false,exp:'Ele acontece em fevereiro ou março.'},
+ {dim:'A',t:'Romeu e Julieta foi escrito por William Shakespeare.',v:true,exp:'A peça é do fim do século 16.'},
+ {dim:'P',t:'A palavra “exceção” se escreve com ç.',v:true,exp:'O certo é exceção, com x e ç.'},
+ {dim:'P',t:'Um ano bissexto tem 366 dias.',v:true,exp:'Ganha o dia 29 de fevereiro.'},
+ {dim:'P',t:'O certo é dizer “meio-dia e meia”.',v:true,exp:'Porque é meio-dia e meia hora.'},
+ {dim:'T',t:'Em compras feitas por telefone ou internet, o consumidor pode desistir em até 7 dias.',v:true,exp:'É o direito de arrependimento, previsto no Código de Defesa do Consumidor.'},
+ {dim:'T',t:'Chamar o cliente pelo nome ajuda a criar proximidade.',v:true,exp:'O cliente se sente atendido como pessoa, não como número.'},
+ {dim:'T',t:'Falar muito rápido passa mais segurança ao cliente.',v:false,exp:'Falar rápido demais dificulta o entendimento.'},
+ {dim:'T',t:'Ligações gravadas podem ser usadas para melhorar a qualidade do atendimento.',v:true,exp:'A escuta das gravações ajuda a dar retorno e treinar a equipe.'},
+ {dim:'T',t:'O Procon é uma empresa privada de telemarketing.',v:false,exp:'O Procon é um órgão público de defesa do consumidor.'}];
 const Q_O=[
- {dim:'Q',t:'Coloque as etapas do ciclo PDCA na ordem certa.',steps:['Planejar','Executar','Verificar','Agir'],exp:'Planejar, executar, verificar o resultado e agir para padronizar ou corrigir.'},
- {dim:'N',t:'Coloque as etapas do Design Thinking na ordem certa.',steps:['Entender o usuário','Definir o problema','Gerar ideias','Criar protótipo','Testar'],exp:'Primeiro entender e definir, depois criar, prototipar e testar.'},
- {dim:'Q',t:'Coloque as etapas do método DMAIC na ordem certa.',steps:['Definir','Medir','Analisar','Melhorar','Controlar'],exp:'DMAIC: definir, medir, analisar, melhorar e controlar.'},
- {dim:'C',t:'Monte a ordem certa para tratar a reclamação de um cliente.',steps:['Ouvir o cliente','Entender o problema','Propor uma solução','Resolver','Confirmar se ele ficou satisfeito'],exp:'Ouvir e entender antes de propor, e sempre confirmar no final.'},
- {dim:'M',t:'Monte a ordem certa para dar um feedback.',steps:['Descrever a situação','Falar do comportamento','Mostrar o impacto','Combinar o próximo passo'],exp:'Situação, comportamento, impacto e próximo passo.'},
- {dim:'R',t:'Monte a ordem certa para planejar uma entrega.',steps:['Definir o objetivo','Dividir em tarefas','Definir prazos e responsáveis','Acompanhar o andamento','Entregar e avaliar'],exp:'Objetivo claro, tarefas, responsáveis, acompanhamento e avaliação.'},
- {dim:'N',t:'Monte a ordem certa de um projeto piloto.',steps:['Criar a hipótese','Definir como medir o sucesso','Testar em pequena escala','Medir o resultado','Decidir se expande'],exp:'Hipótese, métrica, teste pequeno, medição e decisão.'}];
+ {dim:'H',t:'Coloque os fatos em ordem, do mais antigo ao mais recente.',steps:['Chegada dos portugueses','Independência do Brasil','Abolição da escravidão','Proclamação da República','Inauguração de Brasília'],exp:'1500, 1822, 1888, 1889 e 1960.'},
+ {dim:'C',t:'Coloque os planetas em ordem, a partir do Sol.',steps:['Mercúrio','Vênus','Terra','Marte','Júpiter'],exp:'Depois de Júpiter vêm Saturno, Urano e Netuno.'},
+ {dim:'G',t:'Coloque os continentes do maior para o menor.',steps:['Ásia','América','África','Europa','Oceania'],exp:'A Ásia é o maior e a Oceania, o menor.'},
+ {dim:'G',t:'Coloque as regiões do Brasil da maior para a menor em área.',steps:['Norte','Centro-Oeste','Nordeste','Sudeste','Sul'],exp:'A região Norte ocupa quase metade do país.'},
+ {dim:'C',t:'Coloque do menor para o maior.',steps:['Átomo','Célula','Formiga','Elefante','Planeta Terra'],exp:'Do invisível ao gigante.'},
+ {dim:'C',t:'Coloque as fases da Lua em ordem, começando pela Lua Nova.',steps:['Lua Nova','Crescente','Cheia','Minguante'],exp:'O ciclo completo leva cerca de 29 dias e meio.'},
+ {dim:'E',t:'Coloque as Copas vencidas pelo Brasil em ordem, pelo país-sede.',steps:['Suécia','Chile','México','Estados Unidos','Coreia do Sul e Japão'],exp:'1958, 1962, 1970, 1994 e 2002.'},
+ {dim:'T',t:'Coloque as etapas de um bom atendimento telefônico em ordem.',steps:['Cumprimentar e se apresentar','Ouvir a necessidade do cliente','Confirmar o entendimento','Resolver ou encaminhar','Agradecer e encerrar'],exp:'Atendimento com começo, meio e fim deixa o cliente seguro.'},
+ {dim:'P',t:'Coloque as medidas da menor para a maior.',steps:['Milímetro','Centímetro','Metro','Quilômetro'],exp:'Cada uma é maior que a anterior.'},
+ {dim:'A',t:'Coloque os números romanos do menor para o maior.',steps:['V','X','L','C','M'],exp:'5, 10, 50, 100 e 1.000.'}];
 const Q_M=[
- {dim:'Q',t:'Ligue cada ferramenta da qualidade ao que ela faz.',pairs:[['Ishikawa','Organiza as causas em forma de espinha de peixe'],['Pareto','Mostra as causas que mais pesam'],['5 Porquês','Pergunta “por quê” até chegar à raiz'],['Checklist','Lista para conferir antes de entregar']],exp:'Cada ferramenta ajuda numa parte da solução de problemas.'},
- {dim:'N',t:'Ligue cada termo de inovação ao seu significado.',pairs:[['Brainstorming','Gerar muitas ideias sem julgar'],['MVP','Versão mínima para testar uma ideia'],['Benchmarking','Aprender com quem já faz melhor'],['Protótipo','Modelo simples para testar a solução']],exp:'São as ferramentas básicas de quem inova.'},
- {dim:'R',t:'Ligue cada termo de gestão ao seu significado.',pairs:[['KPI','Indicador que mede o resultado'],['Meta','Valor a ser alcançado'],['Prazo','Data limite da entrega'],['Prioridade','O que deve ser feito primeiro']],exp:'Saber medir e priorizar é a base da produtividade.'},
- {dim:'M',t:'Ligue cada conceito de comunicação ao seu significado.',pairs:[['Escuta ativa','Ouvir com atenção e confirmar o entendimento'],['Feedback','Retorno sobre um comportamento'],['Alinhamento','Combinar o mesmo objetivo com todos'],['Empatia','Se colocar no lugar do outro']],exp:'Boa comunicação junta escuta, clareza e empatia.'},
- {dim:'L',t:'Ligue cada atitude ao seu significado.',pairs:[['Proatividade','Agir antes do problema aparecer'],['Colaboração','Trabalhar junto pelo mesmo objetivo'],['Resiliência','Se recuperar bem das dificuldades'],['Ética','Agir certo mesmo sem ninguém ver']],exp:'São atitudes que fazem diferença em qualquer equipe.'}];
+ {dim:'G',t:'Ligue cada país à sua capital.',pairs:[['Argentina','Buenos Aires'],['França','Paris'],['Japão','Tóquio'],['Portugal','Lisboa']],exp:'Capitais famosas de quatro continentes.'},
+ {dim:'G',t:'Ligue cada estado à sua capital.',pairs:[['Minas Gerais','Belo Horizonte'],['Pernambuco','Recife'],['Paraná','Curitiba'],['Amazonas','Manaus']],exp:'Capitais de quatro regiões do Brasil.'},
+ {dim:'A',t:'Ligue cada livro ao seu autor.',pairs:[['Dom Casmurro','Machado de Assis'],['O Pequeno Príncipe','Antoine de Saint-Exupéry'],['Capitães da Areia','Jorge Amado'],['Sítio do Picapau Amarelo','Monteiro Lobato']],exp:'Clássicos lidos por várias gerações.'},
+ {dim:'C',t:'Ligue cada animal ao seu grupo.',pairs:[['Baleia','Mamífero'],['Tubarão','Peixe'],['Jacaré','Réptil'],['Sapo','Anfíbio']],exp:'A baleia respira ar e amamenta: é mamífero.'},
+ {dim:'E',t:'Ligue cada atleta ao seu esporte.',pairs:[['Marta','Futebol'],['Oscar Schmidt','Basquete'],['Rebeca Andrade','Ginástica'],['Gustavo Kuerten','Tênis']],exp:'Grandes nomes do esporte brasileiro.'},
+ {dim:'T',t:'Ligue cada sigla ao seu significado.',pairs:[['SAC','Serviço de Atendimento ao Consumidor'],['CDC','Código de Defesa do Consumidor'],['CPF','Cadastro de Pessoas Físicas'],['CEP','Código de Endereçamento Postal']],exp:'Siglas que aparecem todo dia no atendimento.'},
+ {dim:'A',t:'Ligue cada instrumento à sua família.',pairs:[['Violão','Cordas'],['Flauta','Sopro'],['Bateria','Percussão'],['Piano','Teclas']],exp:'Cada família produz o som de um jeito.'},
+ {dim:'P',t:'Ligue cada palavra ao seu sinônimo.',pairs:[['Feliz','Contente'],['Rápido','Veloz'],['Bonito','Belo'],['Difícil','Complicado']],exp:'Sinônimos têm o mesmo sentido.'}];
 const Q_I=[
- {dim:'Q',t:'Qual destas NÃO é uma ferramenta da qualidade?',opts:['Ishikawa','Pareto','5 Porquês','Organograma'],ans:3,exp:'O organograma mostra a estrutura da empresa, não analisa problemas.'},
- {dim:'Q',t:'Qual destas NÃO é um desperdício na visão Lean?',opts:['Retrabalho','Espera','Excesso de estoque','Entregar no prazo'],ans:3,exp:'Entregar no prazo é o objetivo. Os outros são desperdícios.'},
- {dim:'N',t:'Qual destas NÃO ajuda a inovar?',opts:['Brainstorming','Protótipo','Benchmarking','Fazer sempre do mesmo jeito'],ans:3,exp:'Repetir sempre o mesmo jeito impede descobrir formas melhores.'},
- {dim:'C',t:'Qual destas NÃO é uma boa prática de atendimento?',opts:['Ouvir com atenção','Cumprir o prazo combinado','Interromper o cliente','Confirmar o entendimento'],ans:2,exp:'Interromper passa a ideia de que o cliente não está sendo ouvido.'},
- {dim:'R',t:'Qual destas NÃO é característica de uma meta SMART?',opts:['Específica','Mensurável','Com prazo','Vaga'],ans:3,exp:'Meta vaga não dá para medir nem acompanhar.'},
- {dim:'M',t:'Qual destas NÃO faz parte de uma boa comunicação?',opts:['Clareza','Objetividade','Escuta','Mensagens longas e confusas'],ans:3,exp:'Mensagens confusas geram ruído e retrabalho.'},
- {dim:'L',t:'Qual destas NÃO é uma atitude de liderança?',opts:['Dar o exemplo','Reconhecer a equipe','Centralizar todas as decisões','Desenvolver pessoas'],ans:2,exp:'Centralizar tudo trava a equipe e não desenvolve ninguém.'},
- {dim:'E',t:'Qual destas NÃO é uma atitude ética?',opts:['Cumprir as regras','Proteger os dados','Usar informação sigilosa em benefício próprio','Ser transparente'],ans:2,exp:'Usar informação sigilosa para benefício próprio é falta grave.'}];
+ {dim:'G',t:'Qual destes NÃO é um país da América do Sul?',opts:['Chile','Uruguai','Paraguai','México'],ans:3,exp:'O México fica na América do Norte.'},
+ {dim:'G',t:'Qual destas NÃO é capital de estado?',opts:['Recife','Fortaleza','Campinas','Natal'],ans:2,exp:'Campinas é uma grande cidade de São Paulo, mas não é capital.'},
+ {dim:'C',t:'Qual destes NÃO é um planeta?',opts:['Marte','Vênus','Lua','Saturno'],ans:2,exp:'A Lua é um satélite natural da Terra.'},
+ {dim:'C',t:'Qual destes NÃO é mamífero?',opts:['Golfinho','Morcego','Pinguim','Baleia'],ans:2,exp:'O pinguim é uma ave que não voa.'},
+ {dim:'E',t:'Qual destes esportes NÃO usa bola?',opts:['Futebol','Vôlei','Natação','Basquete'],ans:2,exp:'Na natação, o desafio é só a água.'},
+ {dim:'A',t:'Qual destes NÃO é personagem do Sítio do Picapau Amarelo?',opts:['Emília','Visconde de Sabugosa','Narizinho','Cebolinha'],ans:3,exp:'O Cebolinha é da Turma da Mônica.'},
+ {dim:'A',t:'Qual destes NÃO é instrumento de cordas?',opts:['Violão','Cavaquinho','Violino','Trompete'],ans:3,exp:'O trompete é instrumento de sopro.'},
+ {dim:'P',t:'Qual destas palavras está escrita ERRADA?',opts:['Exceção','Paralisar','Obsessão','Previlégio'],ans:3,exp:'O certo é privilégio, com i.'},
+ {dim:'P',t:'Qual destes NÃO é um número primo?',opts:['2','7','9','13'],ans:2,exp:'O 9 pode ser dividido por 3.'},
+ {dim:'H',t:'Qual destes NÃO foi presidente do Brasil?',opts:['Juscelino Kubitschek','Getúlio Vargas','Tiradentes','Fernando Henrique Cardoso'],ans:2,exp:'Tiradentes viveu antes da Independência, no século 18.'},
+ {dim:'T',t:'Qual destas NÃO é uma boa prática ao telefone?',opts:['Sorrir ao falar','Falar com clareza','Comer durante a ligação','Usar o nome do cliente'],ans:2,exp:'O cliente percebe tudo pelo som.'},
+ {dim:'T',t:'Qual destes NÃO é um direito do consumidor?',opts:['Informação clara','Troca de produto com defeito','Desistir de compra a distância em 7 dias','Receber ligações de oferta a qualquer hora'],ans:3,exp:'Pelo contrário: ele pode pedir para não receber ofertas.'}];
 const Q_C=[
- {dim:'Q',t:'No PDCA, a letra C significa ____.',opts:['Verificar (Check)','Criar','Cobrar','Comunicar'],ans:0,exp:'C vem de Check: verificar se o resultado foi alcançado.'},
- {dim:'Q',t:'O 5S começa pelo senso de ____.',opts:['Utilização','Limpeza','Disciplina','Saúde'],ans:0,exp:'Seiri, o senso de utilização: separar o que é útil do que não é.'},
- {dim:'N',t:'MVP é a versão ____ de um produto, feita para testar uma ideia.',opts:['mínima viável','mais completa','final','mais cara'],ans:0,exp:'Produto mínimo viável: o suficiente para aprender com o usuário.'},
- {dim:'R',t:'KPI quer dizer indicador-____ de desempenho.',opts:['chave','de custo','do cliente','comum'],ans:0,exp:'Key Performance Indicator: indicador-chave de desempenho.'},
- {dim:'C',t:'Superar a expectativa do cliente começa por ____ o que ele precisa.',opts:['entender','supor','ignorar','copiar'],ans:0,exp:'Sem entender a necessidade, não há como superar a expectativa.'},
- {dim:'M',t:'Um bom feedback é ____, específico e focado no comportamento.',opts:['respeitoso','público','genérico','atrasado'],ans:0,exp:'Respeito, especificidade e foco no comportamento.'},
- {dim:'L',t:'Delegar bem é passar a tarefa e ____.',opts:['acompanhar','esquecer','refazer depois','cobrar a cada hora'],ans:0,exp:'Delegar inclui acompanhar e apoiar quando preciso.'},
- {dim:'E',t:'Dados pessoais de clientes devem ser tratados com ____.',opts:['sigilo','curiosidade','pressa','descuido'],ans:0,exp:'Sigilo e cuidado são exigidos pela LGPD.'}];
+ {dim:'P',t:'Água mole em pedra dura, tanto bate até que ____.',opts:['fura','quebra','seca','para'],ans:0,exp:'Quem persiste, consegue.'},
+ {dim:'P',t:'Quem não tem cão, caça com ____.',opts:['gato','pato','rato','lobo'],ans:0,exp:'Na falta do ideal, a gente se vira com o que tem.'},
+ {dim:'P',t:'De grão em grão, a galinha enche o ____.',opts:['papo','ninho','prato','saco'],ans:0,exp:'Pouco a pouco se chega longe.'},
+ {dim:'P',t:'Mais vale um pássaro na mão do que dois ____.',opts:['voando','cantando','no ninho','na gaiola'],ans:0,exp:'É melhor garantir o certo do que arriscar no incerto.'},
+ {dim:'P',t:'Em boca fechada não entra ____.',opts:['mosca','comida','vento','água'],ans:0,exp:'Às vezes, é melhor ficar em silêncio.'},
+ {dim:'P',t:'Quem com ferro fere, com ferro será ____.',opts:['ferido','punido','pago','lembrado'],ans:0,exp:'O que se faz, volta.'},
+ {dim:'G',t:'A maior floresta tropical do mundo é a Floresta ____.',opts:['Amazônica','Atlântica','Negra','Boreal'],ans:0,exp:'Ela se estende por nove países.'},
+ {dim:'C',t:'A camada que protege a Terra dos raios ultravioleta é a camada de ____.',opts:['ozônio','oxigênio','gelo','nuvens'],ans:0,exp:'O ozônio filtra boa parte dos raios UV.'},
+ {dim:'H',t:'A Proclamação da República no Brasil aconteceu em ____.',opts:['1889','1822','1500','1930'],ans:0,exp:'Em 15 de novembro de 1889.'},
+ {dim:'C',t:'O animal terrestre mais rápido do mundo é o ____.',opts:['guepardo','leão','cavalo','avestruz'],ans:0,exp:'O guepardo passa dos 100 km/h em pouco tempo.'},
+ {dim:'E',t:'A seleção brasileira de futebol é chamada de Seleção ____.',opts:['Canarinho','Azzurra','Albiceleste','Laranja'],ans:0,exp:'Por causa da camisa amarela.'},
+ {dim:'A',t:'“Ouviram do Ipiranga as margens plácidas” é o começo do Hino ____.',opts:['Nacional','da Independência','da Bandeira','da República'],ans:0,exp:'A letra é de Joaquim Osório Duque Estrada.'},
+ {dim:'T',t:'Para resolver bem uma reclamação, o primeiro passo é ____ o cliente.',opts:['ouvir','interromper','transferir','apressar'],ans:0,exp:'Sem ouvir, não dá para entender o problema.'},
+ {dim:'T',t:'Na ligação, o tom de voz deve ser ____ e cordial.',opts:['calmo','alto','apressado','frio'],ans:0,exp:'Calma e cordialidade passam confiança.'}];
 const BANK={s:Q_S,v:Q_V,o:Q_O,m:Q_M,i:Q_I,c:Q_C};
-Q_S.push(
- {dim:'Q',t:'Você percebe que um colega pulou uma etapa do procedimento.',opts:[['Ignora, não é problema seu',0],['Conta para o gestor sem falar com ele',1],['Refaz a etapa sem dizer nada',1],['Conversa com ele, explica o risco e corrigem juntos',3]],exp:'Corrigir junto, explicando o risco, evita que o erro se repita.'},
- {dim:'Q',t:'Um indicador da área piorou dois meses seguidos.',opts:[['Espera o terceiro mês para ver',0],['Muda a forma de calcular',0],['Só comenta no relatório',1],['Investiga a causa com a equipe e define ações',3]],exp:'Indicador piorando é sinal para agir na causa, não para esperar.'},
- {dim:'N',t:'A equipe faz uma tarefa do mesmo jeito há anos.',opts:[['Mantém, se funciona não se mexe',0],['Muda tudo de uma vez',1],['Reclama que é ultrapassado',0],['Pergunta à equipe o que dá para melhorar e testa uma mudança pequena',3]],exp:'Melhorar aos poucos, com a equipe, gera adesão e menos risco.'},
- {dim:'N',t:'Um concorrente lançou uma solução melhor que a sua.',opts:[['Ignora',0],['Copia igualzinho',1],['Critica o concorrente',0],['Estuda o que ele fez bem e propõe uma melhoria própria',3]],exp:'Aprender com quem faz melhor e adaptar é benchmarking.'},
- {dim:'C',t:'Você vai atrasar uma entrega combinada com o cliente.',opts:[['Avisa só no dia',1],['Não avisa e torce para ele não perceber',0],['Avisa assim que souber, explica o motivo e propõe nova data',3],['Pede para outra pessoa avisar',1]],exp:'Avisar cedo, com nova data, preserva a confiança.'},
- {dim:'C',t:'O cliente pede algo que você não sabe fazer.',opts:[['Diz que sabe e tenta',0],['Diz que não dá e encerra',1],['Explica que vai buscar a resposta e combina um prazo',3],['Não responde',0]],exp:'Ser honesto e combinar um prazo mostra compromisso.'},
- {dim:'R',t:'Uma reunião sem pauta toma o tempo da equipe toda semana.',opts:[['Continua indo',1],['Para de ir sem avisar',0],['Propõe uma pauta com tempo definido ou o cancelamento',3],['Reclama nos corredores',0]],exp:'Tempo da equipe é recurso: reunião precisa de objetivo.'},
- {dim:'R',t:'Você recebe uma tarefa sem prazo definido.',opts:[['Faz quando der',0],['Larga tudo e faz na hora',1],['Pergunta o prazo e a prioridade em relação ao resto',3],['Espera alguém cobrar',0]],exp:'Saber prazo e prioridade evita surpresas e conflitos.'},
- {dim:'M',t:'Um e-mail seu foi entendido de forma errada.',opts:[['Culpa quem leu',0],['Ignora',0],['Manda outro e-mail ainda maior',1],['Liga, esclarece e reenvia uma mensagem mais clara',3]],exp:'Esclarecer rápido corta o ruído antes que vire problema.'},
- {dim:'M',t:'Numa reunião, um colega mais tímido não fala nada.',opts:[['Ignora',0],['Pede a opinião dele com respeito',3],['Fala por ele',1],['Comenta depois que ele não participa',0]],exp:'Abrir espaço para todos traz ideias que ficariam de fora.'},
- {dim:'L',t:'A equipe vai passar por uma grande mudança de processo.',opts:[['Espera a mudança acontecer',0],['Critica a mudança',0],['Só repassa o comunicado oficial',1],['Explica o motivo, ouve as dúvidas e ajuda a planejar a transição',3]],exp:'Mudança com explicação e escuta tem muito mais adesão.'},
- {dim:'E',t:'Você percebe um erro seu que ninguém notou.',opts:[['Deixa como está',0],['Corrige escondido',1],['Culpa o sistema',0],['Corrige e avisa os envolvidos',3]],exp:'Assumir o próprio erro gera confiança.'});
-Q_V.push(
- {dim:'Q',t:'Retrabalho é um tipo de desperdício.',v:true,exp:'Fazer de novo gasta tempo e recursos que poderiam gerar valor.'},
- {dim:'Q',t:'Padronizar um processo impede qualquer melhoria.',v:false,exp:'O padrão é a base para melhorar com segurança.'},
- {dim:'Q',t:'A ISO 9001 é uma norma de gestão da qualidade.',v:true,exp:'É a norma internacional mais usada para sistemas de qualidade.'},
- {dim:'N',t:'Só a área de inovação pode ter ideias.',v:false,exp:'Boas ideias podem vir de qualquer pessoa da empresa.'},
- {dim:'N',t:'Ouvir o usuário é uma etapa importante do Design Thinking.',v:true,exp:'Tudo começa por entender quem vai usar a solução.'},
- {dim:'C',t:'Atender bem é só ser simpático.',v:false,exp:'Também é resolver o problema e cumprir o combinado.'},
- {dim:'C',t:'Uma reclamação pode ser uma oportunidade de melhoria.',v:true,exp:'A reclamação mostra exatamente onde melhorar.'},
- {dim:'R',t:'Priorizar é fazer primeiro o que é mais fácil.',v:false,exp:'Priorizar é fazer primeiro o que tem mais impacto.'},
- {dim:'R',t:'Acompanhar indicadores ajuda a corrigir a rota a tempo.',v:true,exp:'Quem mede cedo corrige cedo.'},
- {dim:'M',t:'A comunicação não verbal também passa mensagem.',v:true,exp:'Tom de voz, postura e expressão também comunicam.'},
- {dim:'L',t:'Reconhecer o bom trabalho da equipe aumenta o engajamento.',v:true,exp:'Reconhecimento sincero motiva e reforça o que deu certo.'},
- {dim:'E',t:'Compartilhar a senha com um colega de confiança é seguro.',v:false,exp:'Senha é pessoal e intransferível, mesmo com quem você confia.'});
-Q_O.push(
- {dim:'Q',t:'Coloque os sensos do 5S na ordem certa.',steps:['Utilização','Organização','Limpeza','Padronização','Disciplina'],exp:'Seiri, Seiton, Seiso, Seiketsu e Shitsuke.'},
- {dim:'R',t:'Ordene as etapas de uma reunião produtiva.',steps:['Definir o objetivo','Enviar a pauta','Conduzir no tempo combinado','Registrar as decisões','Acompanhar as ações'],exp:'Objetivo, pauta, tempo, registro e acompanhamento.'},
- {dim:'Q',t:'Ordene as etapas para analisar um problema.',steps:['Descrever o problema','Coletar dados','Encontrar a causa raiz','Definir ações','Verificar se resolveu'],exp:'Do problema aos dados, à causa, à ação e à verificação.'},
- {dim:'L',t:'Ordene as etapas para delegar uma tarefa.',steps:['Escolher a pessoa certa','Explicar o objetivo e o prazo','Dar autonomia','Acompanhar','Reconhecer o resultado'],exp:'Delegar bem vai da escolha até o reconhecimento.'});
-Q_M.push(
- {dim:'C',t:'Ligue cada termo de atendimento ao seu significado.',pairs:[['NPS','Índice de recomendação do cliente'],['SLA','Prazo de atendimento combinado'],['Pesquisa de satisfação','Pergunta ao cliente como foi a experiência'],['Cliente interno','Colega que recebe o seu trabalho']],exp:'Conhecer esses termos ajuda a medir e melhorar o atendimento.'},
- {dim:'E',t:'Ligue cada termo de conduta ao seu significado.',pairs:[['LGPD','Lei que protege dados pessoais'],['Compliance','Cumprir as leis e regras internas'],['Confidencial','Informação que não pode ser divulgada'],['Conflito de interesses','Quando um interesse pessoal atrapalha a decisão']],exp:'São a base da conduta profissional.'},
- {dim:'Q',t:'Ligue cada senso do 5S ao seu significado.',pairs:[['Utilização','Separar o útil do que não serve'],['Organização','Um lugar para cada coisa'],['Limpeza','Manter o ambiente limpo'],['Disciplina','Seguir o padrão sempre']],exp:'O 5S organiza o ambiente e a rotina de trabalho.'});
-Q_I.push(
- {dim:'Q',t:'Qual destas NÃO faz parte do 5S?',opts:['Utilização','Organização','Limpeza','Velocidade'],ans:3,exp:'Os 5S são utilização, organização, limpeza, padronização e disciplina.'},
- {dim:'N',t:'Qual destas NÃO é etapa do Design Thinking?',opts:['Entender o usuário','Gerar ideias','Testar','Punir quem errou'],ans:3,exp:'Errar faz parte do processo de inovar.'},
- {dim:'C',t:'Qual destas NÃO mede a satisfação do cliente?',opts:['NPS','Pesquisa de satisfação','Taxa de reclamações','Número de reuniões internas'],ans:3,exp:'Reuniões internas não dizem nada sobre o cliente.'},
- {dim:'R',t:'Qual destas NÃO ajuda a organizar o tempo?',opts:['Lista de prioridades','Agenda','Reservar horários para foco','Abrir o e-mail a cada minuto'],ans:3,exp:'Interrupções constantes derrubam a produtividade.'},
- {dim:'M',t:'Qual destas NÃO é escuta ativa?',opts:['Fazer perguntas','Resumir o que ouviu','Olhar o celular enquanto o outro fala','Manter contato visual'],ans:2,exp:'Olhar o celular mostra que você não está ouvindo.'},
- {dim:'L',t:'Qual destas NÃO desenvolve a equipe?',opts:['Dar feedback','Ensinar','Delegar com apoio','Esconder informações'],ans:3,exp:'Esconder informação impede o crescimento do time.'});
-Q_C.push(
- {dim:'Q',t:'O diagrama de Ishikawa também é chamado de diagrama de ____.',opts:['espinha de peixe','pizza','barras','dispersão'],ans:0,exp:'O formato lembra uma espinha de peixe.'},
- {dim:'N',t:'Benchmarking é aprender com ____.',opts:['quem já faz melhor','os próprios erros apenas','a sorte','a concorrência copiando tudo'],ans:0,exp:'Benchmarking é comparar e aprender com as melhores práticas.'},
- {dim:'C',t:'SLA é o ____ de atendimento combinado com o cliente.',opts:['prazo','preço','local','canal'],ans:0,exp:'SLA define o prazo e o nível de serviço combinado.'},
- {dim:'R',t:'Uma meta SMART é específica, mensurável, alcançável, relevante e ____.',opts:['com prazo','secreta','fácil','flexível'],ans:0,exp:'O T de SMART é de temporal: toda meta precisa de prazo.'},
- {dim:'M',t:'Para evitar ruído, toda mensagem importante deve ser ____.',opts:['clara e objetiva','longa','urgente','informal'],ans:0,exp:'Clareza e objetividade evitam interpretações erradas.'},
- {dim:'E',t:'Agir com ética é fazer o certo mesmo quando ____.',opts:['ninguém está olhando','for mais fácil','alguém pedir','houver prêmio'],ans:0,exp:'Ética não depende de plateia.'});
 const BANKN=Object.values(BANK).reduce((a,l)=>a+l.length,0);
-const TNAME={s:'Situação real',v:'Verdadeiro ou falso',o:'Monte a sequência',m:'Ligue os pares',i:'Encontre o intruso',c:'Complete a frase'};
-const TLIM={s:25,v:12,o:40,m:45,i:15,c:18};
-const HINTS={Q:'Pense em causa raiz, dados e padrão.',N:'Pense em testar pequeno, aprender e medir.',C:'Pense em entender o cliente e cumprir o combinado.',R:'Pense em prioridade, prazo e responsabilidade.',M:'Pense em clareza, escuta e respeito.',L:'Pense em dar o exemplo, tomar iniciativa e desenvolver pessoas.',E:'Pense em transparência, regras e proteção de dados.'};
-
-const LEVELS=['Aprendiz','Explorador','Criativo','Inventor','Inovador','Visionário','Lenda da Inovação'],LVXP=300;
+const TNAME={s:'Múltipla escolha',v:'Verdadeiro ou falso',o:'Monte a sequência',m:'Ligue os pares',i:'Encontre o intruso',c:'Complete a frase'};
+const TLIM={s:20,v:12,o:35,m:40,i:15,c:18};
+const LEVELS=['Iniciante','Curioso','Estudioso','Sabichão','Expert','Mestre','Lenda do Conhecimento'],LVXP=300;
 const lvlOf=xp=>Math.max(0,Math.min(LEVELS.length-1,Math.floor(Math.max(0,xp)/LVXP)));
 const ACH=[['first','Primeiro acerto','Acertou em cheio pela primeira vez'],['combo3','Combo x3','3 acertos seguidos'],['combo5','Imparável','5 acertos seguidos'],['flash','Relâmpago','Acertou em até 5 segundos'],['bold','Ousado','Acertou apostando “certeza absoluta”'],['order','Estrategista','Montou uma sequência perfeita'],['match','Conector','Ligou todos os pares certos'],['noaid','Sem ajuda','Terminou sem usar nenhum poder'],['perfect','Perfeição','Acertou todas as perguntas']];
 const BADGES=ACH,ACHPTS=50,TEAMCOL=['#2a78d6','#eb6834','#1baf7a','#6250d6','#e87ba4','#c98500'];
@@ -1910,7 +1905,7 @@ let SET={mode:'solo',solo:'',teams:[{nome:'Equipe Alfa',n:3,p:['','','']},{nome:
 try{const c=JSON.parse(localStorage.getItem(CKEY)||'null');if(c)SET=Object.assign(SET,c)}catch(e){}
 const setSave=()=>{try{localStorage.setItem(CKEY,JSON.stringify(SET))}catch(e){}};
 let G={phase:'setup'},gT=null,AC=null,lastTick=null;
-const gPersist=()=>{try{if(G.phase==='setup'||G.phase==='end')localStorage.removeItem(GSKEY);else localStorage.setItem(GSKEY,JSON.stringify(G))}catch(e){}};
+const gPersist=()=>{try{if(G.phase==='setup'||G.phase==='end'||G.phase==='reveal')localStorage.removeItem(GSKEY);else localStorage.setItem(GSKEY,JSON.stringify(G))}catch(e){}};
 /* som */
 function tone(fs,d=0.12,type='sine',vol=.08){if(!(G.sound??SET.sound))return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime;fs.forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,t+i*d);g.gain.exponentialRampToValueAtTime(.0001,t+i*d+d*1.8);o.connect(g).connect(AC.destination);o.start(t+i*d);o.stop(t+i*d+d*2)})}catch(e){}}
 const SFX={ok:()=>tone([660,880]),mid:()=>tone([520,560],.1),bad:()=>tone([220,150],.16,'triangle'),ach:()=>tone([523,659,784,1047],.08),lvl:()=>tone([392,523,659,784,1047],.07),tick:()=>tone([1100],.03,'square',.025),go:()=>tone([440,660,880],.08),click:()=>tone([700],.03,'sine',.03)};
@@ -1978,7 +1973,7 @@ function gAnswer(a){
 function gNext(){if(G.turn+1>=G.sched.length){gFinish();return}G.turn++;if(G.solo)gStartTurn();else{G.phase='turn';G.r=null;gPersist();renderGame()}}
 function pResult(p){
  const idx=p.ans.length?Math.round(mean(p.ans.map(a=>a.q))*100):0,dims={};
- DIMS.forEach(d=>{const l=p.ans.filter(a=>a.dim===d.id);dims[d.id]=l.length?Math.round((1+mean(l.map(a=>a.q))*4)*10)/10:null});
+ CATS.forEach(d=>{const l=p.ans.filter(a=>a.dim===d.id);dims[d.id]=l.length?Math.round((1+mean(l.map(a=>a.q))*4)*10)/10:null});
  return{idx,nota:Math.round((1+idx/100*4)*10)/10,dims,avgT:mean(p.ans.map(a=>a.time)),badges:p.ach,xp:p.pts,nivel:lvlOf(p.pts),acertos:p.ans.filter(a=>a.q>=1).length,total:p.ans.length,maxStreak:p.maxStreak}}
 function gFinish(){stopTimer();
  G.players.forEach(p=>{if(!p.used&&!p.ach.includes('noaid')){p.ach.push('noaid');p.pts+=ACHPTS}if(p.ans.length&&p.ans.every(a=>a.q>=1)&&!p.ach.includes('perfect')){p.ach.push('perfect');p.pts+=ACHPTS}p.res=pResult(p)});
@@ -1986,7 +1981,7 @@ function gFinish(){stopTimer();
  G.players.forEach((p,i)=>l.push({id:'g'+Date.now()+'_'+i,nome:p.nome,team:G.solo?'':G.teams[p.team].nome,data:d,timed:G.timed,...p.res}));gSave(l);
  if(!G.solo){G.teams.forEach(t=>{const ps=t.ids.map(i=>G.players[i]);t.total=ps.reduce((a,p)=>a+p.pts,0);t.media=Math.round(t.total/ps.length);t.idx=Math.round(mean(ps.map(p=>p.res.idx)))});
   const tl=tLoad();tl.push({data:d,teams:G.teams.map(t=>({nome:t.nome,media:t.media,total:t.total,n:t.ids.length,idx:t.idx}))});try{localStorage.setItem(TKEY,JSON.stringify(tl.slice(-30)))}catch(e){}}
- G.phase='end';G.sel=[...G.players].sort((a,b)=>b.pts-a.pts)[0].id;gPersist();renderGame();confetti();SFX.lvl()}
+ G.phase=G.solo?'end':'reveal';G.sel=[...G.players].sort((a,b)=>b.pts-a.pts)[0].id;gPersist();renderGame();if(G.solo){confetti();SFX.lvl()}else SFX.go()}
 function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const c=document.createElement('canvas');c.className='confetti';document.body.appendChild(c);const x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
  const cols=['#F2B705','#2a78d6','#1baf7a','#eb6834','#6250d6','#ffffff'],P=Array.from({length:180},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,w:6+Math.random()*6,h:8+Math.random()*8,vy:2+Math.random()*3,vx:-1.5+Math.random()*3,r:Math.random()*6,vr:-.2+Math.random()*.4,c:cols[Math.floor(Math.random()*cols.length)]}));
  const t0=performance.now();(function f(t){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()});if(t-t0<3400)requestAnimationFrame(f);else c.remove()})(t0)}
@@ -2000,11 +1995,10 @@ function scoreboard(){
   <div class="g-lv-mini"><div><span>Nível ${nv+1} · ${LEVELS[nv]}</span></div><div class="g-lv-bar dark"><i style="width:${nv>=LEVELS.length-1?100:(Math.max(0,p.pts)-nv*LVXP)/LVXP*100}%"></i></div></div>
   <div class="g-sb-stats"><div><span>Acertos</span><b>${p.ans.filter(a=>a.q>=1).length}/${p.ans.length}</b></div><div><span>Maior combo</span><b>${p.maxStreak}</b></div><div><span>Conquistas</span><b>${p.ach.length}</b></div></div>
   <div class="g-ach-row">${ACH.map(([k,n])=>`<span class="${p.ach.includes(k)?'on':''}" data-tip="${n}">${n[0]}</span>`).join('')}</div></aside>`}
- const ts=G.teams.map((t,i)=>{const ps=t.ids.map(k=>G.players[k]),tot=ps.reduce((a,p)=>a+p.pts,0);return{t,i,tot,med:Math.round(tot/ps.length)}}).sort((a,b)=>b.med-a.med);
- const top=Math.max(1,...ts.map(x=>x.med)),cur=curP(),nx=G.sched.slice(G.turn+1,G.turn+4).map(k=>G.players[k]);
- return`<aside class="g-side"><h3>Placar das equipes</h3><p class="g-sb-sub">Comparadas pela média de pontos por participante.</p>
-  <ol class="g-teams">${ts.map((x,k)=>`<li class="${x.i===cur.team?'cur':''}"><span class="g-tpos">${k+1}º</span><span class="g-tn"><b><i style="background:${x.t.cor}"></i>${esc(x.t.nome)}</b><small>${x.t.ids.length} participante${x.t.ids.length>1?'s':''} · total ${x.tot}</small><span class="g-tbar"><i style="width:${Math.max(0,x.med)/top*100}%;background:${x.t.cor}"></i></span></span><b class="g-tm">${x.med}</b></li>`).join('')}</ol>
-  ${nx.length?`<h4>Próximos</h4><ul class="g-next">${nx.map(p=>`<li>${av(p.nome,G.teams[p.team].cor)}<span>${esc(p.nome)}</span></li>`).join('')}</ul>`:''}</aside>`}
+ const cur=curP(),nx=G.sched.slice(G.turn+1,G.turn+4).map(k=>G.players[k]);
+ return`<aside class="g-side"><h3>Andamento das equipes</h3><p class="g-sb-sub">O placar e o ranking só aparecem quando todas as equipes terminarem.</p>
+  <ol class="g-teams">${G.teams.map((t,i)=>{const ps=t.ids.map(k=>G.players[k]),done=ps.reduce((a,p)=>a+p.ans.length,0),tot=ps.length*G.q;return`<li class="${i===cur.team?'cur':''}"><span class="g-tpos" style="background:${t.cor};color:#fff">${esc(ini(t.nome))}</span><span class="g-tn"><b>${esc(t.nome)}</b><small>${ps.length} participante${ps.length>1?'s':''} · ${done} de ${tot} respostas</small><span class="g-tbar"><i style="width:${done/tot*100}%;background:${t.cor}"></i></span></span><b class="g-tm" style="font-size:14px">${Math.round(done/tot*100)}%</b></li>`}).join('')}</ol>
+  ${nx.length?`<h4>Próximos</h4><ul class="g-next">${nx.map(p=>`<li>${av(p.nome,G.teams[p.team].cor)}<span>${esc(p.nome)}</span></li>`).join('')}</ul>`:''}</aside>`;}
 function setupHtml(){
  let saved=null;try{saved=JSON.parse(localStorage.getItem(GSKEY)||'null')}catch(e){}
  const names=[...new Set(histLoad().map(r=>r.nome.replace(/ \(exemplo\)$/,'')))];
@@ -2013,8 +2007,8 @@ function setupHtml(){
    <div class="g-step"><span>Participantes</span><button type="button" data-n="${i}" data-d="-1" aria-label="Menos um">−</button><b>${t.n}</b><button type="button" data-n="${i}" data-d="1" aria-label="Mais um">+</button></div>
    <div class="g-plist">${Array.from({length:t.n},(_,j)=>`<input data-s="pnome" data-i="${i}" data-j="${j}" list="gNomes" value="${esc(t.p[j]||'')}" placeholder="Participante ${j+1}" aria-label="Participante ${j+1} da ${esc(t.nome)}">`).join('')}</div></div>`).join('');
  return`<div class="g-start">
-  <section class="g-hero"><span class="eyebrow">Dinâmica gamificada</span><h2>Desafio da Inovação</h2>
-   <p>${BANKN} perguntas em 6 formatos diferentes, sorteadas para cada participante, sem repetir para a mesma pessoa. Cada detalhe conta: acerto, rapidez, combos, apostas, poderes e conquistas.</p>
+  <section class="g-hero"><span class="eyebrow">Dinâmica gamificada</span><h2>Desafio do Conhecimento</h2>
+   <p>${BANKN} perguntas de conhecimentos gerais e atendimento, em 6 formatos, sorteadas para cada participante sem repetir para a mesma pessoa. Cada detalhe conta: acerto, rapidez, combos, apostas, poderes e conquistas.</p>
    ${saved&&saved.phase&&saved.phase!=='end'?`<div class="g-resume"><span>Há uma partida em andamento (${saved.turn+1} de ${saved.sched.length} jogadas).</span><button class="btn gold" type="button" id="gResume">Retomar partida</button><button class="btn light" type="button" id="gDiscard">Descartar</button></div>`:''}
    <div class="g-mode" role="group" aria-label="Modo de jogo"><button type="button" data-mode="solo" aria-pressed="${SET.mode==='solo'}">Individual</button><button type="button" data-mode="team" aria-pressed="${SET.mode==='team'}">Por equipes</button></div>
    <datalist id="gNomes">${names.map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
@@ -2035,7 +2029,7 @@ function setupHtml(){
    ${tl.length?`<section class="t-card"><h2>Últimas partidas por equipe</h2><ul class="g-hist">${tl.map(g=>{const w=[...g.teams].sort((a,b)=>b.media-a.media)[0];return`<li><span>${dataBR(g.data)}</span><b>${esc(w.nome)}</b><small>venceu com média ${w.media} · ${g.teams.length} equipes</small></li>`}).join('')}</ul></section>`:''}
   </div></div>`}
 function playHtml(){
- const p=curP(),t=G.teams[p.team],r=G.r,fb=G.fb,k=p.ans.length+(fb?0:1),nv=lvlOf(p.pts),into=nv>=LEVELS.length-1?100:(Math.max(0,p.pts)-nv*LVXP)/LVXP*100,dm=DIMS.find(d=>d.id===r.dim),lim=G.limit+(r.extra||0);
+ const p=curP(),t=G.teams[p.team],r=G.r,fb=G.fb,k=p.ans.length+(fb?0:1),nv=lvlOf(p.pts),into=nv>=LEVELS.length-1?100:(Math.max(0,p.pts)-nv*LVXP)/LVXP*100,dm=CATS.find(d=>d.id===r.dim)||{nome:''},lim=G.limit+(r.extra||0);
  const answered=!!fb,best=r.opts?Math.max(...r.opts.map(o=>o[1])):0;
  let body='';
  if(r.opts){body=`<div class="g-opts">${r.opts.map(([tx,sc],i)=>{if(r.hidden.includes(i))return`<div class="g-opt gone"></div>`;let c='';if(answered){c=sc===best?' best':i===(fb.a&&fb.a.idx)?(sc>0?' mid':' wrong'):' dim'}
@@ -2047,10 +2041,10 @@ function playHtml(){
   body=`<div class="g-match"><div class="g-mcol">${r.L.map(a=>{let c=r.sel===a?' sel':r.links[a]?' linked':'';if(answered){const ok=r.pairs.find(x=>x[0]===a)[1]===r.links[a];c=ok?' ok':' no'}return`<button type="button" class="g-mi${c}" data-ml="${esc(a)}"${answered?' disabled':''}>${num[a]?`<i>${num[a]}</i>`:''}${esc(a)}</button>`}).join('')}</div>
    <div class="g-mcol">${r.Rr.map(b=>{const a=Object.keys(r.links).find(x=>r.links[x]===b),n=a?Object.keys(r.links).indexOf(a)+1:0;let c=a?' linked':'';if(answered&&a){c=r.pairs.find(x=>x[0]===a)[1]===b?' ok':' no'}return`<button type="button" class="g-mi r${c}" data-mr="${esc(b)}"${answered?' disabled':''}>${n?`<i>${n}</i>`:''}${esc(b)}</button>`}).join('')}</div></div>
    ${answered?`<p class="cap">Pares certos: ${r.pairs.map(x=>`<b>${x[0]}</b> → ${x[1]}`).join(' · ')}</p>`:`<div class="g-ord-act"><button class="btn primary" type="button" id="gMatchOk"${Object.keys(r.links).length===r.pairs.length?'':' disabled'}>Confirmar pares</button><span class="cap">Clique num termo à esquerda e depois no significado à direita. Clique de novo para desfazer.</span></div>`}`}
- const canF=['s','i','c'].includes(r.type)&&p.pw.f&&!answered,canT=G.timed&&p.pw.t&&!answered,canD=p.pw.d&&!answered&&!r.hint;
+ const canF=['s','i','c'].includes(r.type)&&p.pw.f&&!answered,canT=G.timed&&p.pw.t&&!answered,canD=p.pw.d&&!answered&&!r.hint&&r.type!=='v';
  const tools=answered?'':`<div class="g-tools">${G.bet?`<div class="g-bet"><span>Aposta</span>${[[1,'Normal'],[1.5,'Confiante x1,5'],[2,'Certeza x2']].map(([m,l])=>`<button type="button" data-bet="${m}" aria-pressed="${r.bet===m}">${l}</button>`).join('')}</div>`:''}
-  <div class="g-pw"><span>Poderes</span><button type="button" data-pw="f"${canF?'':' disabled'} data-tip="Remove duas opções erradas. Vale 30% menos.">50/50</button>${G.timed?`<button type="button" data-pw="t"${canT?'':' disabled'} data-tip="Ganha 10 segundos.">+10 s</button>`:''}<button type="button" data-pw="d"${canD?'':' disabled'} data-tip="Mostra uma dica. Vale 30% menos.">Dica</button></div></div>`;
- const hint=r.hint&&!answered?`<div class="g-hint"><b>Dica:</b> ${HINTS[r.dim]}</div>`:'';
+  <div class="g-pw"><span>Poderes</span><button type="button" data-pw="f"${canF?'':' disabled'} data-tip="Remove duas opções erradas. Vale 30% menos.">50/50</button>${G.timed?`<button type="button" data-pw="t"${canT?'':' disabled'} data-tip="Ganha 10 segundos.">+10 s</button>`:''}<button type="button" data-pw="d"${canD?'':' disabled'} data-tip="Dá uma pista ou adianta uma parte. Vale 30% menos.">Dica</button></div></div>`;
+ const hint=r.hint&&!answered?`<div class="g-hint"><b>Dica:</b> ${r.hintTxt}</div>`:'';
  const fbHtml=fb?`<div class="g-fb ${fb.q>=1?'good':fb.q>0?'mid':'bad'}"><div><b>${fb.timeout?'Tempo esgotado!':fb.q>=1?['Excelente!','Mandou bem!','Na mosca!','Perfeito!'][p.ans.length%4]:fb.q>=0.5?'Quase lá!':'Não foi dessa vez.'}</b><p>${r.exp}</p>
    <div class="g-bd">${fb.base?`<span>Acerto +${fb.base}</span>`:''}${fb.speed?`<span>Rapidez +${fb.speed}</span>`:''}${fb.mult>1?`<span class="hot">Combo x${String(fb.mult).replace('.',',')}</span>`:''}${fb.betTxt?`<span class="${fb.total<0?'neg':'hot'}">Aposta ${fb.betTxt}</span>`:''}${fb.pen<1?'<span class="neg">Poder −30%</span>':''}${fb.got.map(k=>`<span class="ach">${ACH.find(x=>x[0]===k)[1]} +${ACHPTS}</span>`).join('')}</div></div>
    <div class="g-gain"><span class="g-xp${fb.total<0?' neg':''}">${fb.total+fb.achPts>=0?'+':''}${fb.total+fb.achPts}</span><small>pontos</small></div>
@@ -2082,7 +2076,7 @@ function endHtml(){
  const fast=[...G.players].filter(p=>p.res.acertos).sort((a,b)=>a.res.avgT-b.res.avgT)[0],combo=[...G.players].sort((a,b)=>b.maxStreak-a.maxStreak)[0],bold=[...G.players].sort((a,b)=>b.betWins-a.betWins)[0];
  const pod=[ts[1],ts[0],ts[2]];
  return`<div class="g-end">
-  <section class="g-podium-wrap"><span class="eyebrow">Resultado por equipes</span><h2>${esc(ts[0].nome)} venceu o Desafio da Inovação!</h2>
+  <section class="g-podium-wrap"><span class="eyebrow">Resultado por equipes</span><h2>${esc(ts[0].nome)} venceu o Desafio do Conhecimento!</h2>
    <div class="g-podium">${pod.map((t,i)=>t?`<div class="g-pod pd${[2,1,3][i]}" style="--tc:${t.cor}"><b class="nm">${esc(t.nome)}</b><span class="md">${t.media} pts</span><small>média por participante</small><div class="blk"><i>${[2,1,3][i]}º</i></div></div>`:'<div></div>').join('')}</div>
    ${ts.length>3?`<p class="g-rest">${ts.slice(3).map((t,i)=>`${i+4}º ${esc(t.nome)} (${t.media})`).join(' · ')}</p>`:''}
    <div class="g-act"><button class="btn gold" type="button" id="gAgain">Jogar de novo</button><button class="btn light" type="button" id="gNew">Mudar configuração</button></div></section>
@@ -2092,16 +2086,17 @@ function endHtml(){
    <div><span>Maior combo</span><b>${esc(combo.nome)}</b><small>${combo.maxStreak} acerto${combo.maxStreak===1?'':'s'} seguido${combo.maxStreak===1?'':'s'}</small></div>
    <div><span>Mais ousado</span><b>${bold.betWins?esc(bold.nome):'-'}</b><small>${bold.betWins?bold.betWins+(bold.betWins===1?' aposta vencida':' apostas vencidas'):'ninguém arriscou'}</small></div></div>
   <div class="t-grid">
-   <div class="t-card wide"><h2>Equipes</h2><p class="sub">Total, média por participante e índice médio de acerto.</p><div class="tbl-wrap"><table class="t"><thead><tr><th>Posição</th><th>Equipe</th><th style="text-align:right">Participantes</th><th style="text-align:right">Total</th><th style="text-align:right">Média</th><th style="text-align:right">Índice</th></tr></thead><tbody>${ts.map((t,i)=>`<tr><td>${i+1}º</td><td><b><i class="g-dot" style="background:${t.cor}"></i>${esc(t.nome)}</b></td><td class="num">${t.ids.length}</td><td class="num">${t.total}</td><td class="num"><b>${t.media}</b></td><td class="num">${t.idx}</td></tr>`).join('')}</tbody></table></div></div>
-   <div class="t-card wide"><h2>Participantes</h2><p class="sub">Clique num nome para ver o desempenho detalhado.</p><div class="tbl-wrap"><table class="t g-ptab"><thead><tr><th>#</th><th>Participante</th><th>Equipe</th><th style="text-align:right">Pontos</th><th style="text-align:right">Acertos</th><th style="text-align:right">Índice</th><th>Classificação</th><th style="text-align:right">Conquistas</th></tr></thead><tbody>${ps.map((p,i)=>`<tr data-sel="${p.id}" class="${p===sel?'on':''}"><td>${i+1}</td><td><b>${esc(p.nome)}</b></td><td><i class="g-dot" style="background:${G.teams[p.team].cor}"></i>${esc(G.teams[p.team].nome)}</td><td class="num"><b>${p.pts}</b></td><td class="num">${p.res.acertos}/${p.res.total}</td><td class="num">${p.res.idx}</td><td><span class="pill ${cls(p.res.nota)[1]}">${GTITLE(p.res.idx)}</span></td><td class="num">${p.ach.length}</td></tr>`).join('')}</tbody></table></div></div>
+   <div class="t-card wide"><h2>Ranking por equipe</h2><p class="sub">Ordenado pela média de pontos por participante. Também mostra o total e o índice médio de acerto.</p><div class="tbl-wrap"><table class="t"><thead><tr><th>Posição</th><th>Equipe</th><th style="text-align:right">Participantes</th><th style="text-align:right">Total</th><th style="text-align:right">Média</th><th style="text-align:right">Índice</th></tr></thead><tbody>${ts.map((t,i)=>`<tr><td><span class="g-medal-s m${i<3?i+1:0}">${i+1}º</span></td><td><b><i class="g-dot" style="background:${t.cor}"></i>${esc(t.nome)}</b></td><td class="num">${t.ids.length}</td><td class="num">${t.total}</td><td class="num"><b>${t.media}</b></td><td class="num">${t.idx}</td></tr>`).join('')}</tbody></table></div></div>
+   <div class="t-card wide"><h2>Ranking individual</h2><p class="sub">Todos os participantes, de todas as equipes. Clique num nome para ver o desempenho detalhado.</p><div class="tbl-wrap"><table class="t g-ptab"><thead><tr><th>#</th><th>Participante</th><th>Equipe</th><th style="text-align:right">Pontos</th><th style="text-align:right">Acertos</th><th style="text-align:right">Índice</th><th>Classificação</th><th style="text-align:right">Conquistas</th></tr></thead><tbody>${ps.map((p,i)=>`<tr data-sel="${p.id}" class="${p===sel?'on':''}"><td><span class="g-medal-s m${i<3?i+1:0}">${i+1}º</span></td><td><b>${esc(p.nome)}</b></td><td><i class="g-dot" style="background:${G.teams[p.team].cor}"></i>${esc(G.teams[p.team].nome)}</td><td class="num"><b>${p.pts}</b></td><td class="num">${p.res.acertos}/${p.res.total}</td><td class="num">${p.res.idx}</td><td><span class="pill ${cls(p.res.nota)[1]}">${GTITLE(p.res.idx)}</span></td><td class="num">${p.ach.length}</td></tr>`).join('')}</tbody></table></div></div>
    <div class="t-card wide g-detail-h"><h2>${esc(sel.nome)}</h2><p class="sub">${esc(G.teams[sel.team].nome)} · ${sel.pts} pontos · índice ${sel.res.idx} (${GTITLE(sel.res.idx)}) · nível ${sel.res.nivel+1}: ${LEVELS[sel.res.nivel]}</p></div>
    ${detailCards(sel)}</div></div>`}
-function detailCards(p){const r=p.res,ds=DIMS.map(d=>({d,m:r.dims[d.id]})).filter(o=>o.m!=null).sort((a,b)=>b.m-a.m);
- return`<div class="t-card"><h2>Desempenho por área</h2><p class="sub">Convertido para a escala de 1 a 5 da avaliação.</p>${radar(DIMS.map(d=>({d,m:r.dims[d.id]})))}
+function detailCards(p){const r=p.res,ds=CATS.map(d=>({d,m:r.dims[d.id]})).filter(o=>o.m!=null).sort((a,b)=>b.m-a.m);
+ return`<div class="t-card"><h2>Desempenho por tema</h2><p class="sub">Aproveitamento em cada tema, na escala de 1 a 5.</p>${radar(CATS.map(d=>({d,m:r.dims[d.id]})))}
   ${ds.length?`<ul class="insights" style="grid-template-columns:1fr;margin-top:10px"><li><span>Ponto mais forte</span><b>${ds[0].d.nome}</b> (${fmt(ds[0].m)})</li><li><span>Para desenvolver</span><b>${ds[ds.length-1].d.nome}</b> (${fmt(ds[ds.length-1].m)})</li></ul>`:''}</div>
   <div class="t-card"><h2>Conquistas</h2><p class="sub">${p.ach.length} de ${ACH.length} desbloqueadas.</p><div class="g-badges">${ACH.map(([k,n,ds2])=>`<div class="g-bdg${p.ach.includes(k)?' on':''}"><i>${n[0]}</i><b>${n}</b><small>${ds2}</small></div>`).join('')}</div>
   <p class="cap">O resultado aparece também no relatório do consultor com o mesmo nome.</p></div>`}
 function renderGame(){const el=$('#game');
+ if(G.phase==='reveal'){el.innerHTML=`<section class="g-turn g-reveal"><span class="eyebrow">Fim de jogo</span><h2>Todas as equipes terminaram!</h2><p>${G.teams.length} equipes · ${G.players.length} participantes · ${G.sched.length} respostas</p><button class="btn gold big" type="button" id="gReveal">Revelar o resultado</button><small class="g-small">Ou aperte Enter</small></section>`;$('#gReveal').focus({preventScroll:true});return}
  if(G.phase==='setup')el.innerHTML=setupHtml();else if(G.phase==='turn')el.innerHTML=turnHtml();else if(G.phase==='end')el.innerHTML=endHtml();else el.innerHTML=playHtml();
  const f=G.phase==='fb'?$('#gNext'):G.phase==='turn'?$('#gReady'):null;if(f)f.focus({preventScroll:true})}
 $('#game').addEventListener('input',e=>{const t=e.target,k=t.dataset.s;if(!k)return;
@@ -2119,12 +2114,15 @@ $('#game').addEventListener('click',e=>{const t=e.target.closest('button,tr[data
  if(t.id==='gResume'){try{G=JSON.parse(localStorage.getItem(GSKEY));if(G.phase==='play'){G.phase=G.solo?'play':'turn';if(G.solo){gStartTurn();return}}renderGame()}catch(er){G={phase:'setup'};renderGame()}return}
  if(t.id==='gDiscard'){try{localStorage.removeItem(GSKEY)}catch(er){}renderGame();return}
  if(t.id==='gReady'){gStartTurn();return}
+ if(t.id==='gReveal'){G.phase='end';gPersist();tone([196,247,294,392,494,587,784],.11);setTimeout(()=>{renderGame();confetti();SFX.lvl()},900);t.disabled=true;t.textContent='Revelando…';return}
  if(t.dataset.opt!=null){gAnswer({idx:+t.dataset.opt});return}
  if(t.dataset.v!=null){gAnswer({v:t.dataset.v==='true'});return}
  if(t.dataset.bet){G.r.bet=+t.dataset.bet;SFX.click();renderGame();return}
  if(t.dataset.pw){const p=curP(),r=G.r,k=t.dataset.pw;if(!p.pw[k])return;p.pw[k]=0;p.used++;SFX.click();
   if(k==='f'){const bestS=Math.max(...r.opts.map(o=>o[1]));r.hidden=shufA(r.opts.map((o,i)=>i).filter(i=>r.opts[i][1]<bestS)).sort((a,b)=>r.opts[a][1]-r.opts[b][1]).slice(0,2);r.f5050=true}
-  if(k==='t'){r.extra=(r.extra||0)+10;G.left+=10}if(k==='d')r.hint=true;renderGame();return}
+  if(k==='t'){r.extra=(r.extra||0)+10;G.left+=10}if(k==='d'){r.hint=true;if(r.opts){const c=r.opts.find(o=>o[1]===Math.max(...r.opts.map(x=>x[1])))[0].replace(/^[^A-Za-zÀ-ú0-9]+/,'');r.hintTxt=`a resposta certa começa com “${c[0].toUpperCase()}”.`}
+  if(r.type==='o'){r.pick=[r.steps[0]];r.hintTxt='a primeira etapa já foi colocada para você.'}
+  if(r.type==='m'){const[a0,b0]=r.pairs[0];Object.keys(r.links).forEach(x=>{if(x===a0||r.links[x]===b0)delete r.links[x]});r.links[a0]=b0;r.sel=null;r.hintTxt='um par já foi ligado para você.'}}renderGame();return}
  if(t.dataset.step){const r=G.r;r.pick.push(t.dataset.step);SFX.click();if(r.pick.length===r.steps.length)gAnswer({});else renderGame();return}
  if(t.id==='gUndo'){G.r.pick.pop();renderGame();return}
  if(t.dataset.ml!=null){const r=G.r,a=t.dataset.ml;if(r.links[a]){delete r.links[a];r.sel=null}else r.sel=r.sel===a?null:a;SFX.click();renderGame();return}
@@ -2163,7 +2161,7 @@ function renderHome(){
  <div class="qa">
   <button type="button" data-h="equipe">${qi('team')}<b>Painel da equipe</b><small>Gráficos, ranking, evolução e comparação entre consultores.</small></button>
   <button type="button" data-h="hist">${qi('hist')}<b>Histórico</b><small>Todas as avaliações salvas, com backup e restauração.</small></button>
-  <button type="button" data-h="din"><span class="qi" style="background:#FFF3C4;color:#8A6400"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><b>Dinâmica</b><small>Jogo individual ou por equipes, com pontos, combos, apostas e ranking.</small></button>
+  <button type="button" data-h="din"><span class="qi" style="background:#FFF3C4;color:#8A6400"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><b>Dinâmica</b><small>Quiz de conhecimentos gerais, individual ou por equipes, com ranking.</small></button>
   <button type="button" data-h="ex">${qi('ex')}<b>Relatório de exemplo</b><small>Veja como fica o resultado completo e o PDF.</small></button>
  </div>
  <div class="home-grid">
