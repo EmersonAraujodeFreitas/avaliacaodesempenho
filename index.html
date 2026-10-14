@@ -86,6 +86,62 @@ button,input,select,textarea{font:inherit;color:inherit}
 .r-logo img{height:54px;width:auto;display:block}
 .r-head{border-bottom-color:var(--brand)}
 
+
+/* Painel da equipe */
+.tab-team{margin-left:auto;color:var(--brand)}
+.demo{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:10px 14px;font-size:14.5px;margin-bottom:16px}
+.t-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.t-kpi{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--brand);border-radius:10px;padding:14px 16px}
+.t-kpi span{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.t-kpi b{display:block;font-family:var(--f-display);font-size:32px;line-height:1.15;margin-top:4px}
+.t-kpi small{color:var(--muted);font-size:13.5px}
+.t-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:16px}
+.t-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;min-width:0;box-shadow:0 1px 3px rgba(0,49,88,.06)}
+.t-card.wide{grid-column:1/-1}
+.t-card h2{font-size:18px;margin-bottom:2px}
+.t-card .sub{font-size:14px;color:var(--muted);margin:0 0 14px}
+.insights{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
+.insights li{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:15px;min-width:0}
+.insights li span{display:block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.rk{display:flex;flex-direction:column;gap:9px}
+.rk-row{display:grid;grid-template-columns:minmax(110px,170px) 1fr 40px;gap:10px;align-items:center;font-size:15px}
+.rk-row .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rk-track{position:relative;height:18px;background:var(--soft);border:1px solid var(--line);border-radius:4px}
+.rk-fill{position:absolute;inset:0 auto 0 0;border-radius:3px}
+.rk-avg{position:absolute;top:-5px;bottom:-5px;border-left:2px dashed var(--ink);opacity:.6}
+.rk-row b{font-family:var(--f-mono);font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.heat td.h{text-align:center;font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:14px;border:2px solid var(--surface);border-radius:4px;min-width:62px}
+.heat th.c{text-align:center}
+.heat tr.avg td{font-weight:700;border-top:2px solid var(--ink)}
+.dv{display:flex;flex-direction:column;gap:9px}
+.dv-row{display:grid;grid-template-columns:minmax(110px,170px) 1fr 52px;gap:10px;align-items:center;font-size:15px}
+.dv-track{position:relative;height:18px}
+.dv-track::before{content:"";position:absolute;left:50%;top:-4px;bottom:-4px;border-left:1px solid var(--muted)}
+.dv-bar{position:absolute;top:2px;bottom:2px;border-radius:3px}
+.dv-row b{font-family:var(--f-mono);font-weight:500;text-align:right}
+.dv-row i{font-style:normal;font-size:13px;color:var(--muted)}
+.nine.team .cell{min-height:78px}
+.nine.team .cell .who{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.nine.team .cell .who span{background:var(--brand);color:#fff;border-radius:10px;padding:1px 7px;font-size:11.5px}
+.nine.team .cell.has{background:var(--accent-soft);border-color:var(--accent)}
+.disc-team{display:flex;flex-direction:column;gap:12px}
+.disc-team .row{display:grid;grid-template-columns:140px 1fr 28px;gap:10px;align-items:center;font-size:15px}
+.disc-team .names{grid-column:2/4;font-size:13px;color:var(--muted);margin-top:-6px}
+.cmp-sel{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin-bottom:14px}
+.cmp-sel .field{flex:1 1 200px}
+.legend-row{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;margin-bottom:10px}
+.legend-row span{display:flex;align-items:center;gap:6px}
+.legend-row i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.cmp{display:flex;flex-direction:column;gap:12px}
+.cmp-row{display:grid;grid-template-columns:minmax(100px,150px) 1fr;gap:10px;align-items:center;font-size:15px}
+.cmp-bars{display:flex;flex-direction:column;gap:3px}
+.cmp-bars div{display:grid;grid-template-columns:1fr 36px;gap:8px;align-items:center}
+.cmp-bars .tr{position:relative;height:13px;background:var(--soft);border-radius:3px}
+.cmp-bars .tr i{position:absolute;inset:0 auto 0 0;border-radius:3px}
+.cmp-bars b{font-family:var(--f-mono);font-weight:500;font-size:13.5px;text-align:right}
+.cmp-sum{background:var(--accent-soft);border-left:4px solid var(--gold);border-radius:8px;padding:10px 14px;font-size:15px;margin-top:14px}
+@media (max-width:560px){.rk-row,.dv-row{grid-template-columns:96px 1fr 40px}.tab-team{margin-left:0}}
+
 /* Abas */
 .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
 .tab{border:0;background:none;padding:12px 14px;cursor:pointer;font-weight:600;color:var(--muted);border-bottom:3px solid transparent;white-space:nowrap;display:flex;gap:8px;align-items:center}
@@ -287,6 +343,7 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
     <button class="tab" role="tab" data-tab="disc" id="t_disc">3 · Perfil DISC <span class="n" id="n_disc"></span></button>
     <button class="tab" role="tab" data-tab="obs" id="t_obs">4 · Considerações</button>
     <button class="tab" role="tab" data-tab="painel" id="t_painel">5 · Resultado</button>
+    <button class="tab tab-team" role="tab" data-tab="equipe" id="t_equipe">Painel da equipe</button>
   </nav>
   <div class="progress" aria-hidden="true"><div id="progBar"></div></div>
 
@@ -366,6 +423,11 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
       </div>
     </div>
     <div class="next-row"><button class="btn" data-go="disc" type="button">← Voltar</button><button class="btn primary big" data-go="painel" type="button">Ver resultado da avaliação ✓</button></div>
+  </section>
+
+  <section class="panel" id="tab-equipe" hidden>
+    <div class="demo" id="teamDemo" hidden><b>Dados de exemplo.</b> Os gráficos passam a mostrar a sua equipe assim que a primeira avaliação for salva no histórico.</div>
+    <div id="team"></div>
   </section>
 
   <section class="panel" id="tab-hist" hidden>
@@ -589,7 +651,7 @@ const HELP={
  'obs.melhorar':'Descreva situações reais. Ajuda o consultor a entender exatamente o que mudar.',
  'obs.metas':'Compromissos mensuráveis, com prazo, para o próximo ciclo. São a base do acompanhamento.',
  'obs.avaliado':'Espaço para o consultor registrar a própria visão sobre a avaliação.',
- 'obs.parecer':'Conclusão formal da avaliação, encaminhada ao RH.'};
+ 'obs.parecer':'Conclusão formal da avaliação, encaminhada à Gerência de Operações.'};
 document.querySelectorAll('[data-k]').forEach(el=>{const h=HELP[el.dataset.k];if(h){const s=document.createElement('small');s.className='help';s.textContent=h;el.closest('.field').appendChild(s)}});
 const KEY='avaliacao-consultor-v2';
 function blank(){return{id:'av'+Date.now(),info:{nome:'',cargo:'',area:'Inovação',tempo:'',avaliador:'',cargoAv:'Gerente',periodo:'',data:new Date().toISOString().slice(0,10),tipo:'Avaliação do gestor (90°)'},notas:{},disc:{},obs:{fortes:'',melhorar:'',metas:'',avaliado:'',parecer:'Manter na função com plano de desenvolvimento'}}}
@@ -795,7 +857,7 @@ function report(){
    <div class="tbl-wrap"><table class="t"><thead><tr><th>Área</th><th style="text-align:right">Anterior</th><th style="text-align:right">Atual</th><th style="text-align:right">Variação</th><th>Grau de evolução</th></tr></thead><tbody>
    ${cmp.rows.map(r=>{const[g,p]=evo(r.d);return`<tr><td>${r.nome}</td><td class="num">${fmt(r.ant)}</td><td class="num"><b>${fmt(r.atu)}</b></td><td class="num ${r.d>=0.2?'up':r.d<=-0.2?'dn':''}">${sgn(r.d)}</td><td><span class="pill ${p}">${g}</span></td></tr>`}).join('')}
    </tbody></table></div>
-   <p class="cap">${up&&up.d>0?`Mais evoluiu: <b>${up.nome}</b> (${sgn(up.d)}). `:''}${dn&&dn.d<0?`Mais caiu: <b>${dn.nome}</b> (${sgn(dn.d)}). `:''}Perfil DISC: antes ${cmp.discAnt}, agora ${cmp.discAtu}. Grau: evoluiu muito (+0,5 ou mais), evoluiu (+0,2), estável, caiu (−0,2), caiu muito (−0,5 ou menos).</p>`})():'<p class="empty">Esta é a primeira avaliação registrada deste consultor. Na próxima avaliação, aparece aqui a comparação com esta.</p>'}</section>
+   <p class="cap">${up&&up.d>0?`Mais evoluiu: <b>${up.nome}</b> (${sgn(up.d)}). `:''}${dn&&dn.d<0?`Mais caiu: <b>${dn.nome}</b> (${sgn(dn.d)}). `:''}DISC: antes ${cmp.discAnt}, agora ${cmp.discAtu}.</p>`})():'<p class="empty">Esta é a primeira avaliação registrada deste consultor. Na próxima avaliação, aparece aqui a comparação com esta.</p>'}</section>
  <section class="r-sec"><h2><i>04</i>O que vai bem e o que melhorar</h2>
   <div class="two"><div style="--c-dot:var(--good)"><div class="box-h">Vai bem</div>${fortes.length?`<ul class="list">${fortes.map(x=>li(x,1)).join('')}</ul>`:'<p class="empty">Nenhum item com nota 4 ou 5.</p>'}</div>
   <div style="--c-dot:var(--warn)"><div class="box-h">Precisa melhorar</div>${opp.length?`<ul class="list">${opp.map(x=>li(x,0)).join('')}</ul>`:'<p class="empty">Todos os itens estão no nível esperado ou acima.</p>'}</div></div>
@@ -808,7 +870,7 @@ function report(){
   </div></div></section>
  <section class="r-sec pb"><h2><i>06</i>Perfil DISC (jeito de trabalhar)</h2>${discHtml}</section>
  <section class="r-sec"><h2><i>07</i>Comentários</h2>${quotes}</section>
- <div class="sign"><div>${esc(I.avaliador||'Avaliador')}<br>Avaliador${I.cargoAv?' · '+esc(I.cargoAv):''}</div><div>${esc((I.nome||'Avaliado').replace(/ \(exemplo\)$/,''))}<br>Avaliado</div><div>Recursos Humanos</div></div>
+ <div class="sign"><div>${esc(I.avaliador||'Avaliador')}<br>Avaliador${I.cargoAv?' · '+esc(I.cargoAv):''}</div><div>${esc((I.nome||'Avaliado').replace(/ \(exemplo\)$/,''))}<br>Avaliado</div><div>Elinai Ramos<br>Gerente de Operações</div></div>
  <div class="foot"><span>Escala: 1 Insatisfatório · 2 Abaixo · 3 Atende · 4 Supera · 5 Excepcional</span><span>Documento confidencial</span></div>`;
  $('#x_out').value=JSON.stringify(state);
 }
@@ -916,7 +978,7 @@ function pdfDownload(){
  qs.forEach(([t,c])=>{Fo('normal',9.5);const ls=doc.splitTextToSize(c,CW-10);const h=ls.length*lh(9.5)+11;need(h);F(PC.soft);doc.rect(M,y,CW,h,'F');F(PC.blue);doc.rect(M,y,1.6,h,'F');
   Fo('bold',8);T(PC.muted);doc.text(t.toUpperCase(),M+5,y+5.8);Fo('normal',9.5);T(PC.ink);doc.text(ls,M+5,y+10.6);y+=h+4});
  need(12);Fo('bold',10);T(PC.ink);doc.text('Parecer final: ',M,y+4);const pw=doc.getTextWidth('Parecer final: ');Fo('normal',10);doc.text(O.parecer||'-',M+pw,y+4);y+=10;
- need(30);y+=16;const sw=(CW-16)/3;[[I.avaliador||'Avaliador','Avaliador'+(I.cargoAv?' · '+I.cargoAv:'')],[(I.nome||'Avaliado').replace(/ \(exemplo\)$/,''),'Avaliado'],['','Recursos Humanos']].forEach(([n,r],i)=>{const x=M+i*(sw+8);D(PC.ink);doc.setLineWidth(.3);doc.line(x,y,x+sw,y);Fo('bold',8.5);T(PC.ink);if(n)doc.text(n,x+sw/2,y+4.5,{align:'center'});Fo('normal',7.5);T(PC.muted);doc.text(r,x+sw/2,y+(n?8.5:4.5),{align:'center'})});
+ need(30);y+=16;const sw=(CW-16)/3;[[I.avaliador||'Avaliador','Avaliador'+(I.cargoAv?' · '+I.cargoAv:'')],[(I.nome||'Avaliado').replace(/ \(exemplo\)$/,''),'Avaliado'],['Elinai Ramos','Gerente de Operações']].forEach(([n,r],i)=>{const x=M+i*(sw+8);D(PC.ink);doc.setLineWidth(.3);doc.line(x,y,x+sw,y);Fo('bold',8.5);T(PC.ink);if(n)doc.text(n,x+sw/2,y+4.5,{align:'center'});Fo('normal',7.5);T(PC.muted);doc.text(r,x+sw/2,y+(n?8.5:4.5),{align:'center'})});
 
  const n=doc.getNumberOfPages();for(let p=1;p<=n;p++){doc.setPage(p);D(PC.line);doc.setLineWidth(.3);doc.line(M,287,W-M,287);Fo('normal',7.5);T(PC.muted);doc.text('Inovação Casa  ·  Avaliação de Desempenho  ·  Documento confidencial',M,291.5);doc.text(`Página ${p} de ${n}`,W-M,291.5,{align:'right'})}
  const slug=nome.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^\w]+/g,'_').replace(/^_|_$/g,'');
@@ -929,6 +991,109 @@ async function deliver(fn,blob,fallback,what){
  if(!dl){alertMsg('Não foi possível baixar aqui. Use o site: emersonaraujodefreitas.github.io/avaliacaodesempenho');return}
  try{await dl.save({filename:fn,data:blob});alertMsg(what+' salvo.',true)}
  catch(e){if(e&&e.code==='declined')return;if(e&&e.code==='rate_limited'){alertMsg('Já existe uma confirmação aberta. Conclua-a e tente de novo.');return}alertMsg('Não foi possível salvar o '+what+' aqui. Use o site: emersonaraujodefreitas.github.io/avaliacaodesempenho')}
+}
+
+
+/* ---------- painel da equipe ---------- */
+const SER=['#2a78d6','#eb6834'],HEAT=['#cde2fb','#9ec5f4','#6da7ec','#3987e5','#1c5cab'];
+function teamSample(){
+ const opp={D:'S',I:'C',S:'D',C:'I'};
+ const mk=(id,nome,cargo,data,b,p,sc)=>{const s=blank();s.id=id;Object.assign(s.info,{nome,cargo,data,avaliador:'Exemplo',cargoAv:'Gerente'});
+  DIMS.forEach((d,di)=>d.itens.forEach(([iid],k)=>{s.notas[iid]=Math.max(1,Math.min(5,Math.round(b[di]+((k%3)-1)*0.45)))}));
+  DISC_G.forEach((g,i)=>s.disc['g'+i]={mais:i%3===2?sc:p,menos:opp[p]});return s};
+ const L=[exemploAnterior(),exemplo(),
+  mk('x1','Ana Souza (exemplo)','Consultora de Inovação Sênior','2026-04-08',[4,4,4,4,4,4,5],'I','D'),
+  mk('x2','Ana Souza (exemplo)','Consultora de Inovação Sênior','2026-10-06',[4.3,4.6,4,4.4,4.2,4.4,4.8],'I','D'),
+  mk('x3','Bruno Lima (exemplo)','Consultor de Inovação Pleno','2026-04-09',[3,2.6,3.4,3.4,3,2.6,4],'C','S'),
+  mk('x4','Bruno Lima (exemplo)','Consultor de Inovação Pleno','2026-10-07',[3.4,3.4,3.6,3.8,3.2,3.2,4.2],'C','S'),
+  mk('x5','Carla Mendes (exemplo)','Consultora de Inovação Júnior','2026-04-10',[3,3.4,3,2.8,3.4,2.8,4],'S','I'),
+  mk('x6','Carla Mendes (exemplo)','Consultora de Inovação Júnior','2026-10-08',[2.8,3,2.8,2.6,3,2.6,3.8],'S','I'),
+  mk('x7','Diego Ferreira (exemplo)','Consultor de Inovação Pleno','2026-10-09',[3.8,4.2,3.4,3.6,3,3.6,4],'D','I')];
+ return L.map(s=>({id:s.id,nome:s.info.nome,data:s.info.data,s}));
+}
+function teamData(){
+ let recs=histLoad(),demo=!recs.length;if(demo)recs=teamSample();
+ const g={};recs.forEach(r=>{const k=nkey(r.nome);(g[k]=g[k]||[]).push(r)});
+ const people=Object.values(g).map(l=>{l.sort((a,b)=>(a.data||'').localeCompare(b.data||'')||(a.salvo||'').localeCompare(b.salvo||''));
+  const last=norm(JSON.parse(JSON.stringify(l[l.length-1].s))),prev=l.length>1?norm(JSON.parse(JSON.stringify(l[l.length-2].s))):null;
+  const c=calc(last),pc=prev?calc(prev):null,dc=discCalc(last);
+  return{nome:last.info.nome.replace(/ \(exemplo\)$/,''),cargo:last.info.cargo,data:last.info.data,n:l.length,c,pc,d:pc&&pc.m!=null?c.m-pc.m:null,dc}}).filter(x=>x.c.m!=null);
+ return{demo,people,total:recs.length};
+}
+const lv=m=>m==null?'var(--line)':m>=4.5?'var(--good)':m>=3.75?'var(--accent)':m>=2.75?'#64748B':m>=1.75?'var(--warn)':'var(--bad)';
+let cmpA=null,cmpB=null;
+function renderTeam(){
+ const T=teamData(),P=T.people;$('#teamDemo').hidden=!T.demo;
+ if(!P.length){$('#team').innerHTML='<p class="empty">Nenhuma avaliação com notas no histórico ainda.</p>';return}
+ const avg=mean(P.map(p=>p.c.m)),withPrev=P.filter(p=>p.d!=null),up=withPrev.filter(p=>p.d>=0.2);
+ const dimAvg=DIMS.map((d,i)=>mean(P.map(p=>p.c.dims[i].m).filter(x=>x!=null)));
+ const byNota=[...P].sort((a,b)=>b.c.m-a.c.m);
+ const dimRank=DIMS.map((d,i)=>({d,m:dimAvg[i]})).filter(x=>x.m!=null).sort((a,b)=>b.m-a.m);
+ const evoRank=[...withPrev].sort((a,b)=>b.d-a.d);
+ const discCount={D:[],I:[],S:[],C:[]};P.forEach(p=>{if(p.dc)discCount[p.dc.p].push(p.nome)});
+ const topDisc=Object.entries(discCount).sort((a,b)=>b[1].length-a[1].length)[0];
+ const ins=[
+  ['Maior nota',`<b>${esc(byNota[0].nome)}</b> (${fmt(byNota[0].c.m)})`],
+  ['Menor nota',`<b>${esc(byNota[byNota.length-1].nome)}</b> (${fmt(byNota[byNota.length-1].c.m)})`],
+  ['Área mais forte da equipe',`<b>${dimRank[0].d.nome}</b> (${fmt(dimRank[0].m)})`],
+  ['Área que mais precisa de atenção',`<b>${dimRank[dimRank.length-1].d.nome}</b> (${fmt(dimRank[dimRank.length-1].m)})`],
+  ['Mais evoluiu',evoRank.length?`<b>${esc(evoRank[0].nome)}</b> (${sgn(evoRank[0].d)})`:'Sem comparação ainda'],
+  ['Perfil DISC mais comum',topDisc[1].length?`<b>${DISC[topDisc[0]].nome}</b> (${topDisc[1].length} de ${P.length})`:'-']];
+
+ const ranking=`<div class="rk">${byNota.map(p=>`<div class="rk-row" title="${esc(p.nome)}: ${fmt(p.c.m)} (${cls(p.c.m)[0]})"><span class="nm">${esc(p.nome)}</span><div class="rk-track"><div class="rk-fill" style="width:${(p.c.m-1)/4*100}%;background:${lv(p.c.m)}"></div><div class="rk-avg" style="left:${(avg-1)/4*100}%"></div></div><b>${fmt(p.c.m)}</b></div>`).join('')}</div><p class="cap">Escala de 1 a 5. Linha tracejada: média da equipe (${fmt(avg)}).</p>`;
+
+ const hc=v=>{if(v==null)return'background:var(--soft)';const i=Math.max(0,Math.min(4,Math.round(v)-1));return`background:${HEAT[i]};color:${i>=3?'#fff':'var(--ink)'}`};
+ const heat=`<div class="tbl-wrap"><table class="t heat"><thead><tr><th>Consultor</th>${DIMS.map(d=>`<th class="c">${d.curto}</th>`).join('')}<th class="c">Geral</th></tr></thead><tbody>
+  ${byNota.map(p=>`<tr><td><b>${esc(p.nome)}</b></td>${p.c.dims.map((x,i)=>`<td class="h" style="${hc(x.m)}" title="${esc(p.nome)} · ${DIMS[i].nome}: ${fmt(x.m)}">${fmt(x.m)}</td>`).join('')}<td class="h" style="${hc(p.c.m)}"><b>${fmt(p.c.m)}</b></td></tr>`).join('')}
+  <tr class="avg"><td>Média da equipe</td>${dimAvg.map(v=>`<td class="h" style="${hc(v)}">${fmt(v)}</td>`).join('')}<td class="h" style="${hc(avg)}">${fmt(avg)}</td></tr></tbody></table></div>
+  <p class="cap">Quanto mais escuro, maior a nota.</p>`;
+
+ const mx=Math.max(0.5,...withPrev.map(p=>Math.abs(p.d)));
+ const evoHtml=`<div class="dv">${[...P].sort((a,b)=>(b.d??-9)-(a.d??-9)).map(p=>p.d==null?`<div class="dv-row"><span class="nm">${esc(p.nome)}</span><i>Primeira avaliação</i><b></b></div>`:
+  `<div class="dv-row" title="${esc(p.nome)}: ${fmt(p.pc.m)} para ${fmt(p.c.m)}"><span class="nm">${esc(p.nome)}</span><div class="dv-track"><div class="dv-bar" style="${p.d>=0?`left:50%;width:${p.d/mx*50}%;background:${SER[0]}`:`right:50%;width:${-p.d/mx*50}%;background:#e34948`}"></div></div><b class="${p.d>=0.2?'up':p.d<=-0.2?'dn':''}">${sgn(p.d)}</b></div>`).join('')}</div>
+  <p class="cap">Variação da nota geral em relação à avaliação anterior. ${up.length} de ${withPrev.length} evoluíram.</p>`;
+
+ const cell={};P.forEach(p=>{if(p.c.des!=null&&p.c.pot!=null){const k=lvl(p.c.pot)+'-'+lvl(p.c.des);(cell[k]=cell[k]||[]).push(p.nome)}});
+ let nine='<div class="nine team"><div class="ax ay" style="grid-row:1/4">Crescimento →</div>';
+ ['a','m','b'].forEach(r=>['b','m','a'].forEach(c=>{const k=r+'-'+c,w=cell[k]||[];nine+=`<div class="cell${w.length?' has':''}"><b>${NINE[k][0]}</b><div class="who">${w.map(n=>`<span>${esc(n.split(' ')[0])}</span>`).join('')}</div></div>`}));
+ nine+='<div></div><div class="ax" style="grid-column:2/5">Entrega →</div></div>';
+
+ const col={D:'var(--d)',I:'var(--i)',S:'var(--s)',C:'var(--c)'};
+ const disc=`<div class="disc-team">${['D','I','S','C'].map(f=>`<div class="row"><span class="lt" style="display:flex;gap:8px;align-items:center;font-weight:600"><i style="font-style:normal;width:24px;height:24px;border-radius:5px;display:grid;place-items:center;color:#fff;background:${col[f]}">${f}</i>${DISC[f].nome}</span><div class="rk-track"><div class="rk-fill" style="width:${discCount[f].length/P.length*100}%;background:${col[f]}"></div></div><b style="font-family:var(--f-mono);font-weight:500;text-align:right">${discCount[f].length}</b><div class="names">${discCount[f].map(esc).join(', ')||'Ninguém'}</div></div>`).join('')}</div>
+  <p class="cap">Perfil principal de cada consultor na última avaliação.</p>`;
+
+ const opts=[...P.map(p=>p.nome),'Média da equipe'];
+ if(!opts.includes(cmpA))cmpA=byNota[0].nome;if(!opts.includes(cmpB)||cmpB===cmpA)cmpB=byNota.length>1?byNota[1].nome:'Média da equipe';
+ const vals=n=>n==='Média da equipe'?dimAvg:P.find(p=>p.nome===n).c.dims.map(x=>x.m);
+ const va=vals(cmpA),vb=vals(cmpB);
+ const diffs=DIMS.map((d,i)=>({d,x:va[i]!=null&&vb[i]!=null?va[i]-vb[i]:null})).filter(x=>x.x!=null);
+ const ahead=diffs.filter(x=>x.x>0.049).length,behind=diffs.filter(x=>x.x<-0.049).length,big=[...diffs].sort((a,b)=>Math.abs(b.x)-Math.abs(a.x))[0];
+ const sel=(id,v)=>`<select id="${id}">${opts.map(o=>`<option${o===v?' selected':''}>${esc(o)}</option>`).join('')}</select>`;
+ const cmpHtml=`<div class="cmp-sel"><div class="field"><label for="cmpA">Comparar</label>${sel('cmpA',cmpA)}</div><div class="field"><label for="cmpB">com</label>${sel('cmpB',cmpB)}</div></div>
+  <div class="legend-row"><span><i style="background:${SER[0]}"></i>${esc(cmpA)}</span><span><i style="background:${SER[1]}"></i>${esc(cmpB)}</span></div>
+  <div class="cmp">${DIMS.map((d,i)=>`<div class="cmp-row"><span>${d.nome}</span><div class="cmp-bars">
+   <div title="${esc(cmpA)}: ${fmt(va[i])}"><span class="tr"><i style="width:${(va[i]||0)/5*100}%;background:${SER[0]}"></i></span><b>${fmt(va[i])}</b></div>
+   <div title="${esc(cmpB)}: ${fmt(vb[i])}"><span class="tr"><i style="width:${(vb[i]||0)/5*100}%;background:${SER[1]}"></i></span><b>${fmt(vb[i])}</b></div></div></div>`).join('')}</div>
+  <div class="cmp-sum"><b>${esc(cmpA)}</b> está à frente em <b>${ahead}</b> de ${diffs.length} áreas e atrás em <b>${behind}</b>.${big&&Math.abs(big.x)>0.049?` Maior diferença: <b>${big.d.nome}</b> (${sgn(big.x)}).`:''}</div>`;
+
+ $('#team').innerHTML=`
+  <div class="t-kpis">
+   <div class="t-kpi"><span>Consultores</span><b>${P.length}</b><small>avaliados</small></div>
+   <div class="t-kpi"><span>Avaliações</span><b>${T.total}</b><small>no histórico</small></div>
+   <div class="t-kpi"><span>Média da equipe</span><b>${fmt(avg)}</b><small>${cls(avg)[0]}</small></div>
+   <div class="t-kpi"><span>Evoluíram</span><b>${up.length}/${withPrev.length}</b><small>desde a avaliação anterior</small></div>
+  </div>
+  <div class="t-grid">
+   <div class="t-card wide"><h2>Destaques</h2><p class="sub">O principal da equipe em poucas linhas.</p><ul class="insights">${ins.map(([a,b])=>`<li><span>${a}</span>${b}</li>`).join('')}</ul></div>
+   <div class="t-card"><h2>Ranking por nota geral</h2><p class="sub">Última avaliação de cada consultor.</p>${ranking}</div>
+   <div class="t-card"><h2>Evolução</h2><p class="sub">Quanto a nota subiu ou caiu.</p>${evoHtml}</div>
+   <div class="t-card wide"><h2>Notas por área</h2><p class="sub">Cada consultor em cada área, com a média da equipe.</p>${heat}</div>
+   <div class="t-card wide"><h2>Comparar consultores</h2><p class="sub">Escolha dois consultores ou compare um com a média da equipe.</p>${cmpHtml}</div>
+   <div class="t-card"><h2>Entrega × crescimento</h2><p class="sub">Onde cada consultor está na matriz.</p>${nine}</div>
+   <div class="t-card"><h2>Perfis DISC da equipe</h2><p class="sub">Como a equipe se distribui.</p>${disc}</div>
+  </div>`;
+ $('#cmpA').addEventListener('change',e=>{cmpA=e.target.value;renderTeam()});
+ $('#cmpB').addEventListener('change',e=>{cmpB=e.target.value;renderTeam()});
 }
 
 /* ---------- navegação e ações ---------- */
@@ -953,6 +1118,7 @@ function show(t){
  document.querySelectorAll('.panel').forEach(p=>p.hidden=p.id!=='tab-'+t);
  if(t==='painel'){saveToHist();report()}
  if(t==='hist')renderHist();
+ if(t==='equipe')renderTeam();
  try{localStorage.setItem(KEY+'-tab',t)}catch(e){}
  window.scrollTo({top:0});
 }
