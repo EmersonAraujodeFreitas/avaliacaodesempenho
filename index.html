@@ -365,6 +365,13 @@ kbd{font:600 11.5px var(--f-mono);background:#fff;border:1px solid var(--line);b
 .g-note{font-size:13px;color:#A9CBEA;margin:4px 0 16px}
 .g-opts-cfg{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin:6px 0 20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14)}
 .g-cfg{display:flex;align-items:center;gap:10px;font-size:14px;color:#CFE0EF}
+.g-qcfg{flex:1 1 100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 16px;align-items:center;color:#CFE0EF;font-size:14px}
+.g-qh{display:flex;align-items:baseline;gap:10px}
+.g-qh b{font:800 28px var(--f-display);color:var(--gold)}
+.g-qcfg input[type=range]{grid-column:1/2;width:100%;accent-color:var(--gold);height:24px}
+.g-qcfg .g-seg{grid-column:2;grid-row:1/3}
+.g-qcfg small{grid-column:1/-1;color:#A9CBEA;font-size:12.5px}
+@media (max-width:640px){.g-qcfg{grid-template-columns:1fr}.g-qcfg .g-seg{grid-column:1;grid-row:auto}}
 .g-go{font-size:17px;padding:14px 28px}
 .g-err{color:#FFC2BC;margin:10px 0 0;font-size:14px}
 .btn.big{padding:12px 22px;font-size:15.5px}
@@ -1834,6 +1841,56 @@ const Q_C=[
  {dim:'L',t:'Delegar bem é passar a tarefa e ____.',opts:['acompanhar','esquecer','refazer depois','cobrar a cada hora'],ans:0,exp:'Delegar inclui acompanhar e apoiar quando preciso.'},
  {dim:'E',t:'Dados pessoais de clientes devem ser tratados com ____.',opts:['sigilo','curiosidade','pressa','descuido'],ans:0,exp:'Sigilo e cuidado são exigidos pela LGPD.'}];
 const BANK={s:Q_S,v:Q_V,o:Q_O,m:Q_M,i:Q_I,c:Q_C};
+Q_S.push(
+ {dim:'Q',t:'Você percebe que um colega pulou uma etapa do procedimento.',opts:[['Ignora, não é problema seu',0],['Conta para o gestor sem falar com ele',1],['Refaz a etapa sem dizer nada',1],['Conversa com ele, explica o risco e corrigem juntos',3]],exp:'Corrigir junto, explicando o risco, evita que o erro se repita.'},
+ {dim:'Q',t:'Um indicador da área piorou dois meses seguidos.',opts:[['Espera o terceiro mês para ver',0],['Muda a forma de calcular',0],['Só comenta no relatório',1],['Investiga a causa com a equipe e define ações',3]],exp:'Indicador piorando é sinal para agir na causa, não para esperar.'},
+ {dim:'N',t:'A equipe faz uma tarefa do mesmo jeito há anos.',opts:[['Mantém, se funciona não se mexe',0],['Muda tudo de uma vez',1],['Reclama que é ultrapassado',0],['Pergunta à equipe o que dá para melhorar e testa uma mudança pequena',3]],exp:'Melhorar aos poucos, com a equipe, gera adesão e menos risco.'},
+ {dim:'N',t:'Um concorrente lançou uma solução melhor que a sua.',opts:[['Ignora',0],['Copia igualzinho',1],['Critica o concorrente',0],['Estuda o que ele fez bem e propõe uma melhoria própria',3]],exp:'Aprender com quem faz melhor e adaptar é benchmarking.'},
+ {dim:'C',t:'Você vai atrasar uma entrega combinada com o cliente.',opts:[['Avisa só no dia',1],['Não avisa e torce para ele não perceber',0],['Avisa assim que souber, explica o motivo e propõe nova data',3],['Pede para outra pessoa avisar',1]],exp:'Avisar cedo, com nova data, preserva a confiança.'},
+ {dim:'C',t:'O cliente pede algo que você não sabe fazer.',opts:[['Diz que sabe e tenta',0],['Diz que não dá e encerra',1],['Explica que vai buscar a resposta e combina um prazo',3],['Não responde',0]],exp:'Ser honesto e combinar um prazo mostra compromisso.'},
+ {dim:'R',t:'Uma reunião sem pauta toma o tempo da equipe toda semana.',opts:[['Continua indo',1],['Para de ir sem avisar',0],['Propõe uma pauta com tempo definido ou o cancelamento',3],['Reclama nos corredores',0]],exp:'Tempo da equipe é recurso: reunião precisa de objetivo.'},
+ {dim:'R',t:'Você recebe uma tarefa sem prazo definido.',opts:[['Faz quando der',0],['Larga tudo e faz na hora',1],['Pergunta o prazo e a prioridade em relação ao resto',3],['Espera alguém cobrar',0]],exp:'Saber prazo e prioridade evita surpresas e conflitos.'},
+ {dim:'M',t:'Um e-mail seu foi entendido de forma errada.',opts:[['Culpa quem leu',0],['Ignora',0],['Manda outro e-mail ainda maior',1],['Liga, esclarece e reenvia uma mensagem mais clara',3]],exp:'Esclarecer rápido corta o ruído antes que vire problema.'},
+ {dim:'M',t:'Numa reunião, um colega mais tímido não fala nada.',opts:[['Ignora',0],['Pede a opinião dele com respeito',3],['Fala por ele',1],['Comenta depois que ele não participa',0]],exp:'Abrir espaço para todos traz ideias que ficariam de fora.'},
+ {dim:'L',t:'A equipe vai passar por uma grande mudança de processo.',opts:[['Espera a mudança acontecer',0],['Critica a mudança',0],['Só repassa o comunicado oficial',1],['Explica o motivo, ouve as dúvidas e ajuda a planejar a transição',3]],exp:'Mudança com explicação e escuta tem muito mais adesão.'},
+ {dim:'E',t:'Você percebe um erro seu que ninguém notou.',opts:[['Deixa como está',0],['Corrige escondido',1],['Culpa o sistema',0],['Corrige e avisa os envolvidos',3]],exp:'Assumir o próprio erro gera confiança.'});
+Q_V.push(
+ {dim:'Q',t:'Retrabalho é um tipo de desperdício.',v:true,exp:'Fazer de novo gasta tempo e recursos que poderiam gerar valor.'},
+ {dim:'Q',t:'Padronizar um processo impede qualquer melhoria.',v:false,exp:'O padrão é a base para melhorar com segurança.'},
+ {dim:'Q',t:'A ISO 9001 é uma norma de gestão da qualidade.',v:true,exp:'É a norma internacional mais usada para sistemas de qualidade.'},
+ {dim:'N',t:'Só a área de inovação pode ter ideias.',v:false,exp:'Boas ideias podem vir de qualquer pessoa da empresa.'},
+ {dim:'N',t:'Ouvir o usuário é uma etapa importante do Design Thinking.',v:true,exp:'Tudo começa por entender quem vai usar a solução.'},
+ {dim:'C',t:'Atender bem é só ser simpático.',v:false,exp:'Também é resolver o problema e cumprir o combinado.'},
+ {dim:'C',t:'Uma reclamação pode ser uma oportunidade de melhoria.',v:true,exp:'A reclamação mostra exatamente onde melhorar.'},
+ {dim:'R',t:'Priorizar é fazer primeiro o que é mais fácil.',v:false,exp:'Priorizar é fazer primeiro o que tem mais impacto.'},
+ {dim:'R',t:'Acompanhar indicadores ajuda a corrigir a rota a tempo.',v:true,exp:'Quem mede cedo corrige cedo.'},
+ {dim:'M',t:'A comunicação não verbal também passa mensagem.',v:true,exp:'Tom de voz, postura e expressão também comunicam.'},
+ {dim:'L',t:'Reconhecer o bom trabalho da equipe aumenta o engajamento.',v:true,exp:'Reconhecimento sincero motiva e reforça o que deu certo.'},
+ {dim:'E',t:'Compartilhar a senha com um colega de confiança é seguro.',v:false,exp:'Senha é pessoal e intransferível, mesmo com quem você confia.'});
+Q_O.push(
+ {dim:'Q',t:'Coloque os sensos do 5S na ordem certa.',steps:['Utilização','Organização','Limpeza','Padronização','Disciplina'],exp:'Seiri, Seiton, Seiso, Seiketsu e Shitsuke.'},
+ {dim:'R',t:'Ordene as etapas de uma reunião produtiva.',steps:['Definir o objetivo','Enviar a pauta','Conduzir no tempo combinado','Registrar as decisões','Acompanhar as ações'],exp:'Objetivo, pauta, tempo, registro e acompanhamento.'},
+ {dim:'Q',t:'Ordene as etapas para analisar um problema.',steps:['Descrever o problema','Coletar dados','Encontrar a causa raiz','Definir ações','Verificar se resolveu'],exp:'Do problema aos dados, à causa, à ação e à verificação.'},
+ {dim:'L',t:'Ordene as etapas para delegar uma tarefa.',steps:['Escolher a pessoa certa','Explicar o objetivo e o prazo','Dar autonomia','Acompanhar','Reconhecer o resultado'],exp:'Delegar bem vai da escolha até o reconhecimento.'});
+Q_M.push(
+ {dim:'C',t:'Ligue cada termo de atendimento ao seu significado.',pairs:[['NPS','Índice de recomendação do cliente'],['SLA','Prazo de atendimento combinado'],['Pesquisa de satisfação','Pergunta ao cliente como foi a experiência'],['Cliente interno','Colega que recebe o seu trabalho']],exp:'Conhecer esses termos ajuda a medir e melhorar o atendimento.'},
+ {dim:'E',t:'Ligue cada termo de conduta ao seu significado.',pairs:[['LGPD','Lei que protege dados pessoais'],['Compliance','Cumprir as leis e regras internas'],['Confidencial','Informação que não pode ser divulgada'],['Conflito de interesses','Quando um interesse pessoal atrapalha a decisão']],exp:'São a base da conduta profissional.'},
+ {dim:'Q',t:'Ligue cada senso do 5S ao seu significado.',pairs:[['Utilização','Separar o útil do que não serve'],['Organização','Um lugar para cada coisa'],['Limpeza','Manter o ambiente limpo'],['Disciplina','Seguir o padrão sempre']],exp:'O 5S organiza o ambiente e a rotina de trabalho.'});
+Q_I.push(
+ {dim:'Q',t:'Qual destas NÃO faz parte do 5S?',opts:['Utilização','Organização','Limpeza','Velocidade'],ans:3,exp:'Os 5S são utilização, organização, limpeza, padronização e disciplina.'},
+ {dim:'N',t:'Qual destas NÃO é etapa do Design Thinking?',opts:['Entender o usuário','Gerar ideias','Testar','Punir quem errou'],ans:3,exp:'Errar faz parte do processo de inovar.'},
+ {dim:'C',t:'Qual destas NÃO mede a satisfação do cliente?',opts:['NPS','Pesquisa de satisfação','Taxa de reclamações','Número de reuniões internas'],ans:3,exp:'Reuniões internas não dizem nada sobre o cliente.'},
+ {dim:'R',t:'Qual destas NÃO ajuda a organizar o tempo?',opts:['Lista de prioridades','Agenda','Reservar horários para foco','Abrir o e-mail a cada minuto'],ans:3,exp:'Interrupções constantes derrubam a produtividade.'},
+ {dim:'M',t:'Qual destas NÃO é escuta ativa?',opts:['Fazer perguntas','Resumir o que ouviu','Olhar o celular enquanto o outro fala','Manter contato visual'],ans:2,exp:'Olhar o celular mostra que você não está ouvindo.'},
+ {dim:'L',t:'Qual destas NÃO desenvolve a equipe?',opts:['Dar feedback','Ensinar','Delegar com apoio','Esconder informações'],ans:3,exp:'Esconder informação impede o crescimento do time.'});
+Q_C.push(
+ {dim:'Q',t:'O diagrama de Ishikawa também é chamado de diagrama de ____.',opts:['espinha de peixe','pizza','barras','dispersão'],ans:0,exp:'O formato lembra uma espinha de peixe.'},
+ {dim:'N',t:'Benchmarking é aprender com ____.',opts:['quem já faz melhor','os próprios erros apenas','a sorte','a concorrência copiando tudo'],ans:0,exp:'Benchmarking é comparar e aprender com as melhores práticas.'},
+ {dim:'C',t:'SLA é o ____ de atendimento combinado com o cliente.',opts:['prazo','preço','local','canal'],ans:0,exp:'SLA define o prazo e o nível de serviço combinado.'},
+ {dim:'R',t:'Uma meta SMART é específica, mensurável, alcançável, relevante e ____.',opts:['com prazo','secreta','fácil','flexível'],ans:0,exp:'O T de SMART é de temporal: toda meta precisa de prazo.'},
+ {dim:'M',t:'Para evitar ruído, toda mensagem importante deve ser ____.',opts:['clara e objetiva','longa','urgente','informal'],ans:0,exp:'Clareza e objetividade evitam interpretações erradas.'},
+ {dim:'E',t:'Agir com ética é fazer o certo mesmo quando ____.',opts:['ninguém está olhando','for mais fácil','alguém pedir','houver prêmio'],ans:0,exp:'Ética não depende de plateia.'});
+const BANKN=Object.values(BANK).reduce((a,l)=>a+l.length,0);
 const TNAME={s:'Situação real',v:'Verdadeiro ou falso',o:'Monte a sequência',m:'Ligue os pares',i:'Encontre o intruso',c:'Complete a frase'};
 const TLIM={s:25,v:12,o:40,m:45,i:15,c:18};
 const HINTS={Q:'Pense em causa raiz, dados e padrão.',N:'Pense em testar pequeno, aprender e medir.',C:'Pense em entender o cliente e cumprir o combinado.',R:'Pense em prioridade, prazo e responsabilidade.',M:'Pense em clareza, escuta e respeito.',L:'Pense em dar o exemplo, tomar iniciativa e desenvolver pessoas.',E:'Pense em transparência, regras e proteção de dados.'};
@@ -1881,8 +1938,12 @@ function newGame(){
  G={phase:solo?'play':'turn',solo,teams,players,sched,turn:0,pools,timed:SET.timed,bet:SET.bet,sound:SET.sound,q:SET.q,r:null};
  SFX.go();if(solo)gStartTurn();else{gPersist();renderGame()}
 }
-function draw(type){if(!G.pools[type].length)G.pools[type]=shufA(BANK[type].map((_,i)=>i));return G.pools[type].pop()}
-function makeRound(p){const type=p.types[p.ans.length],it=BANK[type][draw(type)],r={type,dim:it.dim,t:it.t,exp:it.exp,hidden:[],bet:1,hint:false,f5050:false,extra:0};
+function draw(type,p){const key=i=>type+':'+i;p.seen=p.seen||[];
+ if(!G.pools[type].length)G.pools[type]=shufA(BANK[type].map((_,i)=>i));
+ let n=G.pools[type].length;while(n--){const i=G.pools[type].pop();if(!p.seen.includes(key(i))){p.seen.push(key(i));return i}G.pools[type].unshift(i)}
+ const un=BANK[type].map((_,i)=>i).filter(i=>!p.seen.includes(key(i))),i=un.length?un[Math.floor(Math.random()*un.length)]:Math.floor(Math.random()*BANK[type].length);p.seen.push(key(i));return i}
+function durTxt(){const n=SET.mode==='solo'?1:SET.teams.reduce((a,t)=>a+t.n,0),m=Math.max(1,Math.round(n*SET.q*22/60));return`${n*SET.q} perguntas no total · cerca de ${m<60?m+' min':Math.floor(m/60)+' h '+(m%60)+' min'}`}
+function makeRound(p){const type=p.types[p.ans.length],it=BANK[type][draw(type,p)],r={type,dim:it.dim,t:it.t,exp:it.exp,hidden:[],bet:1,hint:false,f5050:false,extra:0};
  if(type==='s')r.opts=shufA(it.opts);
  if(type==='i'||type==='c')r.opts=shufA(it.opts.map((x,i)=>[x,i===it.ans?3:0]));
  if(type==='v')r.v=it.v;
@@ -1953,14 +2014,15 @@ function setupHtml(){
    <div class="g-plist">${Array.from({length:t.n},(_,j)=>`<input data-s="pnome" data-i="${i}" data-j="${j}" list="gNomes" value="${esc(t.p[j]||'')}" placeholder="Participante ${j+1}" aria-label="Participante ${j+1} da ${esc(t.nome)}">`).join('')}</div></div>`).join('');
  return`<div class="g-start">
   <section class="g-hero"><span class="eyebrow">Dinâmica gamificada</span><h2>Desafio da Inovação</h2>
-   <p>Perguntas em 6 formatos diferentes, sorteadas para cada participante. Cada detalhe conta: acerto, rapidez, combos, apostas, poderes e conquistas.</p>
+   <p>${BANKN} perguntas em 6 formatos diferentes, sorteadas para cada participante, sem repetir para a mesma pessoa. Cada detalhe conta: acerto, rapidez, combos, apostas, poderes e conquistas.</p>
    ${saved&&saved.phase&&saved.phase!=='end'?`<div class="g-resume"><span>Há uma partida em andamento (${saved.turn+1} de ${saved.sched.length} jogadas).</span><button class="btn gold" type="button" id="gResume">Retomar partida</button><button class="btn light" type="button" id="gDiscard">Descartar</button></div>`:''}
    <div class="g-mode" role="group" aria-label="Modo de jogo"><button type="button" data-mode="solo" aria-pressed="${SET.mode==='solo'}">Individual</button><button type="button" data-mode="team" aria-pressed="${SET.mode==='team'}">Por equipes</button></div>
    <datalist id="gNomes">${names.map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
    ${SET.mode==='solo'?`<div class="field g-solo"><label for="gNome">Nome do participante</label><input id="gNome" data-s="solo" list="gNomes" autocomplete="off" value="${esc(SET.solo)}" placeholder="Digite o nome"></div>`
    :`<div class="g-teams-cfg">${teamsHtml}${SET.teams.length<6?`<button type="button" class="g-addteam" id="gAddTeam">+ Adicionar equipe</button>`:''}</div><p class="g-note">As equipes podem ter quantidades diferentes de participantes. O placar compara a média de pontos por participante.</p>`}
    <div class="g-opts-cfg">
-    <div class="g-cfg"><span>Perguntas por participante</span><div class="g-seg">${[5,8,10,12].map(n=>`<button type="button" data-q="${n}" aria-pressed="${SET.q===n}">${n}</button>`).join('')}</div></div>
+    <div class="g-qcfg"><div class="g-qh"><span>Perguntas por participante</span><b id="gQv">${SET.q}</b></div><input type="range" min="3" max="50" step="1" value="${SET.q}" data-s="q" id="gQr" aria-label="Perguntas por participante">
+     <div class="g-seg">${[5,10,20,30,50].map(n=>`<button type="button" data-q="${n}" aria-pressed="${SET.q===n}">${n}</button>`).join('')}</div><small id="gDur">${durTxt()}</small></div>
     <label class="switch"><input type="checkbox" data-s="timed"${SET.timed?' checked':''}><span></span>Com tempo</label>
     <label class="switch"><input type="checkbox" data-s="bet"${SET.bet?' checked':''}><span></span>Apostas</label>
     <label class="switch"><input type="checkbox" data-s="sound"${SET.sound?' checked':''}><span></span>Som</label>
@@ -2044,7 +2106,8 @@ function renderGame(){const el=$('#game');
  const f=G.phase==='fb'?$('#gNext'):G.phase==='turn'?$('#gReady'):null;if(f)f.focus({preventScroll:true})}
 $('#game').addEventListener('input',e=>{const t=e.target,k=t.dataset.s;if(!k)return;
  if(k==='solo')SET.solo=t.value;if(k==='tnome')SET.teams[+t.dataset.i].nome=t.value;if(k==='pnome')SET.teams[+t.dataset.i].p[+t.dataset.j]=t.value;
- if(k==='timed'||k==='bet'||k==='sound')SET[k]=t.checked;setSave()});
+ if(k==='timed'||k==='bet'||k==='sound')SET[k]=t.checked;
+ if(k==='q'){SET.q=+t.value;$('#gQv').textContent=SET.q;document.querySelectorAll('[data-q]').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.q===SET.q));$('#gDur').textContent=durTxt()}setSave()});
 $('#game').addEventListener('click',e=>{const t=e.target.closest('button,tr[data-sel]');if(!t)return;
  if(t.dataset.mode){SET.mode=t.dataset.mode;setSave();renderGame();return}
  if(t.dataset.q){SET.q=+t.dataset.q;setSave();renderGame();return}
