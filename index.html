@@ -90,29 +90,62 @@ button,input,select,textarea{font:inherit;color:inherit}
 /* Painel da equipe */
 .tab-team{margin-left:auto;color:var(--brand)}
 .demo{background:var(--warn-soft);border:1px solid var(--warn);border-radius:8px;padding:10px 14px;font-size:14.5px;margin-bottom:16px}
-.t-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
-.t-kpi{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--brand);border-radius:10px;padding:14px 16px}
+.t-bar{display:flex;flex-wrap:wrap;gap:12px;align-items:end;justify-content:space-between;margin-bottom:16px}
+.t-bar .field{min-width:200px}
+.seg{display:flex;flex-wrap:wrap;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:4px}
+.seg button{border:0;background:none;padding:8px 14px;border-radius:7px;font-weight:600;font-size:14.5px;color:var(--muted);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--brand);color:#fff}
+.seg button:hover:not([aria-pressed="true"]){background:var(--soft);color:var(--ink)}
+.t-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px}
+.t-kpi{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--brand);border-radius:10px;padding:12px 16px;min-width:0}
 .t-kpi span{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.t-kpi b{display:block;font-family:var(--f-display);font-size:32px;line-height:1.15;margin-top:4px}
+.t-kpi b{display:block;font-family:var(--f-display);font-size:30px;line-height:1.15;margin-top:4px}
 .t-kpi small{color:var(--muted);font-size:13.5px}
+.t-kpi.warn{border-top-color:var(--bad)}
 .t-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:16px}
 .t-card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;min-width:0;box-shadow:0 1px 3px rgba(0,49,88,.06)}
 .t-card.wide{grid-column:1/-1}
 .t-card h2{font-size:18px;margin-bottom:2px}
 .t-card .sub{font-size:14px;color:var(--muted);margin:0 0 14px}
-.insights{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:10px}
+.insights{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:10px}
 .insights li{background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:15px;min-width:0}
 .insights li span{display:block;font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.svgc{width:100%;height:auto;display:block;overflow:visible}
+.svgc text{font-family:var(--f-body);fill:var(--ink);font-size:13px}
+.svgc .tk{font-size:11.5px;fill:var(--muted);font-family:var(--f-mono)}
+.svgc .rg{font-size:12px;fill:var(--muted);font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.svgc .axt{font-size:12px;fill:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.svgc .lbl{font-size:12.5px;font-weight:600}
+.svgc .val{font-family:var(--f-mono);font-size:12.5px}
+.svgc [data-tip]{cursor:default}
+.tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:#fff;font-size:13px;padding:6px 10px;border-radius:6px;max-width:280px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.lg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;margin-top:10px;align-items:center}
+.lg span,.lg button{display:inline-flex;align-items:center;gap:6px;border:0;background:none;padding:2px 0;font-size:13.5px;cursor:default;color:var(--ink)}
+.lg button{cursor:pointer}
+.lg button[aria-pressed="false"]{opacity:.4;text-decoration:line-through}
+.lg i{width:12px;height:12px;border-radius:50%;display:inline-block;flex:none}
+.lg i.sq{border-radius:2px}
+.lg i.dash{width:18px;height:0;border-top:2px dashed var(--ink);border-radius:0;opacity:.6}
+.lg i.dia{width:10px;height:10px;transform:rotate(45deg);border-radius:1px;background:var(--brand)}
 .rk{display:flex;flex-direction:column;gap:9px}
 .rk-row{display:grid;grid-template-columns:minmax(110px,170px) 1fr 40px;gap:10px;align-items:center;font-size:15px}
-.rk-row .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rk-row .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.rk-row .nm i{width:10px;height:10px;border-radius:50%;flex:none}
 .rk-track{position:relative;height:18px;background:var(--soft);border:1px solid var(--line);border-radius:4px}
 .rk-fill{position:absolute;inset:0 auto 0 0;border-radius:3px}
 .rk-avg{position:absolute;top:-5px;bottom:-5px;border-left:2px dashed var(--ink);opacity:.6}
 .rk-row b{font-family:var(--f-mono);font-weight:500;text-align:right;font-variant-numeric:tabular-nums}
+.dist{display:flex;gap:2px;height:38px;border-radius:6px;overflow:hidden;margin-bottom:12px}
+.dist div{display:grid;place-items:center;color:#fff;font-weight:700;font-size:14px;min-width:0}
+.dist-lg{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:6px 14px;font-size:14px}
+.dist-lg span{display:flex;align-items:center;gap:8px}
+.dist-lg i{width:12px;height:12px;border-radius:3px;flex:none}
+.dist-lg b{font-family:var(--f-mono);margin-left:auto}
 .heat td.h{text-align:center;font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:14px;border:2px solid var(--surface);border-radius:4px;min-width:62px}
 .heat th.c{text-align:center}
 .heat tr.avg td{font-weight:700;border-top:2px solid var(--ink)}
+.heat-lg{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--muted);margin-top:10px}
+.heat-lg i{width:28px;height:12px;display:inline-block;border-radius:2px}
 .dv{display:flex;flex-direction:column;gap:9px}
 .dv-row{display:grid;grid-template-columns:minmax(110px,170px) 1fr 52px;gap:10px;align-items:center;font-size:15px}
 .dv-track{position:relative;height:18px}
@@ -120,27 +153,37 @@ button,input,select,textarea{font:inherit;color:inherit}
 .dv-bar{position:absolute;top:2px;bottom:2px;border-radius:3px}
 .dv-row b{font-family:var(--f-mono);font-weight:500;text-align:right}
 .dv-row i{font-style:normal;font-size:13px;color:var(--muted)}
+.ilist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.ilist li{display:grid;grid-template-columns:1fr 90px 36px;gap:10px;align-items:center;font-size:14.5px}
+.ilist li small{display:block;color:var(--muted);font-size:12.5px}
+.ilist .tr{height:10px;background:var(--soft);border-radius:3px;position:relative}
+.ilist .tr i{position:absolute;inset:0 auto 0 0;border-radius:3px}
+.ilist b{font-family:var(--f-mono);font-weight:500;text-align:right}
 .nine.team .cell{min-height:78px}
 .nine.team .cell .who{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
 .nine.team .cell .who span{background:var(--brand);color:#fff;border-radius:10px;padding:1px 7px;font-size:11.5px}
 .nine.team .cell.has{background:var(--accent-soft);border-color:var(--accent)}
 .disc-team{display:flex;flex-direction:column;gap:12px}
-.disc-team .row{display:grid;grid-template-columns:140px 1fr 28px;gap:10px;align-items:center;font-size:15px}
+.disc-team .row{display:grid;grid-template-columns:140px 1fr 40px;gap:10px;align-items:center;font-size:15px}
 .disc-team .names{grid-column:2/4;font-size:13px;color:var(--muted);margin-top:-6px}
-.cmp-sel{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin-bottom:14px}
+.disc-team .lt{display:flex;gap:8px;align-items:center;font-weight:600}
+.disc-team .lt i{font-style:normal;width:24px;height:24px;border-radius:5px;display:grid;place-items:center;color:#fff;flex:none}
+.cmp-sel{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin-bottom:6px}
 .cmp-sel .field{flex:1 1 200px}
-.legend-row{display:flex;flex-wrap:wrap;gap:16px;font-size:14px;margin-bottom:10px}
-.legend-row span{display:flex;align-items:center;gap:6px}
-.legend-row i{width:12px;height:12px;border-radius:3px;display:inline-block}
 .cmp{display:flex;flex-direction:column;gap:12px}
-.cmp-row{display:grid;grid-template-columns:minmax(100px,150px) 1fr;gap:10px;align-items:center;font-size:15px}
+.cmp-row{display:grid;grid-template-columns:minmax(90px,120px) 1fr;gap:10px;align-items:center;font-size:14.5px}
 .cmp-bars{display:flex;flex-direction:column;gap:3px}
 .cmp-bars div{display:grid;grid-template-columns:1fr 36px;gap:8px;align-items:center}
-.cmp-bars .tr{position:relative;height:13px;background:var(--soft);border-radius:3px}
+.cmp-bars .tr{position:relative;height:12px;background:var(--soft);border-radius:3px}
 .cmp-bars .tr i{position:absolute;inset:0 auto 0 0;border-radius:3px}
 .cmp-bars b{font-family:var(--f-mono);font-weight:500;font-size:13.5px;text-align:right}
-.cmp-sum{background:var(--accent-soft);border-left:4px solid var(--gold);border-radius:8px;padding:10px 14px;font-size:15px;margin-top:14px}
-@media (max-width:560px){.rk-row,.dv-row{grid-template-columns:96px 1fr 40px}.tab-team{margin-left:0}}
+.cmp-sum{background:var(--accent-soft);border-left:4px solid var(--gold);border-radius:8px;padding:12px 16px;font-size:15.5px}
+.sortable th{cursor:pointer;user-select:none;white-space:nowrap}
+.sortable th:hover{color:var(--ink)}
+.sortable th[aria-sort]::after{content:" ▾";color:var(--accent)}
+.sortable th[aria-sort="ascending"]::after{content:" ▴"}
+.sortable td{white-space:nowrap}
+@media (max-width:560px){.rk-row,.dv-row{grid-template-columns:96px 1fr 40px}.tab-team{margin-left:0}.ilist li{grid-template-columns:1fr 60px 32px}}
 
 /* Abas */
 .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
@@ -690,7 +733,7 @@ function prevOf(S){
  return l.length?norm(l[0].s):null;
 }
 function evo(d){if(d==null||isNaN(d))return['-','p3'];if(d>=0.5)return['Evoluiu muito','p5'];if(d>=0.2)return['Evoluiu','p4'];if(d>-0.2)return['Estável','p3'];if(d>-0.5)return['Caiu','p2'];return['Caiu muito','p1']}
-const sgn=d=>d==null||isNaN(d)?'-':(d>0.049?'+':d<-0.049?'−':'')+fmt(Math.abs(d));
+const sgn=d=>{if(d==null||isNaN(d))return'-';const r=Math.round(d*10)/10;return(r>0?'+':r<0?'−':'')+fmt(Math.abs(r))};
 const dataBR=d=>d?new Date(d+'T12:00:00').toLocaleDateString('pt-BR'):'-';
 function compare(S){const P=prevOf(S);if(!P)return null;const a=calc(P),b=calc(S);if(!a.items.length)return null;
  const rows=b.dims.map((x,i)=>({nome:x.d.nome,curto:x.d.curto,ant:a.dims[i].m,atu:x.m,d:x.m!=null&&a.dims[i].m!=null?x.m-a.dims[i].m:null}));
@@ -995,106 +1038,226 @@ async function deliver(fn,blob,fallback,what){
 
 
 /* ---------- painel da equipe ---------- */
-const SER=['#2a78d6','#eb6834'],HEAT=['#cde2fb','#9ec5f4','#6da7ec','#3987e5','#1c5cab'];
+const SER=['#2a78d6','#eb6834','#1baf7a','#eda100','#e87ba4','#008300','#6250d6','#e34948'],HEAT=['#cde2fb','#9ec5f4','#6da7ec','#3987e5','#1c5cab'];
+const LVC=['var(--bad)','var(--warn)','#64748B','var(--accent)','var(--good)'],LVN=['Insatisfatório','Abaixo do esperado','Atende','Supera','Excepcional'];
+const lvIdx=m=>m>=4.5?4:m>=3.75?3:m>=2.75?2:m>=1.75?1:0;
+const lv=m=>m==null?'var(--line)':LVC[lvIdx(m)];
+const MN=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'],mlab=m=>MN[+m.slice(5,7)-1]+'/'+m.slice(2,4);
+let teamTab='geral',teamCargo='Todos',cmpA=null,cmpB=null,hideL=new Set(),tSort={k:'m',dir:-1};
 function teamSample(){
  const opp={D:'S',I:'C',S:'D',C:'I'};
  const mk=(id,nome,cargo,data,b,p,sc)=>{const s=blank();s.id=id;Object.assign(s.info,{nome,cargo,data,avaliador:'Exemplo',cargoAv:'Gerente'});
   DIMS.forEach((d,di)=>d.itens.forEach(([iid],k)=>{s.notas[iid]=Math.max(1,Math.min(5,Math.round(b[di]+((k%3)-1)*0.45)))}));
   DISC_G.forEach((g,i)=>s.disc['g'+i]={mais:i%3===2?sc:p,menos:opp[p]});return s};
- const L=[exemploAnterior(),exemplo(),
-  mk('x1','Ana Souza (exemplo)','Consultora de Inovação Sênior','2026-04-08',[4,4,4,4,4,4,5],'I','D'),
-  mk('x2','Ana Souza (exemplo)','Consultora de Inovação Sênior','2026-10-06',[4.3,4.6,4,4.4,4.2,4.4,4.8],'I','D'),
-  mk('x3','Bruno Lima (exemplo)','Consultor de Inovação Pleno','2026-04-09',[3,2.6,3.4,3.4,3,2.6,4],'C','S'),
-  mk('x4','Bruno Lima (exemplo)','Consultor de Inovação Pleno','2026-10-07',[3.4,3.4,3.6,3.8,3.2,3.2,4.2],'C','S'),
-  mk('x5','Carla Mendes (exemplo)','Consultora de Inovação Júnior','2026-04-10',[3,3.4,3,2.8,3.4,2.8,4],'S','I'),
-  mk('x6','Carla Mendes (exemplo)','Consultora de Inovação Júnior','2026-10-08',[2.8,3,2.8,2.6,3,2.6,3.8],'S','I'),
-  mk('x7','Diego Ferreira (exemplo)','Consultor de Inovação Pleno','2026-10-09',[3.8,4.2,3.4,3.6,3,3.6,4],'D','I')];
+ const pl='Consultor de Inovação Pleno',sr='Consultor de Inovação Sênior',jr='Consultor de Inovação Júnior';
+ const L=[mk('x0','Mariana Costa (exemplo)',pl,'2025-10-08',[3.4,2,3.6,3.2,2.6,2.4,4.6],'C','D'),exemploAnterior(),exemplo(),
+  mk('a1','Ana Souza (exemplo)',sr,'2025-10-07',[3.8,3.8,3.8,3.8,4,3.8,4.6],'I','D'),
+  mk('a2','Ana Souza (exemplo)',sr,'2026-04-08',[4,4,4,4,4,4,5],'I','D'),
+  mk('a3','Ana Souza (exemplo)',sr,'2026-10-06',[4.3,4.6,4,4.4,4.2,4.4,4.8],'I','D'),
+  mk('b1','Bruno Lima (exemplo)',pl,'2025-10-09',[2.8,2.4,3.2,3,2.8,2.4,3.8],'C','S'),
+  mk('b2','Bruno Lima (exemplo)',pl,'2026-04-09',[3,2.6,3.4,3.4,3,2.6,4],'C','S'),
+  mk('b3','Bruno Lima (exemplo)',pl,'2026-10-07',[3.4,3.4,3.6,3.8,3.2,3.2,4.2],'C','S'),
+  mk('c1','Carla Mendes (exemplo)',jr,'2026-04-10',[3,3.4,3,2.8,3.4,2.8,4],'S','I'),
+  mk('c2','Carla Mendes (exemplo)',jr,'2026-10-08',[2.8,3,2.8,2.6,3,2.6,3.8],'S','I'),
+  mk('d1','Diego Ferreira (exemplo)',pl,'2026-10-09',[3.8,4.2,3.4,3.6,3,3.6,4],'D','I'),
+  mk('e1','Eduarda Nunes (exemplo)',sr,'2025-10-10',[3.6,4,3.4,3.6,4,3.8,4.2],'I','S'),
+  mk('e2','Eduarda Nunes (exemplo)',sr,'2026-04-07',[3.8,4.2,3.6,3.8,4.2,4,4.4],'I','S'),
+  mk('e3','Eduarda Nunes (exemplo)',sr,'2026-10-05',[4,4.4,3.8,4,4.4,4.2,4.4],'I','S')];
+ L[1].info.cargo=L[2].info.cargo=pl;
  return L.map(s=>({id:s.id,nome:s.info.nome,data:s.info.data,s}));
 }
 function teamData(){
  let recs=histLoad(),demo=!recs.length;if(demo)recs=teamSample();
  const g={};recs.forEach(r=>{const k=nkey(r.nome);(g[k]=g[k]||[]).push(r)});
- const people=Object.values(g).map(l=>{l.sort((a,b)=>(a.data||'').localeCompare(b.data||'')||(a.salvo||'').localeCompare(b.salvo||''));
-  const last=norm(JSON.parse(JSON.stringify(l[l.length-1].s))),prev=l.length>1?norm(JSON.parse(JSON.stringify(l[l.length-2].s))):null;
-  const c=calc(last),pc=prev?calc(prev):null,dc=discCalc(last);
-  return{nome:last.info.nome.replace(/ \(exemplo\)$/,''),cargo:last.info.cargo,data:last.info.data,n:l.length,c,pc,d:pc&&pc.m!=null?c.m-pc.m:null,dc}}).filter(x=>x.c.m!=null);
- return{demo,people,total:recs.length};
+ const all=Object.values(g).map(l=>{
+  const ev=l.map(r=>{const st=norm(JSON.parse(JSON.stringify(r.s)));return{st,c:calc(st),data:st.info.data||'',salvo:r.salvo||''}}).filter(e=>e.c.m!=null)
+   .sort((a,b)=>a.data.localeCompare(b.data)||a.salvo.localeCompare(b.salvo));
+  if(!ev.length)return null;const last=ev[ev.length-1],prev=ev.length>1?ev[ev.length-2]:null;
+  return{nome:last.st.info.nome.replace(/ \(exemplo\)$/,''),cargo:(last.st.info.cargo||'Sem cargo').trim(),data:last.data,ev,c:last.c,pc:prev?prev.c:null,d:prev?last.c.m-prev.c.m:null,dc:discCalc(last.st),st:last.st}}).filter(Boolean)
+  .sort((a,b)=>a.nome.localeCompare(b.nome));
+ all.forEach((p,i)=>p.color=i<8?SER[i]:'#94A3B8');
+ return{demo,all,total:recs.length};
 }
-const lv=m=>m==null?'var(--line)':m>=4.5?'var(--good)':m>=3.75?'var(--accent)':m>=2.75?'#64748B':m>=1.75?'var(--warn)':'var(--bad)';
-let cmpA=null,cmpB=null;
+/* gráficos */
+function radarMulti(labels,series){
+ const W=500,H=370,cx=250,cy=186,R=124,n=labels.length,ang=i=>(-90+i*360/n)*Math.PI/180;
+ const pt=(i,v)=>[cx+Math.cos(ang(i))*R*(v||0)/5,cy+Math.sin(ang(i))*R*(v||0)/5];
+ let g='';for(let v=1;v<=5;v++)g+=`<polygon points="${labels.map((_,i)=>pt(i,v).join(',')).join(' ')}" fill="none" stroke="var(--line)"/>`;
+ labels.forEach((_,i)=>{const[x,y]=pt(i,5);g+=`<line x1="${cx}" y1="${cy}" x2="${x}" y2="${y}" stroke="var(--line)"/>`});
+ for(let v=1;v<=5;v++)g+=`<text class="tk" x="${cx+4}" y="${cy-R*v/5+4}">${v}</text>`;
+ g+=`<polygon points="${labels.map((_,i)=>pt(i,4).join(',')).join(' ')}" fill="none" stroke="var(--ink)" stroke-opacity=".45" stroke-dasharray="4 4"/>`;
+ series.forEach(s=>{g+=`<polygon points="${s.vals.map((v,i)=>pt(i,v).join(',')).join(' ')}" fill="${s.color}" fill-opacity=".12" stroke="${s.color}" stroke-width="2.2" stroke-linejoin="round"/>`;
+  s.vals.forEach((v,i)=>{if(v==null)return;const[x,y]=pt(i,v);g+=`<circle cx="${x}" cy="${y}" r="5" fill="${s.color}" stroke="var(--surface)" stroke-width="2" data-tip="${esc(s.name)} · ${labels[i]}: ${fmt(v)}"/>`})});
+ labels.forEach((l,i)=>{const c=Math.cos(ang(i)),sn=Math.sin(ang(i)),lx=cx+c*(R+14),ly=cy+sn*(R+14)+(sn>0.5?12:sn<-0.5?-4:4);g+=`<text x="${lx}" y="${ly}" text-anchor="${c>0.2?'start':c<-0.2?'end':'middle'}">${l}</text>`});
+ return `<svg class="svgc" viewBox="0 0 ${W} ${H}" role="img" aria-label="Gráfico radar">${g}</svg>`;
+}
+function scatter(P){
+ const W=560,H=390,L=52,Rr=24,T=16,B=50,x=v=>L+(v-1)/4*(W-L-Rr),y=v=>H-B-(v-1)/4*(H-B-T);
+ let g=`<rect x="${x(3.75)}" y="${y(5)}" width="${x(5)-x(3.75)}" height="${y(3.75)-y(5)}" fill="var(--good-soft)"/><rect x="${x(1)}" y="${y(2.75)}" width="${x(2.75)-x(1)}" height="${y(1)-y(2.75)}" fill="var(--bad-soft)"/>`;
+ for(let v=1;v<=5;v++)g+=`<line x1="${x(1)}" x2="${x(5)}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><line y1="${y(1)}" y2="${y(5)}" x1="${x(v)}" x2="${x(v)}" stroke="var(--line)"/><text class="tk" x="${L-8}" y="${y(v)+4}" text-anchor="end">${v}</text><text class="tk" x="${x(v)}" y="${H-B+18}" text-anchor="middle">${v}</text>`;
+ [2.75,3.75].forEach(t=>g+=`<line x1="${x(t)}" x2="${x(t)}" y1="${y(1)}" y2="${y(5)}" stroke="var(--muted)" stroke-dasharray="4 4"/><line y1="${y(t)}" y2="${y(t)}" x1="${x(1)}" x2="${x(5)}" stroke="var(--muted)" stroke-dasharray="4 4"/>`);
+ g+=`<text class="rg" x="${x(5)-8}" y="${y(5)+18}" text-anchor="end">Destaque</text><text class="rg" x="${x(1)+8}" y="${y(1)-10}">Atenção</text>`;
+ g+=`<text class="axt" x="${(x(1)+x(5))/2}" y="${H-8}" text-anchor="middle">Entrega →</text><text class="axt" transform="translate(14 ${(y(1)+y(5))/2}) rotate(-90)" text-anchor="middle">Crescimento →</text>`;
+ const pts=P.filter(p=>p.c.des!=null&&p.c.pot!=null).map(p=>({p,X:x(p.c.des),Y:y(p.c.pot)}));
+ pts.forEach((a,i)=>{a.dy=4;pts.slice(0,i).forEach(b=>{if(Math.abs(a.X-b.X)<70&&Math.abs(a.Y+a.dy-b.Y-b.dy)<15)a.dy+=15})});
+ pts.forEach(({p,X,Y,dy})=>{const k=lvl(p.c.pot)+'-'+lvl(p.c.des),right=X>W-110;
+  g+=`<circle cx="${X}" cy="${Y}" r="8" fill="${p.color}" stroke="var(--surface)" stroke-width="2" data-tip="${esc(p.nome)} · Entrega ${fmt(p.c.des)} · Crescimento ${fmt(p.c.pot)} · ${NINE[k][0]}"/><text class="lbl" x="${right?X-12:X+12}" y="${Y+dy}" text-anchor="${right?'end':'start'}">${esc(p.nome.split(' ')[0])}</text>`});
+ return `<svg class="svgc" viewBox="0 0 ${W} ${H}" role="img" aria-label="Dispersão entrega por crescimento">${g}</svg>`;
+}
+function strip(P,dimAvg){
+ const W=640,L=110,Rr=54,rh=46,T=26,H=T+DIMS.length*rh+6,x=v=>L+(v-1)/4*(W-L-Rr);
+ let g='';for(let v=1;v<=5;v++)g+=`<line x1="${x(v)}" x2="${x(v)}" y1="${T-6}" y2="${H-6}" stroke="var(--line)"/><text class="tk" x="${x(v)}" y="${T-12}" text-anchor="middle">${v}</text>`;
+ g+=`<line x1="${x(4)}" x2="${x(4)}" y1="${T-6}" y2="${H-6}" stroke="var(--ink)" stroke-opacity=".5" stroke-dasharray="4 4"/>`;
+ DIMS.forEach((d,i)=>{const cy=T+i*rh+rh/2,vals=P.map(p=>({p,v:p.c.dims[i].m})).filter(o=>o.v!=null);g+=`<text x="0" y="${cy+5}">${d.curto}</text>`;if(!vals.length)return;
+  const mn=Math.min(...vals.map(o=>o.v)),mx=Math.max(...vals.map(o=>o.v));
+  g+=`<line x1="${x(mn)}" x2="${x(mx)}" y1="${cy}" y2="${cy}" stroke="#cde2fb" stroke-width="12" stroke-linecap="round" data-tip="${d.nome}: de ${fmt(mn)} a ${fmt(mx)}"/>`;
+  vals.forEach(o=>g+=`<circle cx="${x(o.v)}" cy="${cy}" r="6" fill="${o.p.color}" stroke="var(--surface)" stroke-width="2" data-tip="${esc(o.p.nome)} · ${d.curto}: ${fmt(o.v)}"/>`);
+  const a=dimAvg[i];g+=`<rect x="${x(a)-6}" y="${cy-6}" width="12" height="12" transform="rotate(45 ${x(a)} ${cy})" fill="var(--brand)" stroke="var(--surface)" stroke-width="2" data-tip="Média da equipe · ${d.curto}: ${fmt(a)}"/><text class="val" x="${W}" y="${cy+5}" text-anchor="end">${fmt(a)}</text>`});
+ return `<svg class="svgc" viewBox="0 0 ${W} ${H}" role="img" aria-label="Dispersão das notas por área">${g}</svg>`;
+}
+function lineChart(P){
+ const mk=d=>(d||'').slice(0,7),months=[...new Set(P.flatMap(p=>p.ev.map(e=>mk(e.data))).filter(Boolean))].sort();
+ if(months.length<2)return'<p class="empty">A linha do tempo aparece quando houver avaliações em pelo menos dois meses diferentes.</p>';
+ const W=700,H=330,L=40,Rr=28,T=18,B=34,x=i=>L+i/(months.length-1)*(W-L-Rr),y=v=>H-B-(v-1)/4*(H-B-T);
+ let g='';for(let v=1;v<=5;v++)g+=`<line x1="${x(0)}" x2="${x(months.length-1)}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)"/><text class="tk" x="${L-10}" y="${y(v)+4}" text-anchor="end">${v}</text>`;
+ g+=`<line x1="${x(0)}" x2="${x(months.length-1)}" y1="${y(4)}" y2="${y(4)}" stroke="var(--ink)" stroke-opacity=".45" stroke-dasharray="4 4"/>`;
+ months.forEach((m,i)=>g+=`<text class="tk" x="${x(i)}" y="${H-10}" text-anchor="middle">${mlab(m)}</text>`);
+ const path=pts=>pts.map((p,i)=>(i?'L':'M')+x(p[0]).toFixed(1)+' '+y(p[1]).toFixed(1)).join(' ');
+ P.forEach(p=>{if(hideL.has(p.nome))return;const pts=months.map((m,i)=>{const e=[...p.ev].reverse().find(e=>mk(e.data)===m);return e?[i,e.c.m]:null}).filter(Boolean);
+  if(pts.length>1)g+=`<path d="${path(pts)}" fill="none" stroke="${p.color}" stroke-width="2" stroke-linejoin="round"/>`;
+  pts.forEach(q=>g+=`<circle cx="${x(q[0])}" cy="${y(q[1])}" r="5" fill="${p.color}" stroke="var(--surface)" stroke-width="2" data-tip="${esc(p.nome)} · ${mlab(months[q[0]])}: ${fmt(q[1])}"/>`)});
+ if(!hideL.has('__team')){const tp=months.map((m,i)=>{const v=mean(P.flatMap(p=>p.ev.filter(e=>mk(e.data)===m).map(e=>e.c.m)));return v==null?null:[i,v]}).filter(Boolean);
+  g+=`<path d="${path(tp)}" fill="none" stroke="var(--brand)" stroke-width="3.5" stroke-linejoin="round"/>`;
+  tp.forEach(q=>g+=`<rect x="${x(q[0])-5}" y="${y(q[1])-5}" width="10" height="10" fill="var(--brand)" stroke="var(--surface)" stroke-width="2" data-tip="Média da equipe · ${mlab(months[q[0]])}: ${fmt(q[1])}"/>`)}
+ const lg=`<div class="lg"><button type="button" data-ln="__team" aria-pressed="${!hideL.has('__team')}"><i class="sq" style="background:var(--brand)"></i><b>Média da equipe</b></button>${P.map(p=>`<button type="button" data-ln="${esc(p.nome)}" aria-pressed="${!hideL.has(p.nome)}"><i style="background:${p.color}"></i>${esc(p.nome)}</button>`).join('')}<span><i class="dash"></i>Meta 4,0</span></div>`;
+ return `<svg class="svgc" viewBox="0 0 ${W} ${H}" role="img" aria-label="Evolução da nota no tempo">${g}</svg>${lg}<p class="cap">Clique nos nomes para mostrar ou esconder cada linha.</p>`;
+}
+function dumbbell(P){
+ const Q=P.filter(p=>p.pc);if(!Q.length)return'<p class="empty">Ainda não há consultores com duas avaliações.</p>';
+ const pv=DIMS.map((d,i)=>mean(Q.map(p=>p.pc.dims[i].m).filter(v=>v!=null))),cu=DIMS.map((d,i)=>mean(Q.map(p=>p.c.dims[i].m).filter(v=>v!=null)));
+ const lo=Math.max(1,Math.floor(Math.min(...pv,...cu)*2)/2-0.5),hi=5;
+ const W=640,L=110,Rr=110,rh=42,T=26,H=T+DIMS.length*rh,x=v=>L+(v-lo)/(hi-lo)*(W-L-Rr);
+ let g='';for(let v=lo;v<=hi+1e-9;v+=0.5)g+=`<line x1="${x(v)}" x2="${x(v)}" y1="${T-6}" y2="${H-4}" stroke="var(--line)"/><text class="tk" x="${x(v)}" y="${T-12}" text-anchor="middle">${fmt(v)}</text>`;
+ DIMS.forEach((d,i)=>{const cy=T+i*rh+rh/2,a=pv[i],b=cu[i];g+=`<text x="0" y="${cy+5}">${d.curto}</text>`;if(a==null||b==null)return;const dd=b-a,c=dd>=0.05?'#2a78d6':dd<=-0.05?'#e34948':'#64748B';
+  g+=`<line x1="${x(a)}" x2="${x(b)}" y1="${cy}" y2="${cy}" stroke="${c}" stroke-width="3"/><circle cx="${x(a)}" cy="${cy}" r="6" fill="var(--surface)" stroke="#94A3B8" stroke-width="2.5" data-tip="${d.nome} · anterior: ${fmt(a)}"/><circle cx="${x(b)}" cy="${cy}" r="7" fill="${c}" stroke="var(--surface)" stroke-width="2" data-tip="${d.nome} · atual: ${fmt(b)}"/>
+  <text class="val" x="${W}" y="${cy+5}" text-anchor="end">${fmt(a)} → ${fmt(b)}  <tspan fill="${c}" font-weight="700">${sgn(dd)}</tspan></text>`});
+ return `<svg class="svgc" viewBox="0 0 ${W} ${H}" role="img" aria-label="Antes e depois por área">${g}</svg><div class="lg"><span><i style="background:var(--surface);border:2.5px solid #94A3B8"></i>Avaliação anterior</span><span><i style="background:#2a78d6"></i>Atual (subiu)</span><span><i style="background:#e34948"></i>Atual (caiu)</span></div><p class="cap">Média dos ${Q.length} consultores que já têm duas avaliações.</p>`;
+}
 function renderTeam(){
- const T=teamData(),P=T.people;$('#teamDemo').hidden=!T.demo;
- if(!P.length){$('#team').innerHTML='<p class="empty">Nenhuma avaliação com notas no histórico ainda.</p>';return}
- const avg=mean(P.map(p=>p.c.m)),withPrev=P.filter(p=>p.d!=null),up=withPrev.filter(p=>p.d>=0.2);
+ const T=teamData();$('#teamDemo').hidden=!T.demo;
+ if(!T.all.length){$('#team').innerHTML='<p class="empty">Nenhuma avaliação com notas no histórico ainda.</p>';return}
+ const cargos=[...new Set(T.all.map(p=>p.cargo))].sort();if(teamCargo!=='Todos'&&!cargos.includes(teamCargo))teamCargo='Todos';
+ const P=T.all.filter(p=>teamCargo==='Todos'||p.cargo===teamCargo);
+ const avg=mean(P.map(p=>p.c.m)),withPrev=P.filter(p=>p.d!=null),up=withPrev.filter(p=>p.d>=0.2),acima=P.filter(p=>p.c.m>=3.75).length;
+ const crit=P.reduce((a,p)=>a+p.c.items.filter(i=>i.v<=2).length,0);
  const dimAvg=DIMS.map((d,i)=>mean(P.map(p=>p.c.dims[i].m).filter(x=>x!=null)));
- const byNota=[...P].sort((a,b)=>b.c.m-a.c.m);
- const dimRank=DIMS.map((d,i)=>({d,m:dimAvg[i]})).filter(x=>x.m!=null).sort((a,b)=>b.m-a.m);
- const evoRank=[...withPrev].sort((a,b)=>b.d-a.d);
+ const byNota=[...P].sort((a,b)=>b.c.m-a.c.m),dimRank=DIMS.map((d,i)=>({d,m:dimAvg[i]})).filter(x=>x.m!=null).sort((a,b)=>b.m-a.m),evoRank=[...withPrev].sort((a,b)=>b.d-a.d);
  const discCount={D:[],I:[],S:[],C:[]};P.forEach(p=>{if(p.dc)discCount[p.dc.p].push(p.nome)});
  const topDisc=Object.entries(discCount).sort((a,b)=>b[1].length-a[1].length)[0];
- const ins=[
-  ['Maior nota',`<b>${esc(byNota[0].nome)}</b> (${fmt(byNota[0].c.m)})`],
-  ['Menor nota',`<b>${esc(byNota[byNota.length-1].nome)}</b> (${fmt(byNota[byNota.length-1].c.m)})`],
-  ['Área mais forte da equipe',`<b>${dimRank[0].d.nome}</b> (${fmt(dimRank[0].m)})`],
-  ['Área que mais precisa de atenção',`<b>${dimRank[dimRank.length-1].d.nome}</b> (${fmt(dimRank[dimRank.length-1].m)})`],
-  ['Mais evoluiu',evoRank.length?`<b>${esc(evoRank[0].nome)}</b> (${sgn(evoRank[0].d)})`:'Sem comparação ainda'],
-  ['Perfil DISC mais comum',topDisc[1].length?`<b>${DISC[topDisc[0]].nome}</b> (${topDisc[1].length} de ${P.length})`:'-']];
-
- const ranking=`<div class="rk">${byNota.map(p=>`<div class="rk-row" title="${esc(p.nome)}: ${fmt(p.c.m)} (${cls(p.c.m)[0]})"><span class="nm">${esc(p.nome)}</span><div class="rk-track"><div class="rk-fill" style="width:${(p.c.m-1)/4*100}%;background:${lv(p.c.m)}"></div><div class="rk-avg" style="left:${(avg-1)/4*100}%"></div></div><b>${fmt(p.c.m)}</b></div>`).join('')}</div><p class="cap">Escala de 1 a 5. Linha tracejada: média da equipe (${fmt(avg)}).</p>`;
-
- const hc=v=>{if(v==null)return'background:var(--soft)';const i=Math.max(0,Math.min(4,Math.round(v)-1));return`background:${HEAT[i]};color:${i>=3?'#fff':'var(--ink)'}`};
- const heat=`<div class="tbl-wrap"><table class="t heat"><thead><tr><th>Consultor</th>${DIMS.map(d=>`<th class="c">${d.curto}</th>`).join('')}<th class="c">Geral</th></tr></thead><tbody>
-  ${byNota.map(p=>`<tr><td><b>${esc(p.nome)}</b></td>${p.c.dims.map((x,i)=>`<td class="h" style="${hc(x.m)}" title="${esc(p.nome)} · ${DIMS[i].nome}: ${fmt(x.m)}">${fmt(x.m)}</td>`).join('')}<td class="h" style="${hc(p.c.m)}"><b>${fmt(p.c.m)}</b></td></tr>`).join('')}
-  <tr class="avg"><td>Média da equipe</td>${dimAvg.map(v=>`<td class="h" style="${hc(v)}">${fmt(v)}</td>`).join('')}<td class="h" style="${hc(avg)}">${fmt(avg)}</td></tr></tbody></table></div>
-  <p class="cap">Quanto mais escuro, maior a nota.</p>`;
-
- const mx=Math.max(0.5,...withPrev.map(p=>Math.abs(p.d)));
- const evoHtml=`<div class="dv">${[...P].sort((a,b)=>(b.d??-9)-(a.d??-9)).map(p=>p.d==null?`<div class="dv-row"><span class="nm">${esc(p.nome)}</span><i>Primeira avaliação</i><b></b></div>`:
-  `<div class="dv-row" title="${esc(p.nome)}: ${fmt(p.pc.m)} para ${fmt(p.c.m)}"><span class="nm">${esc(p.nome)}</span><div class="dv-track"><div class="dv-bar" style="${p.d>=0?`left:50%;width:${p.d/mx*50}%;background:${SER[0]}`:`right:50%;width:${-p.d/mx*50}%;background:#e34948`}"></div></div><b class="${p.d>=0.2?'up':p.d<=-0.2?'dn':''}">${sgn(p.d)}</b></div>`).join('')}</div>
-  <p class="cap">Variação da nota geral em relação à avaliação anterior. ${up.length} de ${withPrev.length} evoluíram.</p>`;
-
- const cell={};P.forEach(p=>{if(p.c.des!=null&&p.c.pot!=null){const k=lvl(p.c.pot)+'-'+lvl(p.c.des);(cell[k]=cell[k]||[]).push(p.nome)}});
- let nine='<div class="nine team"><div class="ax ay" style="grid-row:1/4">Crescimento →</div>';
- ['a','m','b'].forEach(r=>['b','m','a'].forEach(c=>{const k=r+'-'+c,w=cell[k]||[];nine+=`<div class="cell${w.length?' has':''}"><b>${NINE[k][0]}</b><div class="who">${w.map(n=>`<span>${esc(n.split(' ')[0])}</span>`).join('')}</div></div>`}));
- nine+='<div></div><div class="ax" style="grid-column:2/5">Entrega →</div></div>';
-
+ const card=(t,s,body,w)=>`<div class="t-card${w?' wide':''}"><h2>${t}</h2><p class="sub">${s}</p>${body}</div>`;
  const col={D:'var(--d)',I:'var(--i)',S:'var(--s)',C:'var(--c)'};
- const disc=`<div class="disc-team">${['D','I','S','C'].map(f=>`<div class="row"><span class="lt" style="display:flex;gap:8px;align-items:center;font-weight:600"><i style="font-style:normal;width:24px;height:24px;border-radius:5px;display:grid;place-items:center;color:#fff;background:${col[f]}">${f}</i>${DISC[f].nome}</span><div class="rk-track"><div class="rk-fill" style="width:${discCount[f].length/P.length*100}%;background:${col[f]}"></div></div><b style="font-family:var(--f-mono);font-weight:500;text-align:right">${discCount[f].length}</b><div class="names">${discCount[f].map(esc).join(', ')||'Ninguém'}</div></div>`).join('')}</div>
-  <p class="cap">Perfil principal de cada consultor na última avaliação.</p>`;
-
- const opts=[...P.map(p=>p.nome),'Média da equipe'];
- if(!opts.includes(cmpA))cmpA=byNota[0].nome;if(!opts.includes(cmpB)||cmpB===cmpA)cmpB=byNota.length>1?byNota[1].nome:'Média da equipe';
- const vals=n=>n==='Média da equipe'?dimAvg:P.find(p=>p.nome===n).c.dims.map(x=>x.m);
- const va=vals(cmpA),vb=vals(cmpB);
- const diffs=DIMS.map((d,i)=>({d,x:va[i]!=null&&vb[i]!=null?va[i]-vb[i]:null})).filter(x=>x.x!=null);
- const ahead=diffs.filter(x=>x.x>0.049).length,behind=diffs.filter(x=>x.x<-0.049).length,big=[...diffs].sort((a,b)=>Math.abs(b.x)-Math.abs(a.x))[0];
- const sel=(id,v)=>`<select id="${id}">${opts.map(o=>`<option${o===v?' selected':''}>${esc(o)}</option>`).join('')}</select>`;
- const cmpHtml=`<div class="cmp-sel"><div class="field"><label for="cmpA">Comparar</label>${sel('cmpA',cmpA)}</div><div class="field"><label for="cmpB">com</label>${sel('cmpB',cmpB)}</div></div>
-  <div class="legend-row"><span><i style="background:${SER[0]}"></i>${esc(cmpA)}</span><span><i style="background:${SER[1]}"></i>${esc(cmpB)}</span></div>
-  <div class="cmp">${DIMS.map((d,i)=>`<div class="cmp-row"><span>${d.nome}</span><div class="cmp-bars">
-   <div title="${esc(cmpA)}: ${fmt(va[i])}"><span class="tr"><i style="width:${(va[i]||0)/5*100}%;background:${SER[0]}"></i></span><b>${fmt(va[i])}</b></div>
-   <div title="${esc(cmpB)}: ${fmt(vb[i])}"><span class="tr"><i style="width:${(vb[i]||0)/5*100}%;background:${SER[1]}"></i></span><b>${fmt(vb[i])}</b></div></div></div>`).join('')}</div>
-  <div class="cmp-sum"><b>${esc(cmpA)}</b> está à frente em <b>${ahead}</b> de ${diffs.length} áreas e atrás em <b>${behind}</b>.${big&&Math.abs(big.x)>0.049?` Maior diferença: <b>${big.d.nome}</b> (${sgn(big.x)}).`:''}</div>`;
-
- $('#team').innerHTML=`
+ let body='';
+ if(teamTab==='geral'){
+  const ins=[['Maior nota',`<b>${esc(byNota[0].nome)}</b> (${fmt(byNota[0].c.m)})`],['Menor nota',`<b>${esc(byNota[byNota.length-1].nome)}</b> (${fmt(byNota[byNota.length-1].c.m)})`],
+   ['Área mais forte',`<b>${dimRank[0].d.nome}</b> (${fmt(dimRank[0].m)})`],['Área mais fraca',`<b>${dimRank[dimRank.length-1].d.nome}</b> (${fmt(dimRank[dimRank.length-1].m)})`],
+   ['Mais evoluiu',evoRank.length?`<b>${esc(evoRank[0].nome)}</b> (${sgn(evoRank[0].d)})`:'Sem comparação ainda'],['Perfil DISC mais comum',topDisc[1].length?`<b>${DISC[topDisc[0]].nome}</b> (${topDisc[1].length} de ${P.length})`:'-']];
+  const ranking=`<div class="rk">${byNota.map(p=>`<div class="rk-row" data-tip="${esc(p.nome)}: ${fmt(p.c.m)} (${cls(p.c.m)[0]})"><span class="nm"><i style="background:${p.color}"></i>${esc(p.nome)}</span><div class="rk-track"><div class="rk-fill" style="width:${(p.c.m-1)/4*100}%;background:${lv(p.c.m)}"></div><div class="rk-avg" style="left:${(avg-1)/4*100}%"></div></div><b>${fmt(p.c.m)}</b></div>`).join('')}</div><p class="cap">Cor da barra: nível da nota. Linha tracejada: média da equipe (${fmt(avg)}).</p>`;
+  const cnt=[0,0,0,0,0];P.forEach(p=>cnt[lvIdx(p.c.m)]++);
+  const dist=`<div class="dist">${cnt.map((c,i)=>c?`<div style="flex:${c};background:${LVC[i]}" data-tip="${LVN[i]}: ${c} consultor(es)">${c}</div>`:'').join('')}</div><div class="dist-lg">${LVN.map((n,i)=>`<span><i style="background:${LVC[i]}"></i>${n}<b>${cnt[i]}</b></span>`).join('')}</div><p class="cap">${acima} de ${P.length} consultores estão no nível “Supera” ou acima.</p>`;
+  body=`${card('Destaques','O principal da equipe em poucas linhas.',`<ul class="insights">${ins.map(([a,b])=>`<li><span>${a}</span>${b}</li>`).join('')}</ul>`,1)}
+   ${card('Ranking por nota geral','Última avaliação de cada consultor.',ranking)}
+   ${card('Distribuição por nível','Quantos consultores há em cada faixa de nota.',dist)}
+   ${card('Mapa de talentos','Entrega no eixo horizontal, crescimento no vertical. Verde: destaque. Vermelho: atenção.',scatter(P),1)}`;
+ }
+ if(teamTab==='comp'){
+  const hc=v=>{if(v==null)return'background:var(--soft)';const i=Math.max(0,Math.min(4,Math.round(v)-1));return`background:${HEAT[i]};color:${i>=3?'#fff':'var(--ink)'}`};
+  const heat=`<div class="tbl-wrap"><table class="t heat"><thead><tr><th>Consultor</th>${DIMS.map(d=>`<th class="c">${d.curto}</th>`).join('')}<th class="c">Geral</th></tr></thead><tbody>
+   ${byNota.map(p=>`<tr><td><b>${esc(p.nome)}</b></td>${p.c.dims.map((x,i)=>`<td class="h" style="${hc(x.m)}" data-tip="${esc(p.nome)} · ${DIMS[i].nome}: ${fmt(x.m)}">${fmt(x.m)}</td>`).join('')}<td class="h" style="${hc(p.c.m)}"><b>${fmt(p.c.m)}</b></td></tr>`).join('')}
+   <tr class="avg"><td>Média da equipe</td>${dimAvg.map(v=>`<td class="h" style="${hc(v)}">${fmt(v)}</td>`).join('')}<td class="h" style="${hc(avg)}">${fmt(avg)}</td></tr></tbody></table></div>
+   <div class="heat-lg">Nota 1 ${HEAT.map(c=>`<i style="background:${c}"></i>`).join('')} Nota 5</div>`;
+  const ia=Object.values(ITEMS).map(it=>({it,m:mean(P.map(p=>p.st.notas[it.id]).filter(v=>v>0))})).filter(o=>o.m!=null).sort((a,b)=>b.m-a.m);
+  const il=(l)=>`<ul class="ilist">${l.map(o=>`<li><div>${o.it.t}<small>${o.it.dim.nome}</small></div><div class="tr"><i style="width:${(o.m-1)/4*100}%;background:${lv(o.m)}"></i></div><b>${fmt(o.m)}</b></li>`).join('')}</ul>`;
+  body=`${card('Média da equipe por área','Linha tracejada: meta 4,0.',radarMulti(DIMS.map(d=>d.curto),[{name:'Média da equipe',vals:dimAvg,color:'#2a78d6'}]))}
+   ${card('Ranking das áreas','Média da equipe em cada área, da maior para a menor.',`<div class="rk">${dimRank.map(o=>`<div class="rk-row" data-tip="${o.d.nome}: ${fmt(o.m)}"><span class="nm">${o.d.curto}</span><div class="rk-track"><div class="rk-fill" style="width:${(o.m-1)/4*100}%;background:${lv(o.m)}"></div><div class="rk-avg" style="left:75%"></div></div><b>${fmt(o.m)}</b></div>`).join('')}</div><p class="cap">Linha tracejada: meta 4,0.</p>`)}
+   ${card('Dispersão por área','Cada ponto é um consultor. Faixa azul: da menor à maior nota. Losango: média da equipe.',strip(P,dimAvg)+`<div class="lg">${P.map(p=>`<span><i style="background:${p.color}"></i>${esc(p.nome)}</span>`).join('')}<span><i class="dia"></i>Média</span><span><i class="dash"></i>Meta 4,0</span></div>`,1)}
+   ${card('Notas por área','Cada consultor em cada área, com a média da equipe.',heat,1)}
+   ${card('5 comportamentos mais fortes','Média da equipe em cada pergunta.',il(ia.slice(0,5)))}
+   ${card('5 comportamentos que mais precisam melhorar','Média da equipe em cada pergunta.',il(ia.slice(-5).reverse()))}`;
+ }
+ if(teamTab==='evo'){
+  const mx=Math.max(0.5,...withPrev.map(p=>Math.abs(p.d)));
+  const dv=`<div class="dv">${[...P].sort((a,b)=>(b.d??-9)-(a.d??-9)).map(p=>p.d==null?`<div class="dv-row"><span class="nm">${esc(p.nome)}</span><i>Primeira avaliação</i><b></b></div>`:
+   `<div class="dv-row" data-tip="${esc(p.nome)}: ${fmt(p.pc.m)} para ${fmt(p.c.m)}"><span class="nm">${esc(p.nome)}</span><div class="dv-track"><div class="dv-bar" style="${p.d>=0?`left:50%;width:${p.d/mx*50}%;background:#2a78d6`:`right:50%;width:${-p.d/mx*50}%;background:#e34948`}"></div></div><b class="${p.d>=0.2?'up':p.d<=-0.2?'dn':''}">${sgn(p.d)}</b></div>`).join('')}</div><p class="cap">${up.length} de ${withPrev.length} evoluíram 0,2 ponto ou mais.</p>`;
+  const tb=`<div class="tbl-wrap"><table class="t"><thead><tr><th>Consultor</th><th style="text-align:right">Anterior</th><th style="text-align:right">Atual</th><th style="text-align:right">Variação</th><th>Grau</th><th>Mais subiu</th><th>Mais caiu</th></tr></thead><tbody>${[...P].sort((a,b)=>(b.d??-9)-(a.d??-9)).map(p=>{if(p.d==null)return`<tr><td><b>${esc(p.nome)}</b></td><td class="num">-</td><td class="num">${fmt(p.c.m)}</td><td class="num">-</td><td><span class="pill p3">Primeira</span></td><td>-</td><td>-</td></tr>`;
+   const ds=DIMS.map((d,i)=>({d,x:p.c.dims[i].m!=null&&p.pc.dims[i].m!=null?p.c.dims[i].m-p.pc.dims[i].m:null})).filter(o=>o.x!=null).sort((a,b)=>b.x-a.x),[gg,gp]=evo(p.d),hi=ds[0],lo=ds[ds.length-1];
+   return`<tr><td><b>${esc(p.nome)}</b></td><td class="num">${fmt(p.pc.m)}</td><td class="num"><b>${fmt(p.c.m)}</b></td><td class="num ${p.d>=0.2?'up':p.d<=-0.2?'dn':''}">${sgn(p.d)}</td><td><span class="pill ${gp}">${gg}</span></td><td>${hi&&hi.x>0.049?`${hi.d.curto} (${sgn(hi.x)})`:'-'}</td><td>${lo&&lo.x<-0.049?`${lo.d.curto} (${sgn(lo.x)})`:'-'}</td></tr>`}).join('')}</tbody></table></div>`;
+  body=`${card('Nota geral ao longo do tempo','Cada linha é um consultor. Linha grossa: média da equipe.',lineChart(P),1)}
+   ${card('Variação desde a última avaliação','Quanto a nota geral subiu ou caiu.',dv)}
+   ${card('Grau de evolução','Quantos consultores em cada grau.',(()=>{const G=[['Caiu muito','var(--bad)'],['Caiu','var(--warn)'],['Estável','#64748B'],['Evoluiu','var(--accent)'],['Evoluiu muito','var(--good)']],c=[0,0,0,0,0];withPrev.forEach(p=>{const n=evo(p.d)[0];c[G.findIndex(g=>g[0]===n)]++});
+     return withPrev.length?`<div class="dist">${c.map((v,i)=>v?`<div style="flex:${v};background:${G[i][1]}" data-tip="${G[i][0]}: ${v}">${v}</div>`:'').join('')}</div><div class="dist-lg">${G.map((g,i)=>`<span><i style="background:${g[1]}"></i>${g[0]}<b>${c[i]}</b></span>`).join('')}</div><p class="cap">Evoluiu muito: +0,5 ou mais. Evoluiu: +0,2 a +0,4. Estável: entre −0,1 e +0,1. Caiu: −0,2 a −0,4. Caiu muito: −0,5 ou menos.</p>`:'<p class="empty">Ainda não há consultores com duas avaliações.</p>'})())}
+   ${card('Antes e depois por área','Média da equipe na avaliação anterior e na atual.',dumbbell(P),1)}
+   ${card('Evolução por consultor','Grau de evolução e as áreas que mais mudaram.',tb,1)}`;
+ }
+ if(teamTab==='perfis'){
+  const D=P.filter(p=>p.dc),di={};['D','I','S','C'].forEach(f=>di[f]=mean(D.map(p=>p.dc.sc[f])));
+  const disc=`<div class="disc-team">${['D','I','S','C'].map(f=>`<div class="row"><span class="lt"><i style="background:${col[f]}">${f}</i>${DISC[f].nome}</span><div class="rk-track"><div class="rk-fill" style="width:${discCount[f].length/P.length*100}%;background:${col[f]}"></div></div><b style="font-family:var(--f-mono);font-weight:500;text-align:right">${discCount[f].length}</b><div class="names">${discCount[f].map(esc).join(', ')||'Ninguém'}</div></div>`).join('')}</div>`;
+  const inten=`<div class="disc-team">${['D','I','S','C'].map(f=>`<div class="row" data-tip="${DISC[f].nome}: ${di[f]==null?'-':Math.round(di[f])} de 100"><span class="lt"><i style="background:${col[f]}">${f}</i>${DISC[f].nome}</span><div class="rk-track"><div class="rk-fill" style="width:${di[f]||0}%;background:${col[f]}"></div><div class="rk-avg" style="left:50%"></div></div><b style="font-family:var(--f-mono);font-weight:500;text-align:right">${di[f]==null?'-':Math.round(di[f])}</b></div>`).join('')}</div><p class="cap">Média de 0 a 100. Acima de 50, o traço é forte na equipe.</p>`;
+  const cell={};P.forEach(p=>{if(p.c.des!=null&&p.c.pot!=null){const k=lvl(p.c.pot)+'-'+lvl(p.c.des);(cell[k]=cell[k]||[]).push(p.nome)}});
+  let nine='<div class="nine team"><div class="ax ay" style="grid-row:1/4">Crescimento →</div>';
+  ['a','m','b'].forEach(r=>['b','m','a'].forEach(c=>{const k=r+'-'+c,w=cell[k]||[];nine+=`<div class="cell${w.length?' has':''}"><b>${NINE[k][0]}</b><div class="who">${w.map(n=>`<span>${esc(n.split(' ')[0])}</span>`).join('')}</div></div>`}));
+  nine+='<div></div><div class="ax" style="grid-column:2/5">Entrega →</div></div>';
+  const cg={};P.forEach(p=>(cg[p.cargo]=cg[p.cargo]||[]).push(p));
+  const ct=`<div class="tbl-wrap"><table class="t"><thead><tr><th>Cargo</th><th style="text-align:right">Pessoas</th><th style="text-align:right">Média</th><th>Área mais forte</th><th>Área mais fraca</th></tr></thead><tbody>${Object.entries(cg).sort((a,b)=>a[0].localeCompare(b[0])).map(([c,l])=>{const dm=DIMS.map((d,i)=>({d,m:mean(l.map(p=>p.c.dims[i].m).filter(v=>v!=null))})).filter(o=>o.m!=null).sort((a,b)=>b.m-a.m);
+   return`<tr><td><b>${esc(c)}</b></td><td class="num">${l.length}</td><td class="num">${fmt(mean(l.map(p=>p.c.m)))}</td><td>${dm[0].d.curto} (${fmt(dm[0].m)})</td><td>${dm[dm.length-1].d.curto} (${fmt(dm[dm.length-1].m)})</td></tr>`}).join('')}</tbody></table></div>`;
+  body=`${card('Perfil DISC principal','Quantos consultores têm cada perfil como principal.',disc)}
+   ${card('Intensidade média dos fatores','O estilo predominante da equipe como um todo.',inten)}
+   ${card('Matriz entrega × crescimento','Onde cada consultor está.',nine)}
+   ${card('Resultado por cargo','Média e áreas de destaque de cada cargo.',ct)}`;
+ }
+ if(teamTab==='cmp'){
+  const opts=[...P.map(p=>p.nome),'Média da equipe'];
+  if(!opts.includes(cmpA))cmpA=byNota[0].nome;if(!opts.includes(cmpB)||cmpB===cmpA)cmpB=byNota.length>1?byNota.find(p=>p.nome!==cmpA).nome:'Média da equipe';
+  const vals=n=>n==='Média da equipe'?dimAvg:P.find(p=>p.nome===n).c.dims.map(x=>x.m),va=vals(cmpA),vb=vals(cmpB);
+  const diffs=DIMS.map((d,i)=>({d,x:va[i]!=null&&vb[i]!=null?va[i]-vb[i]:null})).filter(x=>x.x!=null);
+  const ahead=diffs.filter(x=>x.x>0.049),behind=diffs.filter(x=>x.x<-0.049),big=[...diffs].sort((a,b)=>Math.abs(b.x)-Math.abs(a.x))[0];
+  const sel=(id,v)=>`<select id="${id}">${opts.map(o=>`<option${o===v?' selected':''}>${esc(o)}</option>`).join('')}</select>`;
+  const lgd=`<div class="lg"><span><i style="background:${SER[0]}"></i>${esc(cmpA)}</span><span><i style="background:${SER[1]}"></i>${esc(cmpB)}</span><span><i class="dash"></i>Meta 4,0</span></div>`;
+  const bars=`<div class="cmp">${DIMS.map((d,i)=>`<div class="cmp-row"><span>${d.curto}</span><div class="cmp-bars">
+   <div data-tip="${esc(cmpA)} · ${d.curto}: ${fmt(va[i])}"><span class="tr"><i style="width:${(va[i]||0)/5*100}%;background:${SER[0]}"></i></span><b>${fmt(va[i])}</b></div>
+   <div data-tip="${esc(cmpB)} · ${d.curto}: ${fmt(vb[i])}"><span class="tr"><i style="width:${(vb[i]||0)/5*100}%;background:${SER[1]}"></i></span><b>${fmt(vb[i])}</b></div></div></div>`).join('')}</div>`;
+  const ma=cmpA==='Média da equipe'?avg:P.find(p=>p.nome===cmpA).c.m,mb=cmpB==='Média da equipe'?avg:P.find(p=>p.nome===cmpB).c.m;
+  body=`<div class="t-card wide"><div class="cmp-sel"><div class="field"><label for="cmpA">Comparar</label>${sel('cmpA',cmpA)}</div><div class="field"><label for="cmpB">com</label>${sel('cmpB',cmpB)}</div></div></div>
+   ${card('Perfil por área','As duas formas sobrepostas.',radarMulti(DIMS.map(d=>d.curto),[{name:cmpA,vals:va,color:SER[0]},{name:cmpB,vals:vb,color:SER[1]}])+lgd)}
+   ${card('Notas lado a lado','Escala de 1 a 5.',bars+lgd)}
+   <div class="t-card wide"><div class="cmp-sum">Nota geral: <b>${esc(cmpA)}</b> ${fmt(ma)} e <b>${esc(cmpB)}</b> ${fmt(mb)} (diferença de ${sgn(ma-mb)}).<br><b>${esc(cmpA)}</b> está à frente em <b>${ahead.length}</b> de ${diffs.length} áreas${ahead.length?` (${ahead.map(x=>x.d.curto).join(', ')})`:''} e atrás em <b>${behind.length}</b>${behind.length?` (${behind.map(x=>x.d.curto).join(', ')})`:''}.${big&&Math.abs(big.x)>0.049?` Maior diferença: <b>${big.d.nome}</b> (${sgn(big.x)}).`:''}</div></div>`;
+ }
+ if(teamTab==='tab'){
+  const rows=P.map(p=>({p,nome:p.nome,cargo:p.cargo,data:p.data,n:p.ev.length,m:p.c.m,d:p.d,des:p.c.des,pot:p.c.pot,q:p.c.des!=null&&p.c.pot!=null?NINE[lvl(p.c.pot)+'-'+lvl(p.c.des)][0]:'-',disc:p.dc?p.dc.p+(p.dc.s||''):'-'}));
+  rows.sort((a,b)=>{const x=a[tSort.k],y=b[tSort.k];if(x==null)return 1;if(y==null)return-1;return(typeof x==='string'?x.localeCompare(y):x-y)*tSort.dir});
+  const H=[['nome','Consultor'],['cargo','Cargo'],['data','Última avaliação'],['n','Avaliações'],['m','Nota'],['d','Variação'],['des','Entrega'],['pot','Crescimento'],['q','Matriz'],['disc','DISC']];
+  body=card('Todos os consultores','Clique no título de uma coluna para ordenar.',`<div class="tbl-wrap"><table class="t sortable"><thead><tr>${H.map(([k,l])=>`<th data-sort="${k}"${tSort.k===k?` aria-sort="${tSort.dir>0?'ascending':'descending'}"`:''}>${l}</th>`).join('')}</tr></thead><tbody>
+   ${rows.map(r=>`<tr><td><b>${esc(r.nome)}</b></td><td>${esc(r.cargo)}</td><td>${dataBR(r.data)}</td><td class="num">${r.n}</td><td class="num"><span class="pill ${cls(r.m)[1]}">${fmt(r.m)}</span></td><td class="num ${r.d>=0.2?'up':r.d<=-0.2?'dn':''}">${r.d==null?'-':sgn(r.d)}</td><td class="num">${fmt(r.des)}</td><td class="num">${fmt(r.pot)}</td><td>${r.q}</td><td>${r.disc}</td></tr>`).join('')}</tbody></table></div>`,1);
+ }
+ const tabs=[['geral','Visão geral'],['comp','Competências'],['evo','Evolução'],['perfis','Perfis e talentos'],['cmp','Comparar'],['tab','Tabela']];
+ $('#team').innerHTML=`<div class="t-bar"><div class="seg" role="group" aria-label="Seções do painel">${tabs.map(([k,l])=>`<button type="button" data-tt="${k}" aria-pressed="${teamTab===k}">${l}</button>`).join('')}</div>
+   <div class="field"><label for="tCargo">Filtrar por cargo</label><select id="tCargo"><option>Todos</option>${cargos.map(c=>`<option${c===teamCargo?' selected':''}>${esc(c)}</option>`).join('')}</select></div></div>
   <div class="t-kpis">
    <div class="t-kpi"><span>Consultores</span><b>${P.length}</b><small>avaliados</small></div>
-   <div class="t-kpi"><span>Avaliações</span><b>${T.total}</b><small>no histórico</small></div>
+   <div class="t-kpi"><span>Avaliações</span><b>${P.reduce((a,p)=>a+p.ev.length,0)}</b><small>no histórico</small></div>
    <div class="t-kpi"><span>Média da equipe</span><b>${fmt(avg)}</b><small>${cls(avg)[0]}</small></div>
-   <div class="t-kpi"><span>Evoluíram</span><b>${up.length}/${withPrev.length}</b><small>desde a avaliação anterior</small></div>
+   <div class="t-kpi"><span>Na meta ou acima</span><b>${acima}/${P.length}</b><small>nota 3,75 ou mais</small></div>
+   <div class="t-kpi"><span>Evoluíram</span><b>${up.length}/${withPrev.length}</b><small>desde a anterior</small></div>
+   <div class="t-kpi${crit?' warn':''}"><span>Pontos críticos</span><b>${crit}</b><small>respostas com nota 1 ou 2</small></div>
   </div>
-  <div class="t-grid">
-   <div class="t-card wide"><h2>Destaques</h2><p class="sub">O principal da equipe em poucas linhas.</p><ul class="insights">${ins.map(([a,b])=>`<li><span>${a}</span>${b}</li>`).join('')}</ul></div>
-   <div class="t-card"><h2>Ranking por nota geral</h2><p class="sub">Última avaliação de cada consultor.</p>${ranking}</div>
-   <div class="t-card"><h2>Evolução</h2><p class="sub">Quanto a nota subiu ou caiu.</p>${evoHtml}</div>
-   <div class="t-card wide"><h2>Notas por área</h2><p class="sub">Cada consultor em cada área, com a média da equipe.</p>${heat}</div>
-   <div class="t-card wide"><h2>Comparar consultores</h2><p class="sub">Escolha dois consultores ou compare um com a média da equipe.</p>${cmpHtml}</div>
-   <div class="t-card"><h2>Entrega × crescimento</h2><p class="sub">Onde cada consultor está na matriz.</p>${nine}</div>
-   <div class="t-card"><h2>Perfis DISC da equipe</h2><p class="sub">Como a equipe se distribui.</p>${disc}</div>
-  </div>`;
- $('#cmpA').addEventListener('change',e=>{cmpA=e.target.value;renderTeam()});
- $('#cmpB').addEventListener('change',e=>{cmpB=e.target.value;renderTeam()});
+  <div class="t-grid">${body}</div>`;
 }
+$('#team').addEventListener('click',e=>{const b=e.target.closest('[data-tt]');if(b){teamTab=b.dataset.tt;renderTeam();return}
+ const l=e.target.closest('[data-ln]');if(l){const n=l.dataset.ln;hideL.has(n)?hideL.delete(n):hideL.add(n);renderTeam();return}
+ const s=e.target.closest('th[data-sort]');if(s){const k=s.dataset.sort;tSort=tSort.k===k?{k,dir:-tSort.dir}:{k,dir:['nome','cargo','q','disc'].includes(k)?1:-1};renderTeam()}});
+$('#team').addEventListener('change',e=>{if(e.target.id==='tCargo'){teamCargo=e.target.value;renderTeam()}if(e.target.id==='cmpA'){cmpA=e.target.value;renderTeam()}if(e.target.id==='cmpB'){cmpB=e.target.value;renderTeam()}});
+const tipEl=document.createElement('div');tipEl.className='tip';tipEl.hidden=true;document.body.appendChild(tipEl);
+document.addEventListener('mouseover',e=>{const t=e.target.closest&&e.target.closest('[data-tip]');if(!t){tipEl.hidden=true;return}tipEl.textContent=t.getAttribute('data-tip');tipEl.hidden=false});
+document.addEventListener('mousemove',e=>{if(tipEl.hidden)return;tipEl.style.left=Math.min(e.clientX+14,innerWidth-tipEl.offsetWidth-8)+'px';tipEl.style.top=(e.clientY+18)+'px'});
 
 /* ---------- navegação e ações ---------- */
 const ORDER=['dados','comp','disc','obs','painel'];
