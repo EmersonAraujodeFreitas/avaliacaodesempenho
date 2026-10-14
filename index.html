@@ -328,71 +328,150 @@ kbd{font:600 11.5px var(--f-mono);background:#fff;border:1px solid var(--line);b
 
 /* ===== Dinâmica ===== */
 .g-start{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px;align-items:start}
-.g-hero{position:relative;overflow:hidden;border-radius:20px;padding:30px 32px;color:#fff;background:radial-gradient(600px 260px at 105% -10%,rgba(242,183,5,.35),transparent 60%),radial-gradient(600px 300px at -10% 120%,rgba(27,175,122,.28),transparent 60%),linear-gradient(135deg,#0B4A7E,#003158);box-shadow:0 18px 40px rgba(0,49,88,.22)}
-.g-hero .eyebrow{color:var(--gold);font-weight:600}
+.g-col{display:flex;flex-direction:column;gap:16px;min-width:0}
+.g-hero,.g-res,.g-podium-wrap,.g-turn{position:relative;overflow:hidden;border-radius:20px;color:#fff;background:radial-gradient(600px 260px at 105% -10%,rgba(242,183,5,.35),transparent 60%),radial-gradient(600px 300px at -10% 120%,rgba(27,175,122,.28),transparent 60%),linear-gradient(135deg,#0B4A7E,#003158);box-shadow:0 18px 40px rgba(0,49,88,.22)}
+.g-hero{padding:30px 32px}
+.g-hero .eyebrow,.g-res .eyebrow,.g-podium-wrap .eyebrow,.g-turn .eyebrow{color:var(--gold);font-weight:600}
 .g-hero h2{font-size:clamp(26px,3.2vw,36px);font-weight:800;color:#fff;margin:6px 0 8px}
-.g-hero p{color:#CFE0EF;margin:0;max-width:60ch}
-.g-rules{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:20px 0}
-.g-rules div{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px 14px;font-size:13.5px;color:#CFE0EF}
-.g-rules b{display:block;color:#fff;font-size:15px;margin-bottom:2px}
-.g-form{display:flex;flex-wrap:wrap;gap:12px 16px;align-items:end}
-.g-form .field{flex:1 1 220px}
-.g-form .field label{color:#CFE0EF}
+.g-hero p{color:#CFE0EF;margin:0 0 18px;max-width:62ch}
+.g-hero input{color:var(--ink)}
+.g-hero .field label{color:#CFE0EF}
+.g-resume{display:flex;flex-wrap:wrap;align-items:center;gap:10px;background:rgba(242,183,5,.14);border:1px solid rgba(242,183,5,.5);border-radius:12px;padding:12px 14px;margin-bottom:16px;font-size:14px}
+.g-resume span{flex:1 1 220px}
+.g-mode,.g-seg{display:inline-flex;gap:4px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:4px}
+.g-mode{margin-bottom:16px}
+.g-mode button,.g-seg button{border:0;background:none;color:#CFE0EF;font:700 14.5px var(--f-body);padding:9px 18px;border-radius:9px;cursor:pointer}
+.g-seg button{padding:7px 14px;font-family:var(--f-mono)}
+.g-mode button[aria-pressed="true"],.g-seg button[aria-pressed="true"]{background:var(--gold);color:#002645}
+.g-solo{max-width:420px;margin-bottom:16px}
+.g-teams-cfg{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-bottom:8px}
+.g-team{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-top:4px solid var(--tc);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.g-team-h{display:flex;align-items:center;gap:8px}
+.g-team-h>i{width:12px;height:12px;border-radius:50%;background:var(--tc);flex:none}
+.g-tname{flex:1;min-width:0;background:transparent!important;border:0!important;border-bottom:1.5px dashed rgba(255,255,255,.4)!important;border-radius:0!important;color:#fff!important;font:700 16px var(--f-display);padding:4px 2px!important}
+.g-tname:focus{outline:none;border-bottom-color:var(--gold)!important;box-shadow:none!important}
+.g-x{border:0;background:rgba(255,255,255,.12);color:#fff;width:28px;height:28px;border-radius:8px;font-size:18px;cursor:pointer;flex:none}
+.g-x:hover{background:var(--bad)}
+.g-step{display:flex;align-items:center;gap:8px;font-size:13px;color:#CFE0EF}
+.g-step span{flex:1}
+.g-step button{width:30px;height:30px;border-radius:8px;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:17px;cursor:pointer}
+.g-step button:hover{border-color:var(--gold)}
+.g-step b{font:800 18px var(--f-display);min-width:22px;text-align:center}
+.g-plist{display:flex;flex-direction:column;gap:6px}
+.g-plist input{background:#fff;border:1.5px solid transparent;border-radius:9px;padding:8px 10px;color:var(--ink);width:100%}
+.g-plist input:focus{outline:none;border-color:var(--gold)}
+.g-addteam{border:2px dashed rgba(255,255,255,.35);background:transparent;color:#fff;border-radius:14px;font:700 15px var(--f-body);cursor:pointer;min-height:120px}
+.g-addteam:hover{border-color:var(--gold);color:var(--gold)}
+.g-note{font-size:13px;color:#A9CBEA;margin:4px 0 16px}
+.g-opts-cfg{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;margin:6px 0 20px;padding-top:16px;border-top:1px solid rgba(255,255,255,.14)}
+.g-cfg{display:flex;align-items:center;gap:10px;font-size:14px;color:#CFE0EF}
+.g-go{font-size:17px;padding:14px 28px}
 .g-err{color:#FFC2BC;margin:10px 0 0;font-size:14px}
 .btn.big{padding:12px 22px;font-size:15.5px}
-.switch{display:flex;align-items:center;gap:10px;font-size:14px;color:#CFE0EF;cursor:pointer;padding-bottom:10px}
+.switch{display:flex;align-items:center;gap:10px;font-size:14px;color:#CFE0EF;cursor:pointer}
 .switch input{position:absolute;opacity:0}
 .switch span{width:42px;height:24px;border-radius:20px;background:rgba(255,255,255,.25);position:relative;transition:background .2s;flex:none}
 .switch span::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s}
 .switch input:checked+span{background:var(--gold)}
 .switch input:checked+span::after{transform:translateX(18px)}
 .switch input:focus-visible+span{outline:2px solid #fff;outline-offset:2px}
+.g-howto{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:14px;color:var(--muted)}
+.g-howto li{display:grid;grid-template-columns:96px 1fr;gap:8px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.g-howto li:last-child{border:0;padding:0}
+.g-howto b{color:var(--ink)}
+.g-hist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:14px}
+.g-hist li{display:grid;grid-template-columns:86px 1fr;gap:2px 10px}
+.g-hist span{color:var(--muted);font-family:var(--f-mono);font-size:12.5px;grid-row:span 2}
+.g-hist small{color:var(--muted)}
 .g-rank{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
 .g-rank li{display:grid;grid-template-columns:34px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 2px;border-top:1px solid var(--line)}
 .g-rank li:first-child{border-top:0}
-.g-rank .pos{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:800 14px var(--f-display);background:var(--soft);color:var(--muted)}
+.g-rank .pos,.g-tpos{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:800 14px var(--f-display);background:var(--soft);color:var(--muted)}
 .g-rank .p1{background:linear-gradient(135deg,#F7D046,#D9A400);color:#4A3500}.g-rank .p2{background:linear-gradient(135deg,#E3E8EE,#AEB8C4);color:#2E3A47}.g-rank .p3{background:linear-gradient(135deg,#E9B07A,#B9773D);color:#3D2210}
 .g-rank .nm b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .g-rank .nm small{color:var(--muted);font-size:12.5px}
 .g-rank .xp{font-family:var(--f-mono);font-weight:500;color:var(--brand)}
-.g-stage{background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);overflow:hidden;max-width:980px;margin-inline:auto}
-.g-top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 26px;padding:16px 22px;color:#fff;background:linear-gradient(135deg,#003158,#0B4A7E)}
-.g-stat span{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#A9CBEA;font-weight:600}
-.g-stat b{font:800 24px/1.1 var(--f-display)}
-.g-stat b small{font-size:14px;color:#A9CBEA}
-.g-stat b.hot{color:var(--gold)}
-.g-lv{flex:1 1 220px;min-width:0}
-.g-lv-h{display:flex;justify-content:space-between;gap:10px;font-size:13px;font-weight:600;margin-bottom:6px}
+/* jogo */
+.g-play{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:18px;align-items:start}
+.g-stage{background:var(--surface);border:1px solid var(--line);border-top:5px solid var(--tc,var(--brand));border-radius:20px;box-shadow:var(--shadow);overflow:hidden;min-width:0}
+.g-stage.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.g-top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px;padding:14px 20px;color:#fff;background:linear-gradient(135deg,#003158,#0B4A7E)}
+.g-who{display:flex;align-items:center;gap:10px;min-width:0}
+.g-who b{display:block;font:800 16px var(--f-display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:200px}
+.g-who small{color:#A9CBEA;font-size:12.5px}
+.g-av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:#fff;font:800 13px var(--f-display);flex:none;box-shadow:0 0 0 3px rgba(255,255,255,.25)}
+.g-stat span{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#A9CBEA;font-weight:600}
+.g-stat b{font:800 22px/1.1 var(--f-display)}
+.g-stat b small{font-size:13px;color:#A9CBEA}
+.g-flames{display:flex;gap:3px;margin-top:5px}
+.g-flames i{width:10px;height:18px;border-radius:5px 5px 3px 3px;background:rgba(255,255,255,.18)}
+.g-flames i.on{background:linear-gradient(0deg,#eb6834,var(--gold));box-shadow:0 0 8px rgba(242,183,5,.7)}
+.g-lv{flex:1 1 180px;min-width:0}
+.g-lv-h{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;font-weight:600;margin-bottom:6px}
 .g-lv-h span:last-child{font-family:var(--f-mono);color:var(--gold)}
-.g-lv-bar{height:10px;border-radius:10px;background:rgba(255,255,255,.15);overflow:hidden}
+.g-lv-bar{height:9px;border-radius:10px;background:rgba(255,255,255,.15);overflow:hidden}
+.g-lv-bar.dark{background:var(--soft);border:1px solid var(--line)}
 .g-lv-bar i{display:block;height:100%;border-radius:10px;background:linear-gradient(90deg,var(--gold),#FFE07A);transition:width .5s ease}
 .g-top .btn.light{margin-left:auto;padding:7px 14px}
 .g-time{height:6px;background:#DCE5EF}
 .g-time i{display:block;height:100%;background:linear-gradient(90deg,#1baf7a,var(--gold));transition:width .1s linear}
 .g-time i.low{background:var(--bad)}
-.g-body{padding:26px 28px 28px}
+.g-body{padding:22px 26px 26px}
+.g-tags{display:flex;flex-wrap:wrap;gap:8px}
+.g-type{font-size:12px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:4px 10px;border-radius:20px;color:#fff}
+.t-s{background:#2a78d6}.t-v{background:#1baf7a}.t-o{background:#6250d6}.t-m{background:#e87ba4}.t-i{background:#eb6834}.t-c{background:#c98500}
 .g-chipdim{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;background:var(--accent-soft);color:var(--accent);padding:4px 10px;border-radius:20px}
-.g-q{font:800 clamp(19px,2.3vw,25px)/1.3 var(--f-display);margin:12px 0 20px;color:var(--ink)}
+.g-q{font:800 clamp(19px,2.3vw,25px)/1.3 var(--f-display);margin:12px 0 16px;color:var(--ink)}
+.g-tools{display:flex;flex-wrap:wrap;gap:10px 18px;margin-bottom:16px}
+.g-bet,.g-pw{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.g-bet>span,.g-pw>span{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-right:2px}
+.g-bet button,.g-pw button{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:6px 12px;font:700 13px var(--f-body);color:var(--ink);cursor:pointer;transition:all .12s}
+.g-bet button:hover,.g-pw button:hover:not([disabled]){border-color:var(--accent)}
+.g-bet button[aria-pressed="true"]{background:var(--brand);border-color:var(--brand);color:#fff}
+.g-pw button{background:#FFF8E1;border-color:#F2D27A}
+.g-pw button[disabled]{opacity:.4;cursor:not-allowed;text-decoration:line-through}
+.g-hint{background:#FFF8E1;border:1px solid #F2D27A;border-radius:12px;padding:10px 14px;margin-bottom:14px;font-size:14.5px}
 .g-opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .g-opt{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:38px minmax(0,1fr);gap:14px;align-items:center;padding:14px 16px;border:2px solid var(--line);border-radius:14px;background:#fff;font-size:15.5px;line-height:1.4;color:var(--ink);transition:transform .12s,border-color .12s,box-shadow .12s,opacity .2s}
+.g-opt.gone{visibility:hidden}
 .g-opt:hover:not([disabled]){transform:translateY(-2px);border-color:var(--accent);box-shadow:0 8px 18px rgba(0,49,88,.1)}
 .g-opt:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
 .g-opt .k{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font:800 16px var(--f-display);color:#fff}
 .g-opt[disabled]{cursor:default}
-.g-opt.best{border-color:var(--good);background:var(--good-soft)}
+.g-opt.best,.g-vbtn.best,.g-mi.ok{border-color:var(--good)!important;background:var(--good-soft)!important}
 .g-opt.mid{border-color:var(--warn);background:var(--warn-soft)}
-.g-opt.wrong{border-color:var(--bad);background:var(--bad-soft)}
-.g-opt.dim{opacity:.5}
+.g-opt.wrong,.g-vbtn.wrong,.g-mi.no{border-color:var(--bad)!important;background:var(--bad-soft)!important}
+.g-opt.dim,.g-vbtn.dim{opacity:.45}
+.g-vf{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.g-vbtn{border:2px solid var(--line);border-radius:16px;background:#fff;padding:22px;font:800 20px var(--f-display);color:var(--ink);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:12px;transition:transform .12s,border-color .12s}
+.g-vbtn b{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:#fff}
+.g-vbtn.t b{background:#1baf7a}.g-vbtn.f b{background:#e34948}
+.g-vbtn:hover:not([disabled]){transform:translateY(-2px);border-color:var(--accent)}
+.g-match{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:14px;margin-bottom:12px}
+.g-mcol{display:flex;flex-direction:column;gap:8px}
+.g-mi{border:2px solid var(--line);background:#fff;border-radius:12px;padding:11px 14px;text-align:left;font:600 14.5px/1.35 var(--f-body);color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:10px;transition:all .12s}
+.g-mi.r{font-weight:400}
+.g-mi:hover:not([disabled]){border-color:var(--accent)}
+.g-mi.sel{border-color:var(--gold);background:#FFF8E1;box-shadow:0 0 0 3px rgba(242,183,5,.3)}
+.g-mi.linked{border-color:var(--accent);background:var(--accent-soft)}
+.g-mi i{font-style:normal;width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font:700 12px var(--f-mono);flex:none}
 .g-fb{margin-top:20px;border-radius:16px;padding:16px 18px;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:16px;align-items:center;animation:rise .25s ease both;border:1.5px solid}
 .g-fb.good{background:var(--good-soft);border-color:var(--good)}.g-fb.mid{background:var(--warn-soft);border-color:var(--warn)}.g-fb.bad{background:var(--bad-soft);border-color:var(--bad)}
-.g-fb b{font:800 17px var(--f-display)}
-.g-fb p{margin:4px 0 0;font-size:14.5px}
+.g-fb>div>b{font:800 18px var(--f-display)}
+.g-fb p{margin:4px 0 8px;font-size:14.5px}
+.g-bd{display:flex;flex-wrap:wrap;gap:6px}
+.g-bd span{font-size:12px;font-weight:700;padding:3px 9px;border-radius:20px;background:#fff;border:1px solid var(--line)}
+.g-bd span.hot{background:#FFF3C4;border-color:#F2D27A;color:#7A5600}
+.g-bd span.neg{background:var(--bad-soft);border-color:var(--bad);color:var(--bad)}
+.g-bd span.ach{background:linear-gradient(135deg,#F7D046,#D9A400);border-color:#D9A400;color:#3D2A00}
 .g-gain{text-align:center}
-.g-xp{display:block;font:800 28px var(--f-display);color:var(--brand);animation:pop .5s ease both}
+.g-xp{display:block;font:800 30px var(--f-display);color:var(--brand);animation:pop .5s ease both}
+.g-xp.neg{color:var(--bad)}
 .g-gain small{color:var(--muted);font-size:12px}
 @keyframes pop{0%{transform:scale(.5);opacity:.3}60%{transform:scale(1.15);opacity:1}100%{transform:scale(1)}}
-.g-slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:16px}
-.g-slot{min-height:58px;border:2px dashed #C3CFDC;border-radius:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 12px;font-weight:600;font-size:15px;background:var(--soft)}
+.g-slots{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px}
+.g-slot{min-height:58px;border:2px dashed #C3CFDC;border-radius:14px;display:flex;flex-wrap:wrap;align-items:center;gap:8px;padding:10px 12px;font-weight:600;font-size:14.5px;background:var(--soft)}
 .g-slot i{font-style:normal;width:26px;height:26px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;font:700 12px var(--f-mono);flex:none}
 .g-slot.filled{border-style:solid;border-color:var(--accent);background:var(--accent-soft)}
 .g-slot.ok{border-style:solid;border-color:var(--good);background:var(--good-soft)}
@@ -402,33 +481,93 @@ kbd{font:600 11.5px var(--f-mono);background:#fff;border:1px solid var(--line);b
 .g-chip{border:2px solid var(--line);background:#fff;border-radius:30px;padding:10px 18px;font:700 15px var(--f-body);cursor:pointer;color:var(--ink);transition:transform .12s,border-color .12s}
 .g-chip:hover{transform:translateY(-2px);border-color:var(--accent)}
 .g-ord-act{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
-.g-res{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center;border-radius:20px;padding:28px 32px;margin-bottom:18px;color:#fff;background:radial-gradient(600px 260px at 105% -10%,rgba(242,183,5,.35),transparent 60%),linear-gradient(135deg,#0B4A7E,#003158);box-shadow:0 18px 40px rgba(0,49,88,.22)}
+/* placar lateral */
+.g-side{background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:18px;position:sticky;top:96px;min-width:0}
+.g-side h3{font-size:16px;margin-bottom:2px}
+.g-sb-sub{font-size:12.5px;color:var(--muted);margin:0 0 12px}
+.g-teams{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.g-teams li{display:grid;grid-template-columns:32px minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px;border-radius:12px;border:1.5px solid transparent}
+.g-teams li.cur{border-color:var(--gold);background:#FFF8E1}
+.g-tn b{display:flex;align-items:center;gap:6px;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g-tn b i,.g-dot{width:10px;height:10px;border-radius:50%;flex:none;display:inline-block;margin-right:6px}
+.g-tn b i{margin:0}
+.g-tn small{display:block;font-size:11.5px;color:var(--muted)}
+.g-tbar{display:block;height:6px;background:var(--soft);border-radius:6px;margin-top:5px;overflow:hidden}
+.g-tbar i{display:block;height:100%;border-radius:6px;transition:width .5s}
+.g-tm{font:800 20px var(--f-display);color:var(--brand)}
+.g-side h4{margin:16px 0 8px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.g-next{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px;font-size:14px}
+.g-next li{display:flex;align-items:center;gap:8px}
+.g-next .g-av{width:28px;height:28px;font-size:11px;box-shadow:none}
+.g-sb-big{text-align:center;padding:10px 0}
+.g-sb-big b{display:block;font:800 44px/1 var(--f-display);color:var(--brand)}
+.g-sb-big span{color:var(--muted);font-size:13px}
+.g-lv-mini{font-size:13px;font-weight:600;margin-bottom:12px}
+.g-lv-mini>div:first-child{margin-bottom:6px}
+.g-sb-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:12px}
+.g-sb-stats div{background:var(--soft);border-radius:10px;padding:8px;text-align:center}
+.g-sb-stats span{display:block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.g-sb-stats b{font:800 18px var(--f-display)}
+.g-ach-row{display:flex;flex-wrap:wrap;gap:6px}
+.g-ach-row span{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:800 12px var(--f-display);background:#DCE3EA;color:#8A97A6}
+.g-ach-row span.on{background:linear-gradient(135deg,#F7D046,#D9A400);color:#003158}
+/* vez do participante */
+.g-turn{padding:44px 30px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px;border-top:6px solid var(--tc)}
+.g-turn .g-av{width:84px;height:84px;font-size:28px;margin:8px 0 4px;box-shadow:0 0 0 6px rgba(255,255,255,.15)}
+.g-turn h2{font-size:clamp(26px,3.4vw,38px);color:#fff}
+.g-turn p{color:#CFE0EF;margin:0}
+.g-tchip{display:inline-flex;align-items:center;gap:6px;font-weight:700;color:#fff}
+.g-tchip i{width:12px;height:12px;border-radius:50%;background:var(--tc)}
+.g-pwleft{font-size:13.5px;color:#A9CBEA;margin-bottom:8px}
+.g-small{color:#A9CBEA;font-size:12px}
+/* resultado */
+.g-res{display:grid;grid-template-columns:auto minmax(0,1fr);gap:28px;align-items:center;padding:28px 32px;margin-bottom:18px}
 .g-medal{--p:0;width:170px;height:170px;border-radius:50%;background:conic-gradient(var(--gold) calc(var(--p)*1%),rgba(255,255,255,.15) 0);display:grid;place-items:center;box-shadow:0 0 0 6px rgba(255,255,255,.06)}
 .g-medal div{width:138px;height:138px;border-radius:50%;background:#003158;display:grid;place-content:center;text-align:center}
 .g-medal b{font:800 52px/1 var(--f-display);color:#fff}
 .g-medal small{color:#A9CBEA;font-size:13px}
-.g-res .eyebrow{color:var(--gold);font-weight:600}
-.g-res h2{font-size:clamp(24px,3vw,32px);color:#fff;margin:4px 0}
+.g-res h2,.g-podium-wrap h2{font-size:clamp(24px,3vw,32px);color:#fff;margin:4px 0}
 .g-title{margin:0 0 16px;color:#FFE07A;font-weight:700;font-size:16px}
 .g-mini{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px;margin-bottom:18px}
 .g-mini div{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:10px 12px}
 .g-mini span{display:block;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#A9CBEA;font-weight:600}
 .g-mini b{font:800 22px var(--f-display)}
 .g-act{display:flex;flex-wrap:wrap;gap:10px}
-.g-badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px}
+.g-podium-wrap{padding:28px 30px;margin-bottom:16px;text-align:center}
+.g-podium-wrap .g-act{justify-content:center;margin-top:18px}
+.g-podium{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:end;max-width:640px;margin:22px auto 0}
+.g-pod{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0}
+.g-pod .nm{font:800 17px var(--f-display);color:#fff;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.g-pod .md{font:800 22px var(--f-display);color:var(--gold)}
+.g-pod small{color:#A9CBEA;font-size:11.5px;margin-bottom:8px}
+.g-pod .blk{width:100%;border-radius:12px 12px 0 0;background:linear-gradient(180deg,var(--tc),rgba(0,0,0,.25)),var(--tc);display:grid;place-items:center;box-shadow:inset 0 2px 0 rgba(255,255,255,.3)}
+.g-pod .blk i{font:800 30px var(--f-display);font-style:normal;color:#fff}
+.g-pod.pd1 .blk{height:150px}.g-pod.pd2 .blk{height:110px}.g-pod.pd3 .blk{height:80px}
+.g-pod.pd1 .nm::before{content:"★ ";color:var(--gold)}
+.g-rest{color:#CFE0EF;font-size:14px;margin:12px 0 0}
+.g-awards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.g-awards div{background:var(--surface);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:14px;padding:14px;box-shadow:var(--shadow);min-width:0}
+.g-awards span{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.g-awards b{display:block;font:800 17px var(--f-display);margin:4px 0 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g-awards small{color:var(--muted);font-size:13px}
+.g-ptab tbody tr{cursor:pointer}
+.g-ptab tbody tr:hover td{background:var(--soft)}
+.g-ptab tbody tr.on td{background:var(--accent-soft)}
+.g-detail-h{padding-block:14px}
+.g-badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px}
 .g-bdg{border:1.5px dashed var(--line);border-radius:14px;padding:12px;text-align:center;color:var(--muted);background:var(--soft)}
 .g-bdg i{font-style:normal;width:44px;height:44px;margin:0 auto 6px;border-radius:50%;display:grid;place-items:center;font:800 18px var(--f-display);background:#DCE3EA;color:#8A97A6}
-.g-bdg b{display:block;font-size:14px;color:var(--muted)}
-.g-bdg small{font-size:12px;line-height:1.3;display:block;margin-top:2px}
+.g-bdg b{display:block;font-size:13.5px;color:var(--muted)}
+.g-bdg small{font-size:11.5px;line-height:1.3;display:block;margin-top:2px}
 .g-bdg.on{border-style:solid;border-color:var(--gold);background:#FFF8E1;color:var(--ink)}
 .g-bdg.on i{background:linear-gradient(135deg,#F7D046,#D9A400);color:#003158;box-shadow:0 4px 12px rgba(217,164,0,.35)}
 .g-bdg.on b{color:var(--ink)}
 .confetti{position:fixed;inset:0;pointer-events:none;z-index:70}
 .qa{grid-template-columns:repeat(4,minmax(0,1fr))!important}
-@media (max-width:1200px){.qa{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
-@media (max-width:999px){.g-start{grid-template-columns:1fr}.g-res{grid-template-columns:1fr;justify-items:center;text-align:center}.g-mini{text-align:left}.g-act{justify-content:center}}
-@media (max-width:640px){.g-opts{grid-template-columns:1fr}.g-fb{grid-template-columns:1fr}.g-body{padding:20px 16px}.g-rules{grid-template-columns:1fr}.g-medal{width:140px;height:140px}.g-medal div{width:112px;height:112px}.g-medal b{font-size:42px}.qa{grid-template-columns:1fr!important}}
-@media (prefers-reduced-motion:reduce){.g-xp,.g-fb{animation:none}.g-opt,.g-chip,.g-lv-bar i{transition:none}}
+@media (max-width:1200px){.qa{grid-template-columns:repeat(2,minmax(0,1fr))!important}.g-play{grid-template-columns:1fr}.g-side{position:static}.g-awards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:999px){.g-start{grid-template-columns:1fr}.g-res{grid-template-columns:1fr;justify-items:center;text-align:center}.g-mini{text-align:left}.g-res .g-act{justify-content:center}}
+@media (max-width:640px){.g-opts,.g-match{grid-template-columns:1fr}.g-fb{grid-template-columns:1fr}.g-body{padding:18px 14px}.g-hero,.g-podium-wrap{padding:22px 18px}.g-medal{width:140px;height:140px}.g-medal div{width:112px;height:112px}.g-medal b{font-size:42px}.qa{grid-template-columns:1fr!important}.g-awards{grid-template-columns:1fr 1fr}.g-pod .nm{font-size:14px}.g-pod .md{font-size:17px}.g-vbtn{padding:16px;font-size:17px}}
+@media (prefers-reduced-motion:reduce){.g-xp,.g-fb,.g-stage.shake{animation:none}.g-opt,.g-chip,.g-lv-bar i,.g-tbar i{transition:none}}
 
 /* Abas */
 .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto;position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5}
@@ -1202,7 +1341,7 @@ function report(){
  <section class="r-sec pb"><h2><i>06</i>Perfil DISC (jeito de trabalhar)</h2>${discHtml}</section>
  <section class="r-sec"><h2><i>07</i>Comentários</h2>${quotes}</section>
  ${(()=>{const gm=gLoad().filter(r=>nkey(r.nome)===nkey(I.nome)).sort((a,b)=>(b.data||'').localeCompare(a.data||'')||b.id.localeCompare(a.id))[0];if(!gm)return'';
-  return`<section class="r-sec"><h2><i>08</i>Dinâmica gamificada</h2><div class="evo-top"><div><span>Índice</span><b>${gm.idx}/100</b><small>${GTITLE(gm.idx)}</small></div><div><span>Nível</span><b>${gm.nivel+1}</b><small>${LEVELS[gm.nivel]}</small></div><div><span>XP</span><b>${gm.xp}</b><small>em ${dataBR(gm.data)}</small></div><div><span>Conquistas</span><b>${gm.badges.length}/${BADGES.length}</b><small>${gm.badges.map(k=>BADGES.find(b=>b[0]===k)[1]).join(', ')||'nenhuma'}</small></div></div>
+  return`<section class="r-sec"><h2><i>08</i>Dinâmica gamificada</h2><div class="evo-top"><div><span>Índice</span><b>${gm.idx}/100</b><small>${GTITLE(gm.idx)}</small></div><div><span>Nível</span><b>${gm.nivel+1}</b><small>${LEVELS[gm.nivel]}</small></div><div><span>XP</span><b>${gm.xp}</b><small>em ${dataBR(gm.data)}</small></div><div><span>Conquistas</span><b>${gm.badges.length}/${BADGES.length}</b><small>${gm.badges.map(k=>(BADGES.find(b=>b[0]===k)||[0,k])[1]).join(', ')||'nenhuma'}</small></div></div>
   <div class="bars">${DIMS.filter(d=>gm.dims[d.id]!=null).map(d=>`<div class="bar-row"><span>${d.curto}</span><div class="bar-track"><div class="bar-fill" style="width:${gm.dims[d.id]/5*100}%;background:${barColor(gm.dims[d.id])}"></div><div class="bar-meta" style="left:80%"></div></div><b>${fmt(gm.dims[d.id])}</b></div>`).join('')}</div><p class="cap">Resultado da última participação no Desafio da Inovação, na escala de 1 a 5.</p></section>`})()}
  <div class="sign"><div>${esc(I.avaliador||'Avaliador')}<br>Avaliador${I.cargoAv?' · '+esc(I.cargoAv):''}</div><div>${esc((I.nome||'Avaliado').replace(/ \(exemplo\)$/,''))}<br>Avaliado</div><div>Elinai Ramos<br>Gerente de Operações</div></div>
  <div class="foot"><span>Escala: 1 Insatisfatório · 2 Abaixo · 3 Atende · 4 Supera · 5 Excepcional</span><span>Documento confidencial</span></div>`;
@@ -1314,7 +1453,7 @@ function pdfDownload(){
  {const gm=gLoad().filter(r=>nkey(r.nome)===nkey(I.nome)).sort((a,b)=>(b.data||'').localeCompare(a.data||'')||b.id.localeCompare(a.id))[0];
   if(gm){sec('Dinâmica gamificada');para(`Índice ${gm.idx} de 100 (${GTITLE(gm.idx)}) · nível ${gm.nivel+1}: ${LEVELS[gm.nivel]} · ${gm.xp} XP · ${dataBR(gm.data)}.`,10);
    para('Por área: '+DIMS.filter(d=>gm.dims[d.id]!=null).map(d=>`${d.curto} ${fmt(gm.dims[d.id])}`).join('  ·  ')+'.',9.5,PC.muted);
-   if(gm.badges.length)para('Conquistas: '+gm.badges.map(k=>BADGES.find(b=>b[0]===k)[1]).join(', ')+'.',9.5,PC.muted);y+=2}}
+   if(gm.badges.length)para('Conquistas: '+gm.badges.map(k=>(BADGES.find(b=>b[0]===k)||[0,k])[1]).join(', ')+'.',9.5,PC.muted);y+=2}}
  need(12);Fo('bold',10);T(PC.ink);doc.text('Parecer final: ',M,y+4);const pw=doc.getTextWidth('Parecer final: ');Fo('normal',10);doc.text(O.parecer||'-',M+pw,y+4);y+=10;
  need(30);y+=16;const sw=(CW-16)/3;[[I.avaliador||'Avaliador','Avaliador'+(I.cargoAv?' · '+I.cargoAv:'')],[(I.nome||'Avaliado').replace(/ \(exemplo\)$/,''),'Avaliado'],['Elinai Ramos','Gerente de Operações']].forEach(([n,r],i)=>{const x=M+i*(sw+8);D(PC.ink);doc.setLineWidth(.3);doc.line(x,y,x+sw,y);Fo('bold',8.5);T(PC.ink);if(n)doc.text(n,x+sw/2,y+4.5,{align:'center'});Fo('normal',7.5);T(PC.muted);doc.text(r,x+sw/2,y+(n?8.5:4.5),{align:'center'})});
 
@@ -1620,132 +1759,323 @@ $('#f_bkp').addEventListener('change',e=>{const f=e.target.files[0];if(!f)return
 if(framed){$('#b_bkp').hidden=true}
 
 /* ---------- dinâmica gamificada ---------- */
-const SCEN=[
+const Q_S=[
  {dim:'Q',t:'Um processo da área gera o mesmo erro toda semana. O que você faz?',opts:[['Corrige o erro de novo sempre que ele aparece',0],['Avisa o gestor e espera uma orientação',1],['Cria um aviso para a equipe tomar cuidado',2],['Analisa a causa com dados e propõe uma correção definitiva',3]],exp:'Atacar a causa raiz com dados faz o problema parar de voltar.'},
  {dim:'Q',t:'Você precisa entregar um relatório hoje, mas encontrou dados que não batem.',opts:[['Entrega assim mesmo, ninguém vai perceber',0],['Adia a entrega sem avisar',0],['Entrega e explica o problema depois',1],['Avisa do risco, corrige os dados e entrega com uma nota explicando',3]],exp:'Qualidade é avisar cedo e entregar certo, sem esconder o problema.'},
+ {dim:'Q',t:'A auditoria é amanhã e um procedimento está desatualizado.',opts:[['Muda só a data do documento',0],['Esconde o documento',0],['Espera a auditoria apontar',1],['Atualiza com o responsável e registra a revisão',3]],exp:'Documento atualizado e revisão registrada é o que a auditoria espera.'},
  {dim:'N',t:'Surgiu uma ideia que pode reduzir custos, mas ninguém testou ainda.',opts:[['Aplica a ideia em toda a empresa de uma vez',1],['Descarta, porque parece arriscado',0],['Faz um teste pequeno, com meta e prazo definidos',3],['Espera alguém de fora validar a ideia',1]],exp:'Um piloto pequeno mostra se a ideia funciona com pouco risco e pouco custo.'},
  {dim:'N',t:'Uma ferramenta nova poderia automatizar uma tarefa manual da equipe.',opts:[['Continua no manual, porque sempre funcionou',0],['Pede para a TI resolver quando puder',1],['Usa por conta própria sem contar para ninguém',1],['Calcula o ganho, testa e apresenta os números para a equipe',3]],exp:'Mostrar o ganho com números ajuda a equipe a adotar a novidade.'},
+ {dim:'N',t:'Você tem uma boa ideia, mas o gestor está sempre sem tempo.',opts:[['Desiste da ideia',0],['Coloca em prática sem autorização',0],['Manda um e-mail longo explicando tudo',1],['Prepara um resumo de uma página com problema, ideia e ganho e pede 10 minutos',3]],exp:'Uma proposta curta, com ganho claro, cabe na agenda de qualquer gestor.'},
+ {dim:'N',t:'O teste de uma ideia nova deu errado.',opts:[['Esconde o resultado',0],['Desiste de tentar coisas novas',0],['Culpa a ferramenta usada',1],['Registra o que aprendeu e ajusta a próxima tentativa',3]],exp:'Em inovação, um teste que falha também ensina. O importante é aprender rápido.'},
  {dim:'C',t:'Um cliente reclama, com razão, de um atraso na entrega.',opts:[['Explica que o atraso não foi culpa sua',0],['Passa a reclamação para outra área',1],['Pede desculpas, apresenta uma solução com novo prazo e acompanha',3],['Oferece um desconto sem consultar ninguém',1]],exp:'Assumir, resolver e acompanhar recupera a confiança do cliente.'},
  {dim:'C',t:'Você não sabe exatamente o que o cliente espera do projeto.',opts:[['Supõe o que ele quer e começa logo',0],['Faz perguntas, anota as expectativas e confirma com ele',3],['Copia um projeto parecido que já foi feito',1],['Espera o cliente reclamar para ajustar',0]],exp:'Entender a expectativa antes de começar evita retrabalho.'},
+ {dim:'C',t:'Uma área pede, com urgência, algo fora do que foi combinado.',opts:[['Recusa sem explicar',0],['Faz tudo sem avaliar o impacto',1],['Pede para falarem com o seu gestor',1],['Entende a necessidade, mostra o impacto no prazo e combina prioridades',3]],exp:'Negociar prioridades com transparência atende o cliente sem prejudicar o resto.'},
+ {dim:'C',t:'Um cliente elogiou o seu trabalho.',opts:[['Ignora o elogio',0],['Pede para ele elogiar ao seu gestor',1],['Só agradece',2],['Agradece e pergunta o que poderia ficar ainda melhor',3]],exp:'Até o elogio é uma chance de descobrir como melhorar.'},
  {dim:'R',t:'Você tem três tarefas urgentes e só dá tempo de fazer duas hoje.',opts:[['Faz primeiro a mais fácil',1],['Prioriza pelo impacto, combina novo prazo para a terceira e avisa',3],['Tenta fazer as três correndo',1],['Espera alguém decidir por você',0]],exp:'Priorizar pelo impacto e combinar prazos mantém a confiança.'},
  {dim:'R',t:'Um projeto seu não atingiu a meta.',opts:[['Procura quem foi o culpado',0],['Analisa o que deu errado e propõe ajustes',3],['Deixa para lá, na próxima melhora',0],['Pede mais prazo sem explicar o motivo',1]],exp:'Assumir o resultado e aprender com ele é o que gera melhoria.'},
+ {dim:'R',t:'No meio do mês você percebe que não vai bater a meta.',opts:[['Espera o fim do mês para ver o que acontece',0],['Muda a meta por conta própria',0],['Trabalha mais horas sem falar com ninguém',1],['Avisa o gestor agora, com um plano de recuperação',3]],exp:'Avisar cedo e com um plano dá tempo de corrigir a rota.'},
+ {dim:'R',t:'Você terminou suas tarefas antes do prazo.',opts:[['Fica esperando o expediente acabar',0],['Começa algo pessoal',0],['Espera alguém pedir ajuda',1],['Oferece ajuda à equipe ou adianta a próxima prioridade',3]],exp:'Tempo livre bem usado acelera o resultado de toda a equipe.'},
  {dim:'M',t:'Um colega discorda da sua proposta durante uma reunião.',opts:[['Defende sua ideia até ele desistir',0],['Ouve, entende o ponto dele e buscam uma solução juntos',3],['Muda de ideia só para evitar conflito',1],['Deixa para resolver por e-mail depois',1]],exp:'Escutar e construir junto gera soluções melhores e menos atrito.'},
  {dim:'M',t:'Você precisa dar um retorno difícil para um colega.',opts:[['Evita o assunto',0],['Fala na frente de todos para resolver logo',0],['Conversa em particular, com fatos e sugestões',3],['Pede para o gestor falar por você',1]],exp:'Retorno em particular, com fatos, ajuda o colega a melhorar.'},
+ {dim:'M',t:'Uma informação importante precisa chegar a toda a equipe hoje.',opts:[['Conta para quem encontrar no corredor',0],['Espera a reunião da semana',1],['Manda um e-mail bem longo',1],['Envia uma mensagem clara com o essencial e confirma se todos entenderam',3]],exp:'Mensagem curta, clara e com confirmação evita ruído.'},
  {dim:'L',t:'Ninguém da equipe assumiu um problema que afeta todos.',opts:[['Espera alguém assumir',0],['Reclama com o gestor',1],['Resolve sozinho, sem envolver ninguém',2],['Toma a frente, organiza a equipe e divide as tarefas',3]],exp:'Liderar é mobilizar as pessoas, mesmo sem ter o cargo.'},
  {dim:'L',t:'Um colega novo tem dificuldade numa tarefa que você domina.',opts:[['Faz a tarefa por ele',1],['Ensina o passo a passo e acompanha as primeiras vezes',3],['Indica um manual para ele ler',1],['Diz que com o tempo ele aprende',0]],exp:'Ensinar e acompanhar desenvolve a equipe toda.'},
+ {dim:'L',t:'A equipe está desanimada depois de um projeto difícil.',opts:[['Ignora, uma hora passa',0],['Cobra mais resultado',0],['Sugere um happy hour',1],['Reconhece o esforço, conversa sobre o que aprenderam e celebra as pequenas vitórias',3]],exp:'Reconhecer e dar sentido ao esforço recupera a energia do time.'},
  {dim:'E',t:'Você recebeu por engano um arquivo com dados pessoais de clientes.',opts:[['Repassa para quem você acha que precisa',0],['Guarda, pode ser útil depois',0],['Ignora o arquivo',1],['Avisa quem enviou e apaga o arquivo',3]],exp:'Proteger dados pessoais é obrigação de todos (LGPD).'},
- {dim:'E',t:'Você percebe que vai se atrasar para uma reunião importante.',opts:[['Chega atrasado sem avisar',0],['Avisa com antecedência e envia a sua parte',3],['Não vai e explica depois',0],['Pede para um colega cobrir sem avisar ninguém',1]],exp:'Avisar antes mostra compromisso e respeito com o time.'}];
-const ORDS=[
- {dim:'Q',t:'Coloque as etapas do ciclo PDCA na ordem certa.',steps:['Planejar','Executar','Verificar','Agir'],exp:'PDCA: planejar, executar, verificar o resultado e agir para padronizar ou corrigir.'},
- {dim:'N',t:'Coloque as etapas do Design Thinking na ordem certa.',steps:['Entender o usuário','Definir o problema','Gerar ideias','Criar protótipo','Testar'],exp:'Primeiro entender e definir, depois criar, prototipar e testar.'}];
-const LEVELS=['Aprendiz','Explorador','Criativo','Inventor','Inovador','Visionário','Lenda da Inovação'],LVXP=350;
-const lvlOf=xp=>Math.min(LEVELS.length-1,Math.floor(xp/LVXP));
-const BADGES=[['fire','Em chamas','5 acertos máximos seguidos'],['fast','Relâmpago','Tempo médio de 8 segundos ou menos'],['vis','Visionário','Acertou tudo em Inovação'],['est','Estrategista','Acertou as duas sequências'],['zero','Sem tropeços','Nenhuma resposta com zero ponto'],['eti','Guardião da ética','Acertou tudo em Conduta']];
+ {dim:'E',t:'Você percebe que vai se atrasar para uma reunião importante.',opts:[['Chega atrasado sem avisar',0],['Avisa com antecedência e envia a sua parte',3],['Não vai e explica depois',0],['Pede para um colega cobrir sem avisar ninguém',1]],exp:'Avisar antes mostra compromisso e respeito com o time.'},
+ {dim:'E',t:'Um fornecedor oferece um presente caro para fechar um contrato.',opts:[['Aceita, ninguém vai saber',0],['Aceita e divide com a equipe',0],['Aceita e avisa depois',1],['Recusa com educação e segue a política da empresa',3]],exp:'Presentes caros comprometem a imparcialidade. A política da empresa vem primeiro.'}];
+const Q_V=[
+ {dim:'Q',t:'O PDCA termina quando a melhoria é implantada pela primeira vez.',v:false,exp:'O PDCA é um ciclo contínuo: depois de agir, começa de novo.'},
+ {dim:'Q',t:'O diagrama de Ishikawa ajuda a encontrar as causas de um problema.',v:true,exp:'Também chamado de espinha de peixe, ele organiza as possíveis causas.'},
+ {dim:'Q',t:'O gráfico de Pareto mostra que poucas causas costumam gerar a maior parte dos problemas.',v:true,exp:'É a regra 80/20: atacar poucas causas resolve a maior parte.'},
+ {dim:'N',t:'Inovar é sempre criar algo totalmente novo, nunca melhorar o que já existe.',v:false,exp:'Melhorias pequenas e contínuas também são inovação.'},
+ {dim:'N',t:'Um protótipo precisa estar perfeito antes de ser testado.',v:false,exp:'O protótipo serve para aprender rápido. Ele pode ser simples.'},
+ {dim:'N',t:'Errar rápido e barato num teste faz parte da inovação.',v:true,exp:'Testes pequenos reduzem o custo de errar e aceleram o aprendizado.'},
+ {dim:'C',t:'Cliente interno é qualquer colega ou área que depende do seu trabalho.',v:true,exp:'Quem recebe o seu trabalho dentro da empresa também é seu cliente.'},
+ {dim:'C',t:'O NPS mede a chance de o cliente recomendar a empresa.',v:true,exp:'NPS significa Net Promoter Score, ou índice de recomendação.'},
+ {dim:'R',t:'Uma meta SMART precisa ter prazo definido.',v:true,exp:'O T de SMART vem de “temporal”: toda meta precisa de prazo.'},
+ {dim:'R',t:'Estar sempre ocupado significa ser produtivo.',v:false,exp:'Produtividade é entregar o que importa, não apenas estar ocupado.'},
+ {dim:'M',t:'Escuta ativa é esperar a sua vez de falar.',v:false,exp:'Escuta ativa é prestar atenção e confirmar que entendeu.'},
+ {dim:'M',t:'Um bom feedback fala do comportamento, não da pessoa.',v:true,exp:'Focar no comportamento torna o retorno útil e respeitoso.'},
+ {dim:'L',t:'Só quem tem cargo de chefe pode liderar.',v:false,exp:'Liderança é atitude: qualquer pessoa pode tomar a frente e inspirar.'},
+ {dim:'L',t:'Delegar é passar a tarefa e não acompanhar mais.',v:false,exp:'Delegar bem inclui combinar o resultado e acompanhar.'},
+ {dim:'E',t:'A LGPD protege os dados pessoais de clientes e colaboradores.',v:true,exp:'A Lei Geral de Proteção de Dados vale para todos os dados pessoais.'},
+ {dim:'E',t:'Se ninguém viu, não tem problema quebrar uma regra pequena.',v:false,exp:'Ética é fazer o certo mesmo quando ninguém está olhando.'}];
+const Q_O=[
+ {dim:'Q',t:'Coloque as etapas do ciclo PDCA na ordem certa.',steps:['Planejar','Executar','Verificar','Agir'],exp:'Planejar, executar, verificar o resultado e agir para padronizar ou corrigir.'},
+ {dim:'N',t:'Coloque as etapas do Design Thinking na ordem certa.',steps:['Entender o usuário','Definir o problema','Gerar ideias','Criar protótipo','Testar'],exp:'Primeiro entender e definir, depois criar, prototipar e testar.'},
+ {dim:'Q',t:'Coloque as etapas do método DMAIC na ordem certa.',steps:['Definir','Medir','Analisar','Melhorar','Controlar'],exp:'DMAIC: definir, medir, analisar, melhorar e controlar.'},
+ {dim:'C',t:'Monte a ordem certa para tratar a reclamação de um cliente.',steps:['Ouvir o cliente','Entender o problema','Propor uma solução','Resolver','Confirmar se ele ficou satisfeito'],exp:'Ouvir e entender antes de propor, e sempre confirmar no final.'},
+ {dim:'M',t:'Monte a ordem certa para dar um feedback.',steps:['Descrever a situação','Falar do comportamento','Mostrar o impacto','Combinar o próximo passo'],exp:'Situação, comportamento, impacto e próximo passo.'},
+ {dim:'R',t:'Monte a ordem certa para planejar uma entrega.',steps:['Definir o objetivo','Dividir em tarefas','Definir prazos e responsáveis','Acompanhar o andamento','Entregar e avaliar'],exp:'Objetivo claro, tarefas, responsáveis, acompanhamento e avaliação.'},
+ {dim:'N',t:'Monte a ordem certa de um projeto piloto.',steps:['Criar a hipótese','Definir como medir o sucesso','Testar em pequena escala','Medir o resultado','Decidir se expande'],exp:'Hipótese, métrica, teste pequeno, medição e decisão.'}];
+const Q_M=[
+ {dim:'Q',t:'Ligue cada ferramenta da qualidade ao que ela faz.',pairs:[['Ishikawa','Organiza as causas em forma de espinha de peixe'],['Pareto','Mostra as causas que mais pesam'],['5 Porquês','Pergunta “por quê” até chegar à raiz'],['Checklist','Lista para conferir antes de entregar']],exp:'Cada ferramenta ajuda numa parte da solução de problemas.'},
+ {dim:'N',t:'Ligue cada termo de inovação ao seu significado.',pairs:[['Brainstorming','Gerar muitas ideias sem julgar'],['MVP','Versão mínima para testar uma ideia'],['Benchmarking','Aprender com quem já faz melhor'],['Protótipo','Modelo simples para testar a solução']],exp:'São as ferramentas básicas de quem inova.'},
+ {dim:'R',t:'Ligue cada termo de gestão ao seu significado.',pairs:[['KPI','Indicador que mede o resultado'],['Meta','Valor a ser alcançado'],['Prazo','Data limite da entrega'],['Prioridade','O que deve ser feito primeiro']],exp:'Saber medir e priorizar é a base da produtividade.'},
+ {dim:'M',t:'Ligue cada conceito de comunicação ao seu significado.',pairs:[['Escuta ativa','Ouvir com atenção e confirmar o entendimento'],['Feedback','Retorno sobre um comportamento'],['Alinhamento','Combinar o mesmo objetivo com todos'],['Empatia','Se colocar no lugar do outro']],exp:'Boa comunicação junta escuta, clareza e empatia.'},
+ {dim:'L',t:'Ligue cada atitude ao seu significado.',pairs:[['Proatividade','Agir antes do problema aparecer'],['Colaboração','Trabalhar junto pelo mesmo objetivo'],['Resiliência','Se recuperar bem das dificuldades'],['Ética','Agir certo mesmo sem ninguém ver']],exp:'São atitudes que fazem diferença em qualquer equipe.'}];
+const Q_I=[
+ {dim:'Q',t:'Qual destas NÃO é uma ferramenta da qualidade?',opts:['Ishikawa','Pareto','5 Porquês','Organograma'],ans:3,exp:'O organograma mostra a estrutura da empresa, não analisa problemas.'},
+ {dim:'Q',t:'Qual destas NÃO é um desperdício na visão Lean?',opts:['Retrabalho','Espera','Excesso de estoque','Entregar no prazo'],ans:3,exp:'Entregar no prazo é o objetivo. Os outros são desperdícios.'},
+ {dim:'N',t:'Qual destas NÃO ajuda a inovar?',opts:['Brainstorming','Protótipo','Benchmarking','Fazer sempre do mesmo jeito'],ans:3,exp:'Repetir sempre o mesmo jeito impede descobrir formas melhores.'},
+ {dim:'C',t:'Qual destas NÃO é uma boa prática de atendimento?',opts:['Ouvir com atenção','Cumprir o prazo combinado','Interromper o cliente','Confirmar o entendimento'],ans:2,exp:'Interromper passa a ideia de que o cliente não está sendo ouvido.'},
+ {dim:'R',t:'Qual destas NÃO é característica de uma meta SMART?',opts:['Específica','Mensurável','Com prazo','Vaga'],ans:3,exp:'Meta vaga não dá para medir nem acompanhar.'},
+ {dim:'M',t:'Qual destas NÃO faz parte de uma boa comunicação?',opts:['Clareza','Objetividade','Escuta','Mensagens longas e confusas'],ans:3,exp:'Mensagens confusas geram ruído e retrabalho.'},
+ {dim:'L',t:'Qual destas NÃO é uma atitude de liderança?',opts:['Dar o exemplo','Reconhecer a equipe','Centralizar todas as decisões','Desenvolver pessoas'],ans:2,exp:'Centralizar tudo trava a equipe e não desenvolve ninguém.'},
+ {dim:'E',t:'Qual destas NÃO é uma atitude ética?',opts:['Cumprir as regras','Proteger os dados','Usar informação sigilosa em benefício próprio','Ser transparente'],ans:2,exp:'Usar informação sigilosa para benefício próprio é falta grave.'}];
+const Q_C=[
+ {dim:'Q',t:'No PDCA, a letra C significa ____.',opts:['Verificar (Check)','Criar','Cobrar','Comunicar'],ans:0,exp:'C vem de Check: verificar se o resultado foi alcançado.'},
+ {dim:'Q',t:'O 5S começa pelo senso de ____.',opts:['Utilização','Limpeza','Disciplina','Saúde'],ans:0,exp:'Seiri, o senso de utilização: separar o que é útil do que não é.'},
+ {dim:'N',t:'MVP é a versão ____ de um produto, feita para testar uma ideia.',opts:['mínima viável','mais completa','final','mais cara'],ans:0,exp:'Produto mínimo viável: o suficiente para aprender com o usuário.'},
+ {dim:'R',t:'KPI quer dizer indicador-____ de desempenho.',opts:['chave','de custo','do cliente','comum'],ans:0,exp:'Key Performance Indicator: indicador-chave de desempenho.'},
+ {dim:'C',t:'Superar a expectativa do cliente começa por ____ o que ele precisa.',opts:['entender','supor','ignorar','copiar'],ans:0,exp:'Sem entender a necessidade, não há como superar a expectativa.'},
+ {dim:'M',t:'Um bom feedback é ____, específico e focado no comportamento.',opts:['respeitoso','público','genérico','atrasado'],ans:0,exp:'Respeito, especificidade e foco no comportamento.'},
+ {dim:'L',t:'Delegar bem é passar a tarefa e ____.',opts:['acompanhar','esquecer','refazer depois','cobrar a cada hora'],ans:0,exp:'Delegar inclui acompanhar e apoiar quando preciso.'},
+ {dim:'E',t:'Dados pessoais de clientes devem ser tratados com ____.',opts:['sigilo','curiosidade','pressa','descuido'],ans:0,exp:'Sigilo e cuidado são exigidos pela LGPD.'}];
+const BANK={s:Q_S,v:Q_V,o:Q_O,m:Q_M,i:Q_I,c:Q_C};
+const TNAME={s:'Situação real',v:'Verdadeiro ou falso',o:'Monte a sequência',m:'Ligue os pares',i:'Encontre o intruso',c:'Complete a frase'};
+const TLIM={s:25,v:12,o:40,m:45,i:15,c:18};
+const HINTS={Q:'Pense em causa raiz, dados e padrão.',N:'Pense em testar pequeno, aprender e medir.',C:'Pense em entender o cliente e cumprir o combinado.',R:'Pense em prioridade, prazo e responsabilidade.',M:'Pense em clareza, escuta e respeito.',L:'Pense em dar o exemplo, tomar iniciativa e desenvolver pessoas.',E:'Pense em transparência, regras e proteção de dados.'};
+
+const LEVELS=['Aprendiz','Explorador','Criativo','Inventor','Inovador','Visionário','Lenda da Inovação'],LVXP=300;
+const lvlOf=xp=>Math.max(0,Math.min(LEVELS.length-1,Math.floor(Math.max(0,xp)/LVXP)));
+const ACH=[['first','Primeiro acerto','Acertou em cheio pela primeira vez'],['combo3','Combo x3','3 acertos seguidos'],['combo5','Imparável','5 acertos seguidos'],['flash','Relâmpago','Acertou em até 5 segundos'],['bold','Ousado','Acertou apostando “certeza absoluta”'],['order','Estrategista','Montou uma sequência perfeita'],['match','Conector','Ligou todos os pares certos'],['noaid','Sem ajuda','Terminou sem usar nenhum poder'],['perfect','Perfeição','Acertou todas as perguntas']];
+const BADGES=ACH,ACHPTS=50,TEAMCOL=['#2a78d6','#eb6834','#1baf7a','#6250d6','#e87ba4','#c98500'];
 const GTITLE=i=>i>=90?'Referência':i>=75?'Destaque':i>=60?'Competente':i>=40?'Em desenvolvimento':'Em formação';
-const GKEY='avaliacao-dinamica',GCOL=['#2a78d6','#1baf7a','#eda100','#6250d6','#e87ba4'];
+const GKEY='avaliacao-dinamica',TKEY='avaliacao-dinamica-equipes',GSKEY='avaliacao-dinamica-partida',CKEY='avaliacao-dinamica-config';
+const OPTCOL=['#2a78d6','#1baf7a','#c98500','#6250d6'];
 function gLoad(){try{return JSON.parse(localStorage.getItem(GKEY)||'[]')}catch(e){return[]}}
 function gSave(l){try{localStorage.setItem(GKEY,JSON.stringify(l))}catch(e){}}
+function tLoad(){try{return JSON.parse(localStorage.getItem(TKEY)||'[]')}catch(e){return[]}}
 const shufA=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
-let G={phase:'start',timed:true,nome:''},gT=null;
+let SET={mode:'solo',solo:'',teams:[{nome:'Equipe Alfa',n:3,p:['','','']},{nome:'Equipe Beta',n:2,p:['','']}],q:8,timed:true,bet:true,sound:true};
+try{const c=JSON.parse(localStorage.getItem(CKEY)||'null');if(c)SET=Object.assign(SET,c)}catch(e){}
+const setSave=()=>{try{localStorage.setItem(CKEY,JSON.stringify(SET))}catch(e){}};
+let G={phase:'setup'},gT=null,AC=null,lastTick=null;
+const gPersist=()=>{try{if(G.phase==='setup'||G.phase==='end')localStorage.removeItem(GSKEY);else localStorage.setItem(GSKEY,JSON.stringify(G))}catch(e){}};
+/* som */
+function tone(fs,d=0.12,type='sine',vol=.08){if(!(G.sound??SET.sound))return;try{AC=AC||new(window.AudioContext||window.webkitAudioContext)();const t=AC.currentTime;fs.forEach((f,i)=>{const o=AC.createOscillator(),g=AC.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,t+i*d);g.gain.exponentialRampToValueAtTime(.0001,t+i*d+d*1.8);o.connect(g).connect(AC.destination);o.start(t+i*d);o.stop(t+i*d+d*2)})}catch(e){}}
+const SFX={ok:()=>tone([660,880]),mid:()=>tone([520,560],.1),bad:()=>tone([220,150],.16,'triangle'),ach:()=>tone([523,659,784,1047],.08),lvl:()=>tone([392,523,659,784,1047],.07),tick:()=>tone([1100],.03,'square',.025),go:()=>tone([440,660,880],.08),click:()=>tone([700],.03,'sine',.03)};
+/* tempo */
 function stopTimer(){clearInterval(gT);gT=null}
-function startTimer(){stopTimer();if(!G.timed||G.phase!=='play')return;let last=Date.now();
- gT=setInterval(()=>{const now=Date.now();G.left-=(now-last)/1000;last=now;const bar=$('#gTime');if(bar){bar.style.width=Math.max(0,G.left/G.limit*100)+'%';bar.classList.toggle('low',G.left<6)}
-  const tx=$('#gTimeTx');if(tx)tx.textContent=Math.max(0,Math.ceil(G.left))+'s';if(G.left<=0){stopTimer();gAnswer(null)}},100)}
-function newGame(nome,timed){
- const by={};SCEN.forEach(s=>(by[s.dim]=by[s.dim]||[]).push(s));
- const pick=Object.values(by).map(l=>shufA(l)[0]),rest=shufA(SCEN.filter(s=>!pick.includes(s))).slice(0,3);
- const rounds=shufA([...pick,...rest]).map(s=>({type:'q',...s,opts:shufA(s.opts)}));
- rounds.splice(3,0,{type:'o',...ORDS[0],pool:shufA(ORDS[0].steps),pick:[]});rounds.splice(8,0,{type:'o',...ORDS[1],pool:shufA(ORDS[1].steps),pick:[]});
- G={phase:'play',nome,timed,rounds,i:0,xp:0,streak:0,maxStreak:0,ans:[]};gRound();
+function startTimer(){stopTimer();if(!G.timed||G.phase!=='play')return;let last=Date.now();lastTick=null;
+ gT=setInterval(()=>{const now=Date.now();G.left-=(now-last)/1000;last=now;const lim=G.limit+(G.r.extra||0),bar=$('#gTime');
+  if(bar){bar.style.width=Math.max(0,G.left/lim*100)+'%';bar.classList.toggle('low',G.left<6)}
+  const tx=$('#gTimeTx');if(tx)tx.textContent=Math.max(0,Math.ceil(G.left))+'s';
+  const s=Math.ceil(G.left);if(G.left<5.5&&s!==lastTick&&s>0){lastTick=s;SFX.tick()}
+  if(G.left<=0){stopTimer();gAnswer({timeout:true})}},100)}
+/* montagem */
+function newGame(){
+ const solo=SET.mode==='solo';
+ const teams=solo?[{nome:'',cor:TEAMCOL[0],ids:[]}]:SET.teams.map((t,i)=>({nome:(t.nome||'').trim()||'Equipe '+(i+1),cor:TEAMCOL[i%6],ids:[]}));
+ const players=[];
+ if(solo)players.push({nome:SET.solo.trim(),team:0});
+ else SET.teams.forEach((t,i)=>{for(let j=0;j<t.n;j++)players.push({nome:(t.p[j]||'').trim()||`Participante ${j+1} · ${teams[i].nome}`,team:i})});
+ const pat=['s','v','s','o','i','c','s','m','v','s','c','i'];
+ players.forEach((p,k)=>{Object.assign(p,{id:k,pts:0,streak:0,maxStreak:0,ans:[],ach:[],pw:{f:1,t:1,d:1},used:0,betWins:0});teams[p.team].ids.push(k);
+  const bag=[];while(bag.length<SET.q)bag.push(...shufA(pat));p.types=shufA(bag.slice(0,SET.q))});
+ const sched=[],mx=Math.max(...teams.map(t=>t.ids.length));
+ for(let q=0;q<SET.q;q++)for(let j=0;j<mx;j++)teams.forEach(t=>{if(t.ids[j]!=null)sched.push(t.ids[j])});
+ const pools={};Object.keys(BANK).forEach(k=>pools[k]=shufA(BANK[k].map((_,i)=>i)));
+ G={phase:solo?'play':'turn',solo,teams,players,sched,turn:0,pools,timed:SET.timed,bet:SET.bet,sound:SET.sound,q:SET.q,r:null};
+ SFX.go();if(solo)gStartTurn();else{gPersist();renderGame()}
 }
-function gRound(){const r=G.rounds[G.i];G.limit=r.type==='o'?45:25;G.left=G.limit;G.t0=Date.now();G.phase='play';G.fb=null;renderGame();startTimer()}
-function gAnswer(idx){
- if(G.phase!=='play')return;stopTimer();const r=G.rounds[G.i];let score;
- if(r.type==='q')score=idx==null?0:r.opts[idx][1];else{const ok=r.pick.filter((s,i)=>s===r.steps[i]).length;score=idx==null&&!r.pick.length?0:3*ok/r.steps.length}
- const time=Math.min(G.limit,(Date.now()-G.t0)/1000),pl=lvlOf(G.xp);
- const base=Math.round(score/3*100),speed=G.timed&&score>0?Math.round(Math.max(0,G.left)/G.limit*50):0;
- if(score>=3){G.streak++;G.maxStreak=Math.max(G.maxStreak,G.streak)}else G.streak=0;
- const sb=score>=3&&G.streak>1?Math.min(100,(G.streak-1)*20):0,gain=base+speed+sb;G.xp+=gain;
- G.ans.push({dim:r.dim,score,time,type:r.type});G.fb={idx,score,gain,base,speed,sb,timeout:idx==null&&r.type==='q',up:lvlOf(G.xp)>pl};G.phase='fb';renderGame();
- if(G.fb.up)toast('Subiu de nível: '+LEVELS[lvlOf(G.xp)]+'!','ok');
+function draw(type){if(!G.pools[type].length)G.pools[type]=shufA(BANK[type].map((_,i)=>i));return G.pools[type].pop()}
+function makeRound(p){const type=p.types[p.ans.length],it=BANK[type][draw(type)],r={type,dim:it.dim,t:it.t,exp:it.exp,hidden:[],bet:1,hint:false,f5050:false,extra:0};
+ if(type==='s')r.opts=shufA(it.opts);
+ if(type==='i'||type==='c')r.opts=shufA(it.opts.map((x,i)=>[x,i===it.ans?3:0]));
+ if(type==='v')r.v=it.v;
+ if(type==='o'){r.steps=it.steps;r.pool=shufA(it.steps);r.pick=[]}
+ if(type==='m'){r.pairs=it.pairs;r.L=shufA(it.pairs.map(x=>x[0]));r.Rr=shufA(it.pairs.map(x=>x[1]));r.links={};r.sel=null}
+ return r}
+const curP=()=>G.players[G.sched[G.turn]];
+function gStartTurn(){const p=curP();G.r=makeRound(p);G.limit=TLIM[G.r.type];G.left=G.limit;G.t0=Date.now();G.phase='play';G.fb=null;gPersist();renderGame();startTimer()}
+function quality(r,a){
+ if(r.type==='s'||r.type==='i'||r.type==='c')return a.idx==null?0:r.opts[a.idx][1]/3;
+ if(r.type==='v')return a.v==null?0:(a.v===r.v?1:0);
+ if(r.type==='o')return r.pick.filter((s,i)=>s===r.steps[i]).length/r.steps.length;
+ if(r.type==='m')return r.pairs.filter(([a2,b])=>r.links[a2]===b).length/r.pairs.length;return 0}
+function gAnswer(a){
+ if(G.phase!=='play')return;stopTimer();const p=curP(),r=G.r,q=quality(r,a),lim=G.limit+(r.extra||0),time=Math.min(lim,(Date.now()-G.t0)/1000),pl=lvlOf(p.pts);
+ const base=Math.round(100*q),speed=G.timed&&q>0?Math.round(50*q*Math.max(0,G.left)/lim):0;
+ if(q>=1){p.streak++;p.maxStreak=Math.max(p.maxStreak,p.streak)}else p.streak=0;
+ const mult=q>=1?(p.streak>=5?2:p.streak>=3?1.5:p.streak>=2?1.2:1):1,pen=(r.hint||r.f5050)?0.7:1;
+ let total,betTxt='';
+ if(q>=1){total=Math.round((base+speed)*mult*r.bet*pen);if(r.bet>1){p.betWins++;betTxt='x'+String(r.bet).replace('.',',')}}
+ else if(q<0.5&&r.bet>1){total=r.bet>=2?-50:-25;betTxt='perdeu a aposta'}
+ else total=Math.round((base+speed)*pen);
+ const got=[];const give=k=>{if(!p.ach.includes(k)){p.ach.push(k);got.push(k)}};
+ if(q>=1)give('first');if(p.streak>=3)give('combo3');if(p.streak>=5)give('combo5');if(q>=1&&G.timed&&time<=5)give('flash');if(q>=1&&r.bet>=2)give('bold');if(r.type==='o'&&q>=1)give('order');if(r.type==='m'&&q>=1)give('match');
+ const achPts=got.length*ACHPTS;p.pts+=total+achPts;
+ p.ans.push({dim:r.dim,type:r.type,q,time,pts:total});
+ G.fb={a,q,total,base,speed,mult,betTxt,pen,got,achPts,timeout:!!a.timeout,up:lvlOf(p.pts)>pl};G.phase='fb';gPersist();renderGame();
+ (q>=1?SFX.ok:q>0?SFX.mid:SFX.bad)();if(got.length)setTimeout(SFX.ach,350);if(G.fb.up)setTimeout(SFX.lvl,700);
+ got.forEach(k=>toast('Conquista: '+ACH.find(x=>x[0]===k)[1]+' (+'+ACHPTS+')','ok'));if(G.fb.up)toast('Subiu de nível: '+LEVELS[lvlOf(p.pts)]+'!','ok');
+ if(q<0.5){const st=$('.g-stage');if(st&&!matchMedia('(prefers-reduced-motion: reduce)').matches){st.classList.remove('shake');void st.offsetWidth;st.classList.add('shake')}}
 }
-function gNext(){if(G.i+1>=G.rounds.length){gFinish();return}G.i++;gRound()}
-function gResult(){
- const tot=G.ans.reduce((a,x)=>a+x.score,0),idx=Math.round(tot/(G.ans.length*3)*100),dims={};
- DIMS.forEach(d=>{const l=G.ans.filter(a=>a.dim===d.id);dims[d.id]=l.length?Math.round((1+mean(l.map(a=>a.score))/3*4)*10)/10:null});
- const avgT=mean(G.ans.map(a=>a.time)),all=dim=>{const l=G.ans.filter(a=>a.dim===dim&&a.type==='q');return l.length&&l.every(a=>a.score>=3)};
- const b=[];if(G.maxStreak>=5)b.push('fire');if(G.timed&&avgT<=8)b.push('fast');if(all('N'))b.push('vis');if(G.ans.filter(a=>a.type==='o').every(a=>a.score>=3))b.push('est');if(G.ans.every(a=>a.score>0))b.push('zero');if(all('E'))b.push('eti');
- return{idx,nota:Math.round((1+idx/100*4)*10)/10,dims,avgT,badges:b,xp:G.xp,nivel:lvlOf(G.xp),acertos:G.ans.filter(a=>a.score>=3).length,total:G.ans.length,maxStreak:G.maxStreak}}
-function gFinish(){stopTimer();const r=gResult();G.res=r;G.phase='end';
- const l=gLoad();l.push({id:'g'+Date.now(),nome:G.nome,data:new Date().toISOString().slice(0,10),timed:G.timed,...r});gSave(l);renderGame();confetti()}
+function gNext(){if(G.turn+1>=G.sched.length){gFinish();return}G.turn++;if(G.solo)gStartTurn();else{G.phase='turn';G.r=null;gPersist();renderGame()}}
+function pResult(p){
+ const idx=p.ans.length?Math.round(mean(p.ans.map(a=>a.q))*100):0,dims={};
+ DIMS.forEach(d=>{const l=p.ans.filter(a=>a.dim===d.id);dims[d.id]=l.length?Math.round((1+mean(l.map(a=>a.q))*4)*10)/10:null});
+ return{idx,nota:Math.round((1+idx/100*4)*10)/10,dims,avgT:mean(p.ans.map(a=>a.time)),badges:p.ach,xp:p.pts,nivel:lvlOf(p.pts),acertos:p.ans.filter(a=>a.q>=1).length,total:p.ans.length,maxStreak:p.maxStreak}}
+function gFinish(){stopTimer();
+ G.players.forEach(p=>{if(!p.used&&!p.ach.includes('noaid')){p.ach.push('noaid');p.pts+=ACHPTS}if(p.ans.length&&p.ans.every(a=>a.q>=1)&&!p.ach.includes('perfect')){p.ach.push('perfect');p.pts+=ACHPTS}p.res=pResult(p)});
+ const d=new Date().toISOString().slice(0,10),l=gLoad();
+ G.players.forEach((p,i)=>l.push({id:'g'+Date.now()+'_'+i,nome:p.nome,team:G.solo?'':G.teams[p.team].nome,data:d,timed:G.timed,...p.res}));gSave(l);
+ if(!G.solo){G.teams.forEach(t=>{const ps=t.ids.map(i=>G.players[i]);t.total=ps.reduce((a,p)=>a+p.pts,0);t.media=Math.round(t.total/ps.length);t.idx=Math.round(mean(ps.map(p=>p.res.idx)))});
+  const tl=tLoad();tl.push({data:d,teams:G.teams.map(t=>({nome:t.nome,media:t.media,total:t.total,n:t.ids.length,idx:t.idx}))});try{localStorage.setItem(TKEY,JSON.stringify(tl.slice(-30)))}catch(e){}}
+ G.phase='end';G.sel=[...G.players].sort((a,b)=>b.pts-a.pts)[0].id;gPersist();renderGame();confetti();SFX.lvl()}
 function confetti(){if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;const c=document.createElement('canvas');c.className='confetti';document.body.appendChild(c);const x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
- const cols=['#F2B705','#2a78d6','#1baf7a','#eb6834','#6250d6','#ffffff'],P=Array.from({length:160},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,w:6+Math.random()*6,h:8+Math.random()*8,vy:2+Math.random()*3,vx:-1.5+Math.random()*3,r:Math.random()*6,vr:-.2+Math.random()*.4,c:cols[Math.floor(Math.random()*cols.length)]}));
- const t0=performance.now();(function f(t){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()});if(t-t0<3200)requestAnimationFrame(f);else c.remove()})(t0)}
+ const cols=['#F2B705','#2a78d6','#1baf7a','#eb6834','#6250d6','#ffffff'],P=Array.from({length:180},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,w:6+Math.random()*6,h:8+Math.random()*8,vy:2+Math.random()*3,vx:-1.5+Math.random()*3,r:Math.random()*6,vr:-.2+Math.random()*.4,c:cols[Math.floor(Math.random()*cols.length)]}));
+ const t0=performance.now();(function f(t){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;x.save();x.translate(p.x,p.y);x.rotate(p.r);x.fillStyle=p.c;x.fillRect(-p.w/2,-p.h/2,p.w,p.h);x.restore()});if(t-t0<3400)requestAnimationFrame(f);else c.remove()})(t0)}
 function gRanking(n){const best={};gLoad().forEach(r=>{const k=nkey(r.nome);if(!best[k]||r.xp>best[k].xp)best[k]=r});return Object.values(best).sort((a,b)=>b.xp-a.xp).slice(0,n)}
 function rankHtml(n){const l=gRanking(n);if(!l.length)return'<p class="empty">Ninguém jogou ainda. Seja o primeiro.</p>';
- return`<ol class="g-rank">${l.map((r,i)=>`<li><span class="pos p${i<3?i+1:0}">${i+1}</span><span class="nm"><b>${esc(r.nome)}</b><small>${LEVELS[r.nivel]} · índice ${r.idx}</small></span><b class="xp">${r.xp} XP</b></li>`).join('')}</ol>`}
-function renderGame(){
- const el=$('#game');
- if(G.phase==='start'){
-  const names=[...new Set(histLoad().map(r=>r.nome.replace(/ \(exemplo\)$/,'')))];
-  el.innerHTML=`<div class="g-start">
-   <section class="g-hero"><span class="eyebrow">Dinâmica gamificada</span><h2>Desafio da Inovação</h2>
-    <p>12 missões com situações reais do dia a dia. Cada escolha vale pontos de experiência (XP). Suba de nível, faça sequências de acertos, desbloqueie conquistas e receba um resultado de desempenho no final.</p>
-    <div class="g-rules"><div><b>10 situações</b>Escolha a melhor atitude entre 4 opções.</div><div><b>2 sequências</b>Monte as etapas na ordem certa.</div><div><b>Bônus de rapidez</b>Quanto mais rápido, mais XP.</div><div><b>Sequência de acertos</b>Acertos seguidos multiplicam os pontos.</div></div>
-    <div class="g-form"><div class="field"><label for="gNome">Nome do participante</label><input id="gNome" list="gNomes" autocomplete="off" value="${esc(G.nome||state.info.nome.replace(/ \(exemplo\)$/,'')||'')}" placeholder="Digite o nome"><datalist id="gNomes">${names.map(n=>`<option value="${esc(n)}">`).join('')}</datalist></div>
-     <label class="switch"><input type="checkbox" id="gTimed"${G.timed?' checked':''}><span></span>Com tempo (25 s por missão)</label>
-     <button class="btn gold big" type="button" id="gStart">Começar o desafio</button></div>
-    <p class="g-err" id="gErr" hidden>Digite o nome do participante para começar.</p></section>
-   <section class="t-card"><h2>Ranking</h2><p class="sub">Melhor pontuação de cada participante.</p>${rankHtml(8)}</section></div>`;
-  return}
- if(G.phase==='end'){const r=G.res,nv=r.nivel,into=r.xp-nv*LVXP;
-  el.innerHTML=`<div class="g-end">
-   <section class="g-res"><div class="g-medal" style="--p:${r.idx}"><div><b>${r.idx}</b><small>de 100</small></div></div>
-    <div class="g-res-tx"><span class="eyebrow">Resultado da dinâmica</span><h2>${esc(G.nome)}</h2><p class="g-title">${GTITLE(r.idx)} · nível ${nv+1}: ${LEVELS[nv]}</p>
-     <div class="g-mini"><div><span>XP total</span><b>${r.xp}</b></div><div><span>Acertos máximos</span><b>${r.acertos}/${r.total}</b></div><div><span>Maior sequência</span><b>${r.maxStreak}</b></div><div><span>Tempo médio</span><b>${fmt(r.avgT)} s</b></div><div><span>Nota equivalente</span><b>${fmt(r.nota)}</b></div></div>
-     <div class="g-act"><button class="btn gold" type="button" id="gAgain">Jogar de novo</button><button class="btn light" type="button" id="gNew">Outro participante</button></div></div></section>
-   <div class="t-grid">
-    <div class="t-card"><h2>Desempenho por área</h2><p class="sub">Convertido para a escala de 1 a 5 da avaliação.</p>${radar(DIMS.map(d=>({d,m:r.dims[d.id]})))}</div>
-    <div class="t-card"><h2>Conquistas</h2><p class="sub">${r.badges.length} de ${BADGES.length} desbloqueadas.</p><div class="g-badges">${BADGES.map(([k,n,ds])=>`<div class="g-bdg${r.badges.includes(k)?' on':''}"><i>${n[0]}</i><b>${n}</b><small>${ds}</small></div>`).join('')}</div></div>
-    <div class="t-card"><h2>O que isso mostra</h2><p class="sub">Leitura rápida do resultado.</p>${(()=>{const ds=DIMS.map(d=>({d,m:r.dims[d.id]})).filter(o=>o.m!=null).sort((a,b)=>b.m-a.m);return`<ul class="insights" style="grid-template-columns:1fr"><li><span>Ponto mais forte</span><b>${ds[0].d.nome}</b> (${fmt(ds[0].m)})</li><li><span>Para desenvolver</span><b>${ds[ds.length-1].d.nome}</b> (${fmt(ds[ds.length-1].m)})</li><li><span>Classificação</span><b>${GTITLE(r.idx)}</b>: ${r.idx>=75?'tomou decisões alinhadas às boas práticas na maioria das situações.':r.idx>=60?'escolheu bem na maior parte das situações, com alguns pontos a ajustar.':'precisa de apoio para tomar as melhores decisões nas situações do dia a dia.'}</li></ul>`})()}<p class="cap">O resultado aparece também no relatório do consultor com o mesmo nome.</p></div>
-    <div class="t-card"><h2>Ranking</h2><p class="sub">Melhor pontuação de cada participante.</p>${rankHtml(8)}</div>
-   </div></div>`;
-  return}
- const r=G.rounds[G.i],fb=G.fb,dm=DIMS.find(d=>d.id===r.dim),nv=lvlOf(G.xp),into=(G.xp-nv*LVXP)/LVXP*100;
+ return`<ol class="g-rank">${l.map((r,i)=>`<li><span class="pos p${i<3?i+1:0}">${i+1}</span><span class="nm"><b>${esc(r.nome)}</b><small>${LEVELS[r.nivel]||''} · índice ${r.idx}${r.team?' · '+esc(r.team):''}</small></span><b class="xp">${r.xp} pts</b></li>`).join('')}</ol>`}
+
+const av=(n,c)=>`<span class="g-av" style="background:${c}">${esc(ini(n))}</span>`;
+function scoreboard(){
+ if(G.solo){const p=G.players[0],nv=lvlOf(p.pts);return`<aside class="g-side"><h3>Seu placar</h3><div class="g-sb-big"><b>${p.pts}</b><span>pontos</span></div>
+  <div class="g-lv-mini"><div><span>Nível ${nv+1} · ${LEVELS[nv]}</span></div><div class="g-lv-bar dark"><i style="width:${nv>=LEVELS.length-1?100:(Math.max(0,p.pts)-nv*LVXP)/LVXP*100}%"></i></div></div>
+  <div class="g-sb-stats"><div><span>Acertos</span><b>${p.ans.filter(a=>a.q>=1).length}/${p.ans.length}</b></div><div><span>Maior combo</span><b>${p.maxStreak}</b></div><div><span>Conquistas</span><b>${p.ach.length}</b></div></div>
+  <div class="g-ach-row">${ACH.map(([k,n])=>`<span class="${p.ach.includes(k)?'on':''}" data-tip="${n}">${n[0]}</span>`).join('')}</div></aside>`}
+ const ts=G.teams.map((t,i)=>{const ps=t.ids.map(k=>G.players[k]),tot=ps.reduce((a,p)=>a+p.pts,0);return{t,i,tot,med:Math.round(tot/ps.length)}}).sort((a,b)=>b.med-a.med);
+ const top=Math.max(1,...ts.map(x=>x.med)),cur=curP(),nx=G.sched.slice(G.turn+1,G.turn+4).map(k=>G.players[k]);
+ return`<aside class="g-side"><h3>Placar das equipes</h3><p class="g-sb-sub">Comparadas pela média de pontos por participante.</p>
+  <ol class="g-teams">${ts.map((x,k)=>`<li class="${x.i===cur.team?'cur':''}"><span class="g-tpos">${k+1}º</span><span class="g-tn"><b><i style="background:${x.t.cor}"></i>${esc(x.t.nome)}</b><small>${x.t.ids.length} participante${x.t.ids.length>1?'s':''} · total ${x.tot}</small><span class="g-tbar"><i style="width:${Math.max(0,x.med)/top*100}%;background:${x.t.cor}"></i></span></span><b class="g-tm">${x.med}</b></li>`).join('')}</ol>
+  ${nx.length?`<h4>Próximos</h4><ul class="g-next">${nx.map(p=>`<li>${av(p.nome,G.teams[p.team].cor)}<span>${esc(p.nome)}</span></li>`).join('')}</ul>`:''}</aside>`}
+function setupHtml(){
+ let saved=null;try{saved=JSON.parse(localStorage.getItem(GSKEY)||'null')}catch(e){}
+ const names=[...new Set(histLoad().map(r=>r.nome.replace(/ \(exemplo\)$/,'')))];
+ const tl=tLoad().slice(-4).reverse();
+ const teamsHtml=SET.teams.map((t,i)=>`<div class="g-team" style="--tc:${TEAMCOL[i%6]}"><div class="g-team-h"><i></i><input class="g-tname" data-s="tnome" data-i="${i}" value="${esc(t.nome)}" aria-label="Nome da equipe ${i+1}" placeholder="Nome da equipe">${SET.teams.length>2?`<button type="button" class="g-x" data-rm="${i}" aria-label="Remover equipe">×</button>`:''}</div>
+   <div class="g-step"><span>Participantes</span><button type="button" data-n="${i}" data-d="-1" aria-label="Menos um">−</button><b>${t.n}</b><button type="button" data-n="${i}" data-d="1" aria-label="Mais um">+</button></div>
+   <div class="g-plist">${Array.from({length:t.n},(_,j)=>`<input data-s="pnome" data-i="${i}" data-j="${j}" list="gNomes" value="${esc(t.p[j]||'')}" placeholder="Participante ${j+1}" aria-label="Participante ${j+1} da ${esc(t.nome)}">`).join('')}</div></div>`).join('');
+ return`<div class="g-start">
+  <section class="g-hero"><span class="eyebrow">Dinâmica gamificada</span><h2>Desafio da Inovação</h2>
+   <p>Perguntas em 6 formatos diferentes, sorteadas para cada participante. Cada detalhe conta: acerto, rapidez, combos, apostas, poderes e conquistas.</p>
+   ${saved&&saved.phase&&saved.phase!=='end'?`<div class="g-resume"><span>Há uma partida em andamento (${saved.turn+1} de ${saved.sched.length} jogadas).</span><button class="btn gold" type="button" id="gResume">Retomar partida</button><button class="btn light" type="button" id="gDiscard">Descartar</button></div>`:''}
+   <div class="g-mode" role="group" aria-label="Modo de jogo"><button type="button" data-mode="solo" aria-pressed="${SET.mode==='solo'}">Individual</button><button type="button" data-mode="team" aria-pressed="${SET.mode==='team'}">Por equipes</button></div>
+   <datalist id="gNomes">${names.map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
+   ${SET.mode==='solo'?`<div class="field g-solo"><label for="gNome">Nome do participante</label><input id="gNome" data-s="solo" list="gNomes" autocomplete="off" value="${esc(SET.solo)}" placeholder="Digite o nome"></div>`
+   :`<div class="g-teams-cfg">${teamsHtml}${SET.teams.length<6?`<button type="button" class="g-addteam" id="gAddTeam">+ Adicionar equipe</button>`:''}</div><p class="g-note">As equipes podem ter quantidades diferentes de participantes. O placar compara a média de pontos por participante.</p>`}
+   <div class="g-opts-cfg">
+    <div class="g-cfg"><span>Perguntas por participante</span><div class="g-seg">${[5,8,10,12].map(n=>`<button type="button" data-q="${n}" aria-pressed="${SET.q===n}">${n}</button>`).join('')}</div></div>
+    <label class="switch"><input type="checkbox" data-s="timed"${SET.timed?' checked':''}><span></span>Com tempo</label>
+    <label class="switch"><input type="checkbox" data-s="bet"${SET.bet?' checked':''}><span></span>Apostas</label>
+    <label class="switch"><input type="checkbox" data-s="sound"${SET.sound?' checked':''}><span></span>Som</label>
+   </div>
+   <button class="btn gold big g-go" type="button" id="gStart">Começar o desafio</button><p class="g-err" id="gErr" hidden></p></section>
+  <div class="g-col">
+   <section class="t-card"><h2>Como pontuar</h2><ul class="g-howto">
+    <li><b>Acerto</b>até 100 pontos por pergunta</li><li><b>Rapidez</b>até +50 se responder rápido</li><li><b>Combo</b>acertos seguidos multiplicam: x1,2, x1,5 e x2</li><li><b>Aposta</b>x1,5 ou x2 se acertar, mas perde 25 ou 50 se errar</li><li><b>Poderes</b>50/50, +10 s e Dica (1 de cada; 50/50 e Dica valem 30% menos)</li><li><b>Conquistas</b>+50 cada, desbloqueadas na hora</li></ul></section>
+   <section class="t-card"><h2>Ranking de participantes</h2><p class="sub">Melhor pontuação de cada um.</p>${rankHtml(6)}</section>
+   ${tl.length?`<section class="t-card"><h2>Últimas partidas por equipe</h2><ul class="g-hist">${tl.map(g=>{const w=[...g.teams].sort((a,b)=>b.media-a.media)[0];return`<li><span>${dataBR(g.data)}</span><b>${esc(w.nome)}</b><small>venceu com média ${w.media} · ${g.teams.length} equipes</small></li>`}).join('')}</ul></section>`:''}
+  </div></div>`}
+function playHtml(){
+ const p=curP(),t=G.teams[p.team],r=G.r,fb=G.fb,k=p.ans.length+(fb?0:1),nv=lvlOf(p.pts),into=nv>=LEVELS.length-1?100:(Math.max(0,p.pts)-nv*LVXP)/LVXP*100,dm=DIMS.find(d=>d.id===r.dim),lim=G.limit+(r.extra||0);
+ const answered=!!fb,best=r.opts?Math.max(...r.opts.map(o=>o[1])):0;
  let body='';
- if(r.type==='q'){
-  body=`<div class="g-opts">${r.opts.map(([t,sc],i)=>{let c='';if(fb){const best=Math.max(...r.opts.map(o=>o[1]));c=sc===best?' best':i===fb.idx?(sc>0?' mid':' wrong'):' dim'}
-   return`<button type="button" class="g-opt${c}" data-opt="${i}"${fb?' disabled':''}><span class="k" style="background:${GCOL[i]}">${'ABCD'[i]}</span><span>${t}</span></button>`}).join('')}</div>`;
- }else{
-  const done=!!fb;body=`<div class="g-slots">${r.steps.map((s,i)=>{const v=r.pick[i];let c=v?' filled':'';if(done)c=v===s?' ok':' no';return`<div class="g-slot${c}"><i>${i+1}</i><span>${v?esc(v):(done?'':'')}</span>${done&&v!==s?`<small>Certo: ${s}</small>`:''}</div>`}).join('')}</div>
-   ${done?'':`<div class="g-pool">${r.pool.filter(s=>!r.pick.includes(s)).map(s=>`<button type="button" class="g-chip" data-step="${esc(s)}">${s}</button>`).join('')}</div><div class="g-ord-act"><button class="btn" type="button" id="gUndo"${r.pick.length?'':' disabled'}>Desfazer</button><span class="cap">Clique nas etapas na ordem em que elas acontecem.</span></div>`}`;
- }
- const fbHtml=fb?`<div class="g-fb ${fb.score>=3?'good':fb.score>0?'mid':'bad'}"><div><b>${fb.timeout?'Tempo esgotado!':r.type==='o'?(fb.score>=3?'Sequência perfeita!':Math.round(fb.score/3*r.steps.length)+' de '+r.steps.length+' etapas na posição certa.'):fb.score>=3?'Excelente escolha!':fb.score>=2?'Boa, mas dava para ir além.':fb.score>0?'Quase lá.':'Não foi a melhor escolha.'}</b><p>${r.exp}</p></div>
-   <div class="g-gain"><span class="g-xp">+${fb.gain} XP</span><small>${fb.base} acerto${fb.speed?` · ${fb.speed} rapidez`:''}${fb.sb?` · ${fb.sb} sequência`:''}</small></div>
-   <button class="btn primary big" type="button" id="gNext">${G.i+1>=G.rounds.length?'Ver meu resultado':'Próxima missão →'}</button></div>`:'';
- el.innerHTML=`<div class="g-stage">
-  <div class="g-top"><div class="g-stat"><span>Missão</span><b>${G.i+1}<small>/${G.rounds.length}</small></b></div>
-   <div class="g-lv"><div class="g-lv-h"><span>Nível ${nv+1} · ${LEVELS[nv]}</span><span>${G.xp} XP</span></div><div class="g-lv-bar"><i style="width:${nv>=LEVELS.length-1?100:into}%"></i></div></div>
-   <div class="g-stat"><span>Sequência</span><b class="${G.streak>=2?'hot':''}">${G.streak}x</b></div>
+ if(r.opts){body=`<div class="g-opts">${r.opts.map(([tx,sc],i)=>{if(r.hidden.includes(i))return`<div class="g-opt gone"></div>`;let c='';if(answered){c=sc===best?' best':i===(fb.a&&fb.a.idx)?(sc>0?' mid':' wrong'):' dim'}
+  return`<button type="button" class="g-opt${c}" data-opt="${i}"${answered?' disabled':''}><span class="k" style="background:${OPTCOL[i]}">${'ABCD'[i]}</span><span>${esc(tx)}</span></button>`}).join('')}</div>`}
+ if(r.type==='v'){const ch=fb&&fb.a?fb.a.v:undefined;body=`<div class="g-vf">${[[true,'Verdadeiro','V'],[false,'Falso','F']].map(([v,l,key])=>{let c='';if(answered)c=v===r.v?' best':v===ch?' wrong':' dim';return`<button type="button" class="g-vbtn ${v?'t':'f'}${c}" data-v="${v}"${answered?' disabled':''}><b>${key}</b>${l}</button>`}).join('')}</div>`}
+ if(r.type==='o'){body=`<div class="g-slots">${r.steps.map((s,i)=>{const v=r.pick[i];let c=v?' filled':'';if(answered)c=v===s?' ok':' no';return`<div class="g-slot${c}"><i>${i+1}</i><span>${v?esc(v):''}</span>${answered&&v!==s?`<small>Certo: ${s}</small>`:''}</div>`}).join('')}</div>
+  ${answered?'':`<div class="g-pool">${r.pool.filter(s=>!r.pick.includes(s)).map(s=>`<button type="button" class="g-chip" data-step="${esc(s)}">${s}</button>`).join('')}</div><div class="g-ord-act"><button class="btn" type="button" id="gUndo"${r.pick.length?'':' disabled'}>Desfazer</button><span class="cap">Clique nas etapas na ordem em que elas acontecem.</span></div>`}`}
+ if(r.type==='m'){const linkedR=Object.values(r.links),num={};r.L.forEach(a=>{if(r.links[a])num[a]=Object.keys(r.links).indexOf(a)+1});
+  body=`<div class="g-match"><div class="g-mcol">${r.L.map(a=>{let c=r.sel===a?' sel':r.links[a]?' linked':'';if(answered){const ok=r.pairs.find(x=>x[0]===a)[1]===r.links[a];c=ok?' ok':' no'}return`<button type="button" class="g-mi${c}" data-ml="${esc(a)}"${answered?' disabled':''}>${num[a]?`<i>${num[a]}</i>`:''}${esc(a)}</button>`}).join('')}</div>
+   <div class="g-mcol">${r.Rr.map(b=>{const a=Object.keys(r.links).find(x=>r.links[x]===b),n=a?Object.keys(r.links).indexOf(a)+1:0;let c=a?' linked':'';if(answered&&a){c=r.pairs.find(x=>x[0]===a)[1]===b?' ok':' no'}return`<button type="button" class="g-mi r${c}" data-mr="${esc(b)}"${answered?' disabled':''}>${n?`<i>${n}</i>`:''}${esc(b)}</button>`}).join('')}</div></div>
+   ${answered?`<p class="cap">Pares certos: ${r.pairs.map(x=>`<b>${x[0]}</b> → ${x[1]}`).join(' · ')}</p>`:`<div class="g-ord-act"><button class="btn primary" type="button" id="gMatchOk"${Object.keys(r.links).length===r.pairs.length?'':' disabled'}>Confirmar pares</button><span class="cap">Clique num termo à esquerda e depois no significado à direita. Clique de novo para desfazer.</span></div>`}`}
+ const canF=['s','i','c'].includes(r.type)&&p.pw.f&&!answered,canT=G.timed&&p.pw.t&&!answered,canD=p.pw.d&&!answered&&!r.hint;
+ const tools=answered?'':`<div class="g-tools">${G.bet?`<div class="g-bet"><span>Aposta</span>${[[1,'Normal'],[1.5,'Confiante x1,5'],[2,'Certeza x2']].map(([m,l])=>`<button type="button" data-bet="${m}" aria-pressed="${r.bet===m}">${l}</button>`).join('')}</div>`:''}
+  <div class="g-pw"><span>Poderes</span><button type="button" data-pw="f"${canF?'':' disabled'} data-tip="Remove duas opções erradas. Vale 30% menos.">50/50</button>${G.timed?`<button type="button" data-pw="t"${canT?'':' disabled'} data-tip="Ganha 10 segundos.">+10 s</button>`:''}<button type="button" data-pw="d"${canD?'':' disabled'} data-tip="Mostra uma dica. Vale 30% menos.">Dica</button></div></div>`;
+ const hint=r.hint&&!answered?`<div class="g-hint"><b>Dica:</b> ${HINTS[r.dim]}</div>`:'';
+ const fbHtml=fb?`<div class="g-fb ${fb.q>=1?'good':fb.q>0?'mid':'bad'}"><div><b>${fb.timeout?'Tempo esgotado!':fb.q>=1?['Excelente!','Mandou bem!','Na mosca!','Perfeito!'][p.ans.length%4]:fb.q>=0.5?'Quase lá!':'Não foi dessa vez.'}</b><p>${r.exp}</p>
+   <div class="g-bd">${fb.base?`<span>Acerto +${fb.base}</span>`:''}${fb.speed?`<span>Rapidez +${fb.speed}</span>`:''}${fb.mult>1?`<span class="hot">Combo x${String(fb.mult).replace('.',',')}</span>`:''}${fb.betTxt?`<span class="${fb.total<0?'neg':'hot'}">Aposta ${fb.betTxt}</span>`:''}${fb.pen<1?'<span class="neg">Poder −30%</span>':''}${fb.got.map(k=>`<span class="ach">${ACH.find(x=>x[0]===k)[1]} +${ACHPTS}</span>`).join('')}</div></div>
+   <div class="g-gain"><span class="g-xp${fb.total<0?' neg':''}">${fb.total+fb.achPts>=0?'+':''}${fb.total+fb.achPts}</span><small>pontos</small></div>
+   <button class="btn primary big" type="button" id="gNext">${G.turn+1>=G.sched.length?'Ver resultado':G.solo?'Próxima pergunta →':'Próximo participante →'}</button></div>`:'';
+ const flames=Array.from({length:5},(_,i)=>`<i class="${i<p.streak?'on':''}"></i>`).join('');
+ return`<div class="g-play"><div class="g-stage" style="--tc:${t.cor}">
+  <div class="g-top">${G.solo?'':`<div class="g-who">${av(p.nome,t.cor)}<div><b>${esc(p.nome)}</b><small>${esc(t.nome)}</small></div></div>`}
+   <div class="g-stat"><span>Pergunta</span><b>${k}<small>/${G.q}</small></b></div>
+   <div class="g-lv"><div class="g-lv-h"><span>Nível ${nv+1} · ${LEVELS[nv]}</span><span>${p.pts} pts</span></div><div class="g-lv-bar"><i style="width:${into}%"></i></div></div>
+   <div class="g-stat"><span>Combo</span><div class="g-flames" data-tip="Acertos seguidos: ${p.streak}">${flames}</div></div>
    ${G.timed?`<div class="g-stat"><span>Tempo</span><b id="gTimeTx">${Math.ceil(Math.max(0,G.left))}s</b></div>`:''}
    <button class="btn light" type="button" id="gQuit">Sair</button></div>
-  ${G.timed?`<div class="g-time"><i id="gTime" style="width:${Math.max(0,G.left/G.limit*100)}%"></i></div>`:''}
-  <div class="g-body"><span class="g-chipdim">${dm.nome}</span><h3 class="g-q">${r.t}</h3>${body}${fbHtml}
-   ${!fb&&r.type==='q'?'<p class="kbd-tip" style="margin-top:14px">Atalho: teclas <kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd> para escolher e <kbd>Enter</kbd> para seguir.</p>':''}</div></div>`;
- if(fb){const n=$('#gNext');n&&n.focus({preventScroll:true})}
-}
-$('#game').addEventListener('click',e=>{const t=e.target.closest('button');if(!t)return;
- if(t.id==='gStart'){const n=$('#gNome').value.trim();if(!n){$('#gErr').hidden=false;$('#gNome').focus();return}newGame(n,$('#gTimed').checked);return}
- if(t.dataset.opt!=null){gAnswer(+t.dataset.opt);return}
- if(t.dataset.step){const r=G.rounds[G.i];r.pick.push(t.dataset.step);if(r.pick.length===r.steps.length)gAnswer(0);else renderGame();return}
- if(t.id==='gUndo'){G.rounds[G.i].pick.pop();renderGame();return}
+  ${G.timed?`<div class="g-time"><i id="gTime" style="width:${Math.max(0,G.left/lim*100)}%"></i></div>`:''}
+  <div class="g-body"><div class="g-tags"><span class="g-type t-${r.type}">${TNAME[r.type]}</span><span class="g-chipdim">${dm.nome}</span></div>
+   <h3 class="g-q">${esc(r.t)}</h3>${tools}${hint}${body}${fbHtml}
+   ${!answered&&(r.opts||r.type==='v')?`<p class="kbd-tip" style="margin-top:14px">Atalho: ${r.type==='v'?'<kbd>V</kbd> ou <kbd>F</kbd>':'<kbd>A</kbd> <kbd>B</kbd> <kbd>C</kbd> <kbd>D</kbd>'} para responder e <kbd>Enter</kbd> para seguir.</p>`:''}</div></div>${scoreboard()}</div>`}
+function turnHtml(){const p=curP(),t=G.teams[p.team],k=p.ans.length+1;
+ return`<div class="g-play"><section class="g-turn" style="--tc:${t.cor}"><span class="eyebrow">Jogada ${G.turn+1} de ${G.sched.length}</span>${av(p.nome,t.cor)}<h2>Vez de ${esc(p.nome)}</h2><p><span class="g-tchip"><i></i>${esc(t.nome)}</span> · pergunta ${k} de ${G.q} · ${p.pts} pontos</p>
+  <div class="g-pwleft">Poderes disponíveis: ${['f','t','d'].filter(x=>p.pw[x]&&(x!=='t'||G.timed)).map(x=>({f:'50/50',t:'+10 s',d:'Dica'})[x]).join(', ')||'nenhum'}</div>
+  <button class="btn gold big" type="button" id="gReady">Estou pronto</button><small class="g-small">Ou aperte Enter</small></section>${scoreboard()}</div>`}
+function endHtml(){
+ if(G.solo){const p=G.players[0],r=p.res;return`<div class="g-end">
+  <section class="g-res"><div class="g-medal" style="--p:${r.idx}"><div><b>${r.idx}</b><small>de 100</small></div></div>
+   <div class="g-res-tx"><span class="eyebrow">Resultado da dinâmica</span><h2>${esc(p.nome)}</h2><p class="g-title">${GTITLE(r.idx)} · nível ${r.nivel+1}: ${LEVELS[r.nivel]}</p>
+    <div class="g-mini"><div><span>Pontos</span><b>${r.xp}</b></div><div><span>Acertos</span><b>${r.acertos}/${r.total}</b></div><div><span>Maior combo</span><b>${r.maxStreak}</b></div><div><span>Tempo médio</span><b>${fmt(r.avgT)} s</b></div><div><span>Nota equivalente</span><b>${fmt(r.nota)}</b></div></div>
+    <div class="g-act"><button class="btn gold" type="button" id="gAgain">Jogar de novo</button><button class="btn light" type="button" id="gNew">Mudar configuração</button></div></div></section>
+  <div class="t-grid">${detailCards(p)}<div class="t-card"><h2>Ranking</h2><p class="sub">Melhor pontuação de cada participante.</p>${rankHtml(8)}</div></div></div>`}
+ const ts=[...G.teams].sort((a,b)=>b.media-a.media),ps=[...G.players].sort((a,b)=>b.pts-a.pts),sel=G.players[G.sel]||ps[0];
+ const fast=[...G.players].filter(p=>p.res.acertos).sort((a,b)=>a.res.avgT-b.res.avgT)[0],combo=[...G.players].sort((a,b)=>b.maxStreak-a.maxStreak)[0],bold=[...G.players].sort((a,b)=>b.betWins-a.betWins)[0];
+ const pod=[ts[1],ts[0],ts[2]];
+ return`<div class="g-end">
+  <section class="g-podium-wrap"><span class="eyebrow">Resultado por equipes</span><h2>${esc(ts[0].nome)} venceu o Desafio da Inovação!</h2>
+   <div class="g-podium">${pod.map((t,i)=>t?`<div class="g-pod pd${[2,1,3][i]}" style="--tc:${t.cor}"><b class="nm">${esc(t.nome)}</b><span class="md">${t.media} pts</span><small>média por participante</small><div class="blk"><i>${[2,1,3][i]}º</i></div></div>`:'<div></div>').join('')}</div>
+   ${ts.length>3?`<p class="g-rest">${ts.slice(3).map((t,i)=>`${i+4}º ${esc(t.nome)} (${t.media})`).join(' · ')}</p>`:''}
+   <div class="g-act"><button class="btn gold" type="button" id="gAgain">Jogar de novo</button><button class="btn light" type="button" id="gNew">Mudar configuração</button></div></section>
+  <div class="g-awards">
+   <div><span>Craque da partida</span><b>${esc(ps[0].nome)}</b><small>${ps[0].pts} pontos</small></div>
+   <div><span>Mais rápido</span><b>${fast?esc(fast.nome):'-'}</b><small>${fast?fmt(fast.res.avgT)+' s em média':''}</small></div>
+   <div><span>Maior combo</span><b>${esc(combo.nome)}</b><small>${combo.maxStreak} acerto${combo.maxStreak===1?'':'s'} seguido${combo.maxStreak===1?'':'s'}</small></div>
+   <div><span>Mais ousado</span><b>${bold.betWins?esc(bold.nome):'-'}</b><small>${bold.betWins?bold.betWins+(bold.betWins===1?' aposta vencida':' apostas vencidas'):'ninguém arriscou'}</small></div></div>
+  <div class="t-grid">
+   <div class="t-card wide"><h2>Equipes</h2><p class="sub">Total, média por participante e índice médio de acerto.</p><div class="tbl-wrap"><table class="t"><thead><tr><th>Posição</th><th>Equipe</th><th style="text-align:right">Participantes</th><th style="text-align:right">Total</th><th style="text-align:right">Média</th><th style="text-align:right">Índice</th></tr></thead><tbody>${ts.map((t,i)=>`<tr><td>${i+1}º</td><td><b><i class="g-dot" style="background:${t.cor}"></i>${esc(t.nome)}</b></td><td class="num">${t.ids.length}</td><td class="num">${t.total}</td><td class="num"><b>${t.media}</b></td><td class="num">${t.idx}</td></tr>`).join('')}</tbody></table></div></div>
+   <div class="t-card wide"><h2>Participantes</h2><p class="sub">Clique num nome para ver o desempenho detalhado.</p><div class="tbl-wrap"><table class="t g-ptab"><thead><tr><th>#</th><th>Participante</th><th>Equipe</th><th style="text-align:right">Pontos</th><th style="text-align:right">Acertos</th><th style="text-align:right">Índice</th><th>Classificação</th><th style="text-align:right">Conquistas</th></tr></thead><tbody>${ps.map((p,i)=>`<tr data-sel="${p.id}" class="${p===sel?'on':''}"><td>${i+1}</td><td><b>${esc(p.nome)}</b></td><td><i class="g-dot" style="background:${G.teams[p.team].cor}"></i>${esc(G.teams[p.team].nome)}</td><td class="num"><b>${p.pts}</b></td><td class="num">${p.res.acertos}/${p.res.total}</td><td class="num">${p.res.idx}</td><td><span class="pill ${cls(p.res.nota)[1]}">${GTITLE(p.res.idx)}</span></td><td class="num">${p.ach.length}</td></tr>`).join('')}</tbody></table></div></div>
+   <div class="t-card wide g-detail-h"><h2>${esc(sel.nome)}</h2><p class="sub">${esc(G.teams[sel.team].nome)} · ${sel.pts} pontos · índice ${sel.res.idx} (${GTITLE(sel.res.idx)}) · nível ${sel.res.nivel+1}: ${LEVELS[sel.res.nivel]}</p></div>
+   ${detailCards(sel)}</div></div>`}
+function detailCards(p){const r=p.res,ds=DIMS.map(d=>({d,m:r.dims[d.id]})).filter(o=>o.m!=null).sort((a,b)=>b.m-a.m);
+ return`<div class="t-card"><h2>Desempenho por área</h2><p class="sub">Convertido para a escala de 1 a 5 da avaliação.</p>${radar(DIMS.map(d=>({d,m:r.dims[d.id]})))}
+  ${ds.length?`<ul class="insights" style="grid-template-columns:1fr;margin-top:10px"><li><span>Ponto mais forte</span><b>${ds[0].d.nome}</b> (${fmt(ds[0].m)})</li><li><span>Para desenvolver</span><b>${ds[ds.length-1].d.nome}</b> (${fmt(ds[ds.length-1].m)})</li></ul>`:''}</div>
+  <div class="t-card"><h2>Conquistas</h2><p class="sub">${p.ach.length} de ${ACH.length} desbloqueadas.</p><div class="g-badges">${ACH.map(([k,n,ds2])=>`<div class="g-bdg${p.ach.includes(k)?' on':''}"><i>${n[0]}</i><b>${n}</b><small>${ds2}</small></div>`).join('')}</div>
+  <p class="cap">O resultado aparece também no relatório do consultor com o mesmo nome.</p></div>`}
+function renderGame(){const el=$('#game');
+ if(G.phase==='setup')el.innerHTML=setupHtml();else if(G.phase==='turn')el.innerHTML=turnHtml();else if(G.phase==='end')el.innerHTML=endHtml();else el.innerHTML=playHtml();
+ const f=G.phase==='fb'?$('#gNext'):G.phase==='turn'?$('#gReady'):null;if(f)f.focus({preventScroll:true})}
+$('#game').addEventListener('input',e=>{const t=e.target,k=t.dataset.s;if(!k)return;
+ if(k==='solo')SET.solo=t.value;if(k==='tnome')SET.teams[+t.dataset.i].nome=t.value;if(k==='pnome')SET.teams[+t.dataset.i].p[+t.dataset.j]=t.value;
+ if(k==='timed'||k==='bet'||k==='sound')SET[k]=t.checked;setSave()});
+$('#game').addEventListener('click',e=>{const t=e.target.closest('button,tr[data-sel]');if(!t)return;
+ if(t.dataset.mode){SET.mode=t.dataset.mode;setSave();renderGame();return}
+ if(t.dataset.q){SET.q=+t.dataset.q;setSave();renderGame();return}
+ if(t.dataset.n!=null){const tm=SET.teams[+t.dataset.n];tm.n=Math.max(1,Math.min(12,tm.n+ +t.dataset.d));while(tm.p.length<tm.n)tm.p.push('');setSave();renderGame();return}
+ if(t.dataset.rm!=null){SET.teams.splice(+t.dataset.rm,1);setSave();renderGame();return}
+ if(t.id==='gAddTeam'){SET.teams.push({nome:'Equipe '+(SET.teams.length+1),n:2,p:['','']});setSave();renderGame();return}
+ if(t.id==='gStart'){const err=$('#gErr');if(SET.mode==='solo'&&!SET.solo.trim()){err.textContent='Digite o nome do participante para começar.';err.hidden=false;$('#gNome').focus();return}
+  if(SET.mode==='team'&&SET.teams.length<2){err.textContent='Crie pelo menos duas equipes.';err.hidden=false;return}newGame();return}
+ if(t.id==='gResume'){try{G=JSON.parse(localStorage.getItem(GSKEY));if(G.phase==='play'){G.phase=G.solo?'play':'turn';if(G.solo){gStartTurn();return}}renderGame()}catch(er){G={phase:'setup'};renderGame()}return}
+ if(t.id==='gDiscard'){try{localStorage.removeItem(GSKEY)}catch(er){}renderGame();return}
+ if(t.id==='gReady'){gStartTurn();return}
+ if(t.dataset.opt!=null){gAnswer({idx:+t.dataset.opt});return}
+ if(t.dataset.v!=null){gAnswer({v:t.dataset.v==='true'});return}
+ if(t.dataset.bet){G.r.bet=+t.dataset.bet;SFX.click();renderGame();return}
+ if(t.dataset.pw){const p=curP(),r=G.r,k=t.dataset.pw;if(!p.pw[k])return;p.pw[k]=0;p.used++;SFX.click();
+  if(k==='f'){const bestS=Math.max(...r.opts.map(o=>o[1]));r.hidden=shufA(r.opts.map((o,i)=>i).filter(i=>r.opts[i][1]<bestS)).sort((a,b)=>r.opts[a][1]-r.opts[b][1]).slice(0,2);r.f5050=true}
+  if(k==='t'){r.extra=(r.extra||0)+10;G.left+=10}if(k==='d')r.hint=true;renderGame();return}
+ if(t.dataset.step){const r=G.r;r.pick.push(t.dataset.step);SFX.click();if(r.pick.length===r.steps.length)gAnswer({});else renderGame();return}
+ if(t.id==='gUndo'){G.r.pick.pop();renderGame();return}
+ if(t.dataset.ml!=null){const r=G.r,a=t.dataset.ml;if(r.links[a]){delete r.links[a];r.sel=null}else r.sel=r.sel===a?null:a;SFX.click();renderGame();return}
+ if(t.dataset.mr!=null){const r=G.r,b=t.dataset.mr,owner=Object.keys(r.links).find(x=>r.links[x]===b);if(owner&&!r.sel){delete r.links[owner]}else if(r.sel){if(owner)delete r.links[owner];r.links[r.sel]=b;r.sel=null}SFX.click();renderGame();return}
+ if(t.id==='gMatchOk'){gAnswer({});return}
  if(t.id==='gNext'){gNext();return}
- if(t.id==='gQuit'){stopTimer();G={phase:'start',timed:G.timed,nome:G.nome};renderGame();return}
- if(t.id==='gAgain'){newGame(G.nome,G.timed);return}
- if(t.id==='gNew'){G={phase:'start',timed:G.timed,nome:''};renderGame()}});
+ if(t.id==='gQuit'){stopTimer();G={phase:'setup'};gPersist();renderGame();return}
+ if(t.id==='gAgain'){newGame();return}
+ if(t.id==='gNew'){G={phase:'setup'};renderGame();return}
+ if(t.dataset.sel!=null){G.sel=+t.dataset.sel;renderGame();const d=$('.g-detail-h');d&&d.scrollIntoView({behavior:'smooth',block:'start'})}});
 document.addEventListener('keydown',e=>{if($('#tab-dinamica').hidden||/input|select|textarea/i.test(e.target.tagName))return;
- if(G.phase==='play'&&G.rounds[G.i].type==='q'){const i='abcd'.indexOf(e.key.toLowerCase());const j=i<0?'1234'.indexOf(e.key):i;if(j>=0){e.preventDefault();gAnswer(j)}}
- else if(G.phase==='fb'&&e.key==='Enter'&&e.target.id!=='gNext'){e.preventDefault();gNext()}});
+ if(G.phase==='play'&&G.r){const k=e.key.toLowerCase();if(G.r.opts){const j='abcd'.indexOf(k)>=0?'abcd'.indexOf(k):'1234'.indexOf(k);if(j>=0&&j<G.r.opts.length&&!G.r.hidden.includes(j)){e.preventDefault();gAnswer({idx:j})}}
+  else if(G.r.type==='v'&&(k==='v'||k==='f')){e.preventDefault();gAnswer({v:k==='v'})}}
+ else if((G.phase==='fb'||G.phase==='turn')&&e.key==='Enter'&&e.target.tagName!=='BUTTON'){e.preventDefault();G.phase==='fb'?gNext():gStartTurn()}});
 
 /* ---------- início ---------- */
 function renderHome(){
@@ -1770,7 +2100,7 @@ function renderHome(){
  <div class="qa">
   <button type="button" data-h="equipe">${qi('team')}<b>Painel da equipe</b><small>Gráficos, ranking, evolução e comparação entre consultores.</small></button>
   <button type="button" data-h="hist">${qi('hist')}<b>Histórico</b><small>Todas as avaliações salvas, com backup e restauração.</small></button>
-  <button type="button" data-h="din"><span class="qi" style="background:#FFF3C4;color:#8A6400"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><b>Dinâmica</b><small>Desafio gamificado com XP, níveis, conquistas e ranking.</small></button>
+  <button type="button" data-h="din"><span class="qi" style="background:#FFF3C4;color:#8A6400"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></svg></span><b>Dinâmica</b><small>Jogo individual ou por equipes, com pontos, combos, apostas e ranking.</small></button>
   <button type="button" data-h="ex">${qi('ex')}<b>Relatório de exemplo</b><small>Veja como fica o resultado completo e o PDF.</small></button>
  </div>
  <div class="home-grid">
