@@ -2211,7 +2211,7 @@ document.addEventListener('keydown',e=>{if($('#tab-dinamica').hidden||/input|sel
  else if((G.phase==='fb'||G.phase==='turn')&&e.key==='Enter'&&e.target.tagName!=='BUTTON'){e.preventDefault();G.phase==='fb'?gNext():gStartTurn()}});
 
 /* ---------- banco de dados (Supabase) ---------- */
-const SUPA_URL='',SUPA_KEY='';
+const SUPA_URL='https://kcboxmvffvnwmmqgncnb.supabase.co',SUPA_KEY='sb_publishable_S2fujGGjgngte-f_jDIAkg_siwX-8Lh';
 const DB={on:false,sb:null,user:null,perfil:null,perfis:[],hist:[],game:[],team:[]};
 const CARGOS=['Gerente','Coordenador','Supervisor','Analista','Assistente'];
 const isAdmin=()=>DB.on&&!!DB.perfil&&['Gerente','Coordenador'].includes(DB.perfil.cargo);
