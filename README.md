@@ -9,7 +9,8 @@ Os dados ficam no Supabase, separados por usuário:
 - **Gerente e Coordenador** veem todos os dados e têm a aba **Administração**, onde definem o cargo de cada pessoa.
 - **Supervisor, Analista e Assistente** veem só o que eles mesmos lançaram.
 - A regra é garantida pelo próprio banco (Row Level Security), não só pela tela.
-- O acesso é por **usuário e senha** (sem e-mail). A primeira conta criada vira Gerente. As demais entram como Assistente.
+- O acesso é por **usuário e senha** (sem e-mail). A primeira conta criada vira Gerente e já entra ativa.
+- Toda conta nova fica **aguardando aprovação**: só entra depois que um gerente ou coordenador aprova e define o cargo em Administração. Também é possível bloquear e reativar o acesso.
 - Quem esquecer a senha pede ao gerente ou coordenador, que cria uma nova em Administração.
 
 ### Como configurar

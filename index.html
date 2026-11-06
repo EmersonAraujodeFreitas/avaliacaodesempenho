@@ -613,6 +613,16 @@ kbd{font:600 11.5px var(--f-mono);background:#fff;border:1px solid var(--line);b
 .ubtns{display:flex;flex-direction:column;gap:4px}
 .ubtns button{padding:4px 8px!important;font-size:11.5px!important}
 .auth-help{display:flex;flex-direction:column;gap:12px}
+.auth-wait{text-align:center;background:var(--soft);border:1px solid var(--line);border-radius:14px;padding:22px 18px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.auth-wait .aw-ic{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font:800 24px var(--f-display);background:#FFF3C4;color:#8A6400}
+.auth-wait.blk .aw-ic{background:var(--bad-soft);color:var(--bad)}
+.auth-wait b{font:800 18px var(--f-display);color:var(--ink)}
+.auth-wait p{margin:0;font-size:14.5px;color:var(--muted)}
+.st-pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:20px}
+.st-ativo{background:var(--good-soft);color:var(--good)}.st-pendente{background:#FFF3C4;color:#8A6400}.st-bloqueado{background:var(--bad-soft);color:var(--bad)}
+.req-card{border:2px solid var(--gold)!important;background:#FFFCF0!important}
+.req-act{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.side .tab .n.req{background:var(--bad);color:#fff}
 .adm-pw{display:flex;gap:6px;align-items:center;margin-top:6px}
 .adm-pw input{border:1.5px solid var(--line);border-radius:8px;padding:6px 8px;width:150px}
 .dbdot{position:absolute;right:-2px;bottom:-2px;width:11px;height:11px;border-radius:50%;border:2px solid #003158;background:#94A3B8}
@@ -821,7 +831,7 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
     <div class="side-lbl">Análises</div>
     <button class="tab" role="tab" data-tab="equipe" id="t_equipe"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg><span>Painel da equipe</span></button>
     <button class="tab" role="tab" data-tab="hist" id="b_hist"><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5M12 7v5l3 2"/></svg><span>Histórico</span></button>
-    <button class="tab" role="tab" data-tab="admin" id="t_admin" hidden><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Administração</span></button>
+    <button class="tab" role="tab" data-tab="admin" id="t_admin" hidden><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Administração</span><span class="n req" id="n_admin" hidden></span></button>
   </nav>
   <div class="side-foot">
     <div class="userbox" id="userBox" hidden><span class="uav"><span id="uAv"></span><i class="dbdot" id="dbDot"></i></span><span class="ut"><b id="uName"></b><small id="uRole"></small></span><span class="ubtns"><button type="button" id="b_senha" title="Trocar a minha senha">Senha</button><button type="button" id="b_sair">Sair</button></span></div>
@@ -985,11 +995,16 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
       <div class="field"><label for="cdSenha">Senha (mínimo 6 caracteres)</label><input id="cdSenha" name="senha" type="password" autocomplete="new-password" required></div>
       <div class="field"><label for="cdSenha2">Repita a senha</label><input id="cdSenha2" name="senha2" type="password" autocomplete="new-password" required></div>
       <button class="btn primary big" type="submit">Criar conta</button>
-      <p class="auth-note">Toda conta nova entra como assistente. O gerente ou o coordenador ajusta o cargo depois.</p>
+      <p class="auth-note">Depois do cadastro, o gerente ou o coordenador precisa aprovar o seu acesso.</p>
     </form>
     <div data-am="esqueci" hidden class="auth-help">
       <p class="auth-note">A senha é criada pela própria pessoa no cadastro. Se você esqueceu, peça ao gerente ou ao coordenador para criar uma nova senha para você na aba <b>Administração</b>.</p>
       <button class="auth-link" type="button" data-go-auth="login">Voltar para o login</button>
+    </div>
+    <div data-am="espera" hidden class="auth-help">
+      <div class="auth-wait" id="waitBox"><span class="aw-ic" id="waitIc"></span><b id="waitTitle"></b><p id="waitTxt"></p></div>
+      <button class="btn primary big" type="button" id="waitCheck">Verificar de novo</button>
+      <button class="auth-link" type="button" id="waitOut">Sair</button>
     </div>
     <form data-am="nova" novalidate hidden>
       <p class="auth-note">Digite a sua nova senha.</p>
@@ -2222,7 +2237,8 @@ document.addEventListener('keydown',e=>{if($('#tab-dinamica').hidden||/input|sel
 const SUPA_URL='https://kcboxmvffvnwmmqgncnb.supabase.co',SUPA_KEY='sb_publishable_S2fujGGjgngte-f_jDIAkg_siwX-8Lh';
 const DB={on:false,sb:null,user:null,perfil:null,perfis:[],hist:[],game:[],team:[]};
 const CARGOS=['Gerente','Coordenador','Supervisor','Analista','Assistente'];
-const isAdmin=()=>DB.on&&!!DB.perfil&&['Gerente','Coordenador'].includes(DB.perfil.cargo);
+const isAdmin=()=>DB.on&&!!DB.perfil&&(DB.perfil.status||'ativo')==='ativo'&&['Gerente','Coordenador'].includes(DB.perfil.cargo);
+const pendentes=()=>DB.perfis.filter(p=>p.status==='pendente');
 const noOwn=r=>{const o={...r};delete o.owner;delete o.ownerNome;return o};
 const pName=id=>(DB.perfis.find(p=>p.id===id)||{}).nome||'';
 function setSync(st){const d=document.getElementById('dbDot');if(d){d.className='dbdot '+st;d.title=st==='ok'?'Dados salvos no banco':st==='err'?'Falha ao salvar no banco':'Salvando…'}}
@@ -2234,9 +2250,11 @@ async function syncTable(table,old,neu,map){
   if(del.length){const{error}=await DB.sb.from(table).delete().in('id',del);if(error)throw error}setSync('ok')}
  catch(e){setSync('err');toast('Não foi possível salvar no banco: '+(e.message||e),'err')}}
 async function dbLoad(){const sb=DB.sb;
- const res=await Promise.all(['perfis','avaliacoes','dinamica_participantes','dinamica_equipes'].map(t=>sb.from(t).select('*')));
- res.forEach(r=>{if(r.error)throw r.error});const[pf,av,gp,ge]=res.map(r=>r.data||[]);
- DB.perfis=pf;DB.perfil=pf.find(p=>p.id===DB.user.id)||{id:DB.user.id,nome:'',email:DB.user.email,cargo:'Assistente'};
+ const r0=await sb.from('perfis').select('*');if(r0.error)throw r0.error;const pf=r0.data||[];
+ DB.perfis=pf;DB.perfil=pf.find(p=>p.id===DB.user.id)||{id:DB.user.id,nome:'',email:DB.user.email,cargo:'Assistente',status:'pendente'};
+ if((DB.perfil.status||'ativo')!=='ativo'){DB.hist=[];DB.game=[];DB.team=[];return}
+ const res=await Promise.all(['avaliacoes','dinamica_participantes','dinamica_equipes'].map(t=>sb.from(t).select('*')));
+ res.forEach(r=>{if(r.error)throw r.error});const[av,gp,ge]=res.map(r=>r.data||[]);
  const wrap=x=>({...x.registro,id:x.id,owner:x.owner,ownerNome:pName(x.owner)});
  DB.hist=av.map(wrap);DB.game=gp.map(wrap);DB.team=ge.map(wrap)}
 function histLoad(){if(DB.on)return DB.hist.map(r=>({...r}));try{return JSON.parse(localStorage.getItem(HK)||'[]')}catch(e){return[]}}
@@ -2259,17 +2277,26 @@ function userEmail(u){const k=userKey(u);if(!/^[a-z0-9._-]{3,30}$/.test(k))throw
 const authErr=e=>{const m=(e&&e.message)||String(e);if(/rate limit/i.test(m))return'O Supabase tentou enviar um e-mail de confirmação e bloqueou. Desligue “Confirm email” em Authentication → Sign In / Providers → Email e tente de novo.';if(m==='USR')return'O usuário deve ter de 3 a 30 caracteres, usando letras, números, ponto, traço ou sublinhado.';if(/email.*(invalid|valid)|invalid.*email/i.test(m))return'O banco recusou este nome de usuário. Tente outro, só com letras e números.';if(/at least 6/i.test(m))return'A senha precisa ter pelo menos 6 caracteres.';if(/fetch|network/i.test(m))return'Sem conexão com o banco de dados. Verifique a internet.';return AUTHMSG[m]||m};
 function showAuth(mode){const a=$('#auth');a.hidden=false;document.querySelector('.app').setAttribute('aria-hidden','true');
  a.querySelectorAll('[data-am]').forEach(f=>f.hidden=f.dataset.am!==mode);a.querySelectorAll('[data-at]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.at===mode));
- $('#authTabs').hidden=mode==='nova'||mode==='esqueci';$('#nvVoltar').hidden=!DB.user;$('#authMsg').hidden=true;const f=a.querySelector(`[data-am="${mode}"] input`);f&&f.focus()}
+ $('#authTabs').hidden=mode==='nova'||mode==='esqueci'||mode==='espera';$('#nvVoltar').hidden=!DB.user;$('#authMsg').hidden=true;const f=a.querySelector(`[data-am="${mode}"] input`);f&&f.focus()}
 function authMsg(t,ok){const m=$('#authMsg');m.textContent=t;m.className='auth-msg'+(ok?' ok':'');m.hidden=false}
 async function entrar(user){
  DB.user=user;KEY=KEY0+'-'+user.id;GSKEY=GSKEY0+'-'+user.id;state=norm(load());
  $('#auth').hidden=true;document.querySelector('.app').removeAttribute('aria-hidden');$('#loading').hidden=false;
- try{await dbLoad();setSync('ok')}catch(e){setSync('err');toast('Erro ao carregar os dados: '+authErr(e),'err')}
- $('#loading').hidden=true;G={phase:'setup'};fill();renderUser();show('home');
- toast(`Olá, ${(DB.perfil.nome||'').split(' ')[0]||'bem-vindo'}! Você entrou como ${DB.perfil.cargo}.`,'ok')}
+ try{await dbLoad();setSync('ok')}catch(e){setSync('err');$('#loading').hidden=true;showAuth('login');authMsg('Erro ao carregar os dados: '+authErr(e));return}
+ $('#loading').hidden=true;
+ const stt=DB.perfil.status||'ativo';
+ if(stt!=='ativo'){const blk=stt==='bloqueado';$('#waitBox').classList.toggle('blk',blk);$('#waitIc').textContent=blk?'×':'…';
+  $('#waitTitle').textContent=blk?'Acesso não liberado':'Cadastro aguardando aprovação';
+  $('#waitTxt').textContent=blk?'O seu acesso foi recusado ou bloqueado. Fale com o gerente ou o coordenador.':`Olá, ${(DB.perfil.nome||'').split(' ')[0]}! O seu cadastro foi enviado. Assim que o gerente ou o coordenador aprovar, você poderá entrar.`;
+  showAuth('espera');return}
+ G={phase:'setup'};fill();renderUser();show('home');
+ toast(`Olá, ${(DB.perfil.nome||'').split(' ')[0]||'bem-vindo'}! Você entrou como ${DB.perfil.cargo}.`,'ok');
+ if(isAdmin()&&pendentes().length)setTimeout(()=>toast(`${pendentes().length} cadastro(s) aguardando a sua aprovação em Administração.`),600)}
+$('#waitCheck').addEventListener('click',async()=>{const b=$('#waitCheck');b.disabled=true;b.textContent='Verificando…';try{await entrar(DB.user)}finally{b.disabled=false;b.textContent='Verificar de novo'}});
+$('#waitOut').addEventListener('click',()=>sair());
 function renderUser(){const u=$('#userBox');if(!DB.on){u.hidden=true;$('#t_admin').hidden=true;return}
  u.hidden=false;$('#uName').textContent=DB.perfil.nome||DB.perfil.usuario||'';$('#uRole').textContent=DB.perfil.cargo+(isAdmin()?' · vê todos os dados':' · vê os próprios dados');$('#uAv').textContent=ini(DB.perfil.nome||DB.perfil.usuario||'?');
- $('#t_admin').hidden=!isAdmin()}
+ $('#t_admin').hidden=!isAdmin();const n=$('#n_admin'),k=isAdmin()?pendentes().length:0;n.hidden=!k;n.textContent=k}
 async function sair(){try{await DB.sb.auth.signOut()}catch(e){}stopTimer&&stopTimer();DB.user=null;DB.perfil=null;DB.perfis=[];DB.hist=[];DB.game=[];DB.team=[];showAuth('login')}
 async function boot(){
  if(SUPA_URL&&SUPA_KEY&&!framed&&!window.supabase){$('#loading').hidden=false;await new Promise(res=>{const sc=document.createElement('script');sc.src='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js';sc.onload=res;sc.onerror=res;document.head.appendChild(sc)});$('#loading').hidden=true}
@@ -2302,7 +2329,7 @@ function renderAdmin(){
  const tl=DB.team.slice().sort((a,b)=>(b.data||'').localeCompare(a.data||''));
  $('#admin').innerHTML=`
  <div class="t-kpis">
-  <div class="t-kpi"><span>Usuários</span><b>${P.length}</b><small>${P.filter(p=>['Gerente','Coordenador'].includes(p.cargo)).length} com acesso total</small></div>
+  <div class="t-kpi${pendentes().length?' warn':''}"><span>Usuários</span><b>${P.filter(p=>(p.status||'ativo')==='ativo').length}</b><small>${pendentes().length?pendentes().length+' aguardando aprovação':'ativos'}</small></div>
   <div class="t-kpi"><span>Avaliações</span><b>${H.length}</b><small>lançadas no banco</small></div>
   <div class="t-kpi"><span>Consultores</span><b>${consult}</b><small>avaliados</small></div>
   <div class="t-kpi"><span>Média geral</span><b>${H.length?fmt(mean(H.map(r=>r.nota).filter(v=>v!=null))):'-'}</b><small>de todas as avaliações</small></div>
@@ -2310,11 +2337,16 @@ function renderAdmin(){
   <div class="t-kpi"><span>Participantes</span><b>${new Set(DB.game.map(r=>nkey(r.nome))).size}</b><small>na dinâmica</small></div>
  </div>
  <div class="t-grid">
-  <div class="t-card wide"><h2>Usuários e cargos</h2><p class="sub">Gerente e coordenador veem todos os dados. Supervisor, analista e assistente veem só o que eles mesmos lançaram. Quem cria a conta entra como assistente. Use “Redefinir senha” quando alguém esquecer a própria senha.</p>
-   <div class="tbl-wrap"><table class="t"><thead><tr><th>Nome</th><th>Usuário</th><th>Cargo</th><th>Cadastro</th><th style="text-align:right">Avaliações</th><th>Última</th><th style="text-align:right">Média lançada</th></tr></thead><tbody>
-   ${P.slice().sort((a,b)=>CARGOS.indexOf(a.cargo)-CARGOS.indexOf(b.cargo)||(a.nome||'').localeCompare(b.nome||'')).map(p=>{const l=by(p.id),u=l.slice().sort((a,b)=>(b.data||'').localeCompare(a.data||''))[0];return`<tr>
+  ${(()=>{const pd=pendentes();return pd.length?`<div class="t-card wide req-card"><h2>Solicitações de acesso (${pd.length})</h2><p class="sub">Estas pessoas criaram conta e estão esperando aprovação. Escolha o cargo e aprove, ou recuse.</p>
+   <div class="tbl-wrap"><table class="t"><thead><tr><th>Nome</th><th>Usuário</th><th>Pedido em</th><th>Cargo</th><th></th></tr></thead><tbody>${pd.map(p=>`<tr><td><b>${esc(p.nome||'-')}</b></td><td>${esc(uLogin(p))}</td><td>${p.criado_em?new Date(p.criado_em).toLocaleDateString('pt-BR')+' '+new Date(p.criado_em).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'}):'-'}</td>
+   <td><select class="adm-cargo" id="rq_${p.id}" aria-label="Cargo de ${esc(p.nome)}">${CARGOS.map(c=>`<option${c==='Assistente'?' selected':''}>${c}</option>`).join('')}</select></td>
+   <td><div class="req-act"><button class="btn primary" type="button" data-aprova="${p.id}">Aprovar</button><button class="btn danger" type="button" data-recusa="${p.id}">Recusar</button></div></td></tr>`).join('')}</tbody></table></div></div>`:''})()}
+  <div class="t-card wide"><h2>Usuários e cargos</h2><p class="sub">Gerente e coordenador veem todos os dados. Supervisor, analista e assistente veem só o que eles mesmos lançaram. Pessoas bloqueadas não conseguem entrar. Use “Redefinir senha” quando alguém esquecer a própria senha.</p>
+   <div class="tbl-wrap"><table class="t"><thead><tr><th>Nome</th><th>Usuário</th><th>Cargo</th><th>Acesso</th><th>Cadastro</th><th style="text-align:right">Avaliações</th><th>Última</th><th style="text-align:right">Média lançada</th></tr></thead><tbody>
+   ${P.filter(p=>p.status!=='pendente').sort((a,b)=>CARGOS.indexOf(a.cargo)-CARGOS.indexOf(b.cargo)||(a.nome||'').localeCompare(b.nome||'')).map(p=>{const l=by(p.id),u=l.slice().sort((a,b)=>(b.data||'').localeCompare(a.data||''))[0];return`<tr>
     <td><b>${esc(p.nome||'-')}</b>${p.id===DB.user.id?' <span class="pill p4">você</span>':''}</td><td>${esc(uLogin(p)||'-')}${p.id!==DB.user.id?(admPw===p.id?`<div class="adm-pw"><input type="password" id="admPwIn" placeholder="Nova senha" autocomplete="new-password" aria-label="Nova senha de ${esc(p.nome)}"><button class="btn primary" type="button" data-pwsave="${p.id}">Salvar</button><button class="btn" type="button" data-pwx>Cancelar</button></div>`:` <button class="auth-link" type="button" data-pw="${p.id}">Redefinir senha</button>`):''}</td>
     <td><select class="adm-cargo" data-uid="${p.id}"${p.id===DB.user.id?' disabled title="Você não pode alterar o próprio cargo"':''} aria-label="Cargo de ${esc(p.nome||uLogin(p))}">${CARGOS.map(c=>`<option${c===p.cargo?' selected':''}>${c}</option>`).join('')}</select></td>
+    <td><span class="st-pill st-${p.status||'ativo'}">${(p.status||'ativo')==='ativo'?'Ativo':'Bloqueado'}</span>${p.id!==DB.user.id?` <button class="auth-link" type="button" data-st="${p.id}" data-v="${(p.status||'ativo')==='ativo'?'bloqueado':'ativo'}">${(p.status||'ativo')==='ativo'?'Bloquear':'Reativar'}</button>`:''}</td>
     <td>${p.criado_em?new Date(p.criado_em).toLocaleDateString('pt-BR'):'-'}</td><td class="num">${l.length}</td><td>${u?dataBR(u.data):'-'}</td><td class="num">${l.length?fmt(mean(l.map(r=>r.nota).filter(v=>v!=null))):'-'}</td></tr>`}).join('')}
    </tbody></table></div></div>
   <div class="t-card wide"><h2>Todas as avaliações</h2><p class="sub">Tudo o que foi lançado por todos os usuários.</p>
@@ -2330,11 +2362,16 @@ function renderAdmin(){
 }
 $('#admin').addEventListener('change',async e=>{const t=e.target;
  if(t.id==='admUser'){admUser=t.value;renderAdmin();return}
- if(t.classList.contains('adm-cargo')){const id=t.dataset.uid,c=t.value,p=DB.perfis.find(x=>x.id===id),old=p.cargo;t.disabled=true;
+ if(t.classList.contains('adm-cargo')&&t.dataset.uid){const id=t.dataset.uid,c=t.value,p=DB.perfis.find(x=>x.id===id),old=p.cargo;t.disabled=true;
   const{error}=await DB.sb.from('perfis').update({cargo:c}).eq('id',id);
   if(error){t.value=old;toast('Não foi possível alterar o cargo: '+error.message,'err')}else{p.cargo=c;toast(`${p.nome||uLogin(p)} agora é ${c}.`,'ok')}renderAdmin()}});
 $('#admin').addEventListener('input',e=>{if(e.target.id==='admBusca'){admBusca=e.target.value;const pos=e.target.selectionStart;renderAdmin();const i=$('#admBusca');i.focus();i.setSelectionRange(pos,pos)}});
-$('#admin').addEventListener('click',async e=>{const pw=e.target.closest('[data-pw]'),ps=e.target.closest('[data-pwsave]');
+async function admUpd(id,v,msg){const p=DB.perfis.find(x=>x.id===id);const{error}=await DB.sb.from('perfis').update(v).eq('id',id);
+ if(error){toast('Não foi possível salvar: '+error.message,'err');return}Object.assign(p,v);renderUser();renderAdmin();toast(msg(p),'ok')}
+$('#admin').addEventListener('click',async e=>{const pw=e.target.closest('[data-pw]'),ps=e.target.closest('[data-pwsave]'),ap=e.target.closest('[data-aprova]'),rc=e.target.closest('[data-recusa]'),st=e.target.closest('[data-st]');
+ if(ap){const id=ap.dataset.aprova,c=$('#rq_'+id).value;ap.disabled=true;await admUpd(id,{status:'ativo',cargo:c},p=>`${p.nome||uLogin(p)} foi aprovado como ${c}.`);return}
+ if(rc){rc.disabled=true;await admUpd(rc.dataset.recusa,{status:'bloqueado'},p=>`O cadastro de ${p.nome||uLogin(p)} foi recusado.`);return}
+ if(st){st.disabled=true;await admUpd(st.dataset.st,{status:st.dataset.v},p=>st.dataset.v==='ativo'?`${p.nome||uLogin(p)} pode entrar de novo.`:`${p.nome||uLogin(p)} foi bloqueado.`);return}
  if(pw){admPw=pw.dataset.pw;renderAdmin();const i=$('#admPwIn');i&&i.focus();return}
  if(e.target.closest('[data-pwx]')){admPw=null;renderAdmin();return}
  if(ps){const nova=$('#admPwIn').value,p=DB.perfis.find(x=>x.id===ps.dataset.pwsave);if(nova.length<6){toast('A senha precisa ter pelo menos 6 caracteres.','err');return}ps.disabled=true;

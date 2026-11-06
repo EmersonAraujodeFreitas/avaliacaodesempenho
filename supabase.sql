@@ -18,6 +18,18 @@ create table if not exists public.perfis (
 alter table public.perfis add column if not exists usuario text;
 create unique index if not exists perfis_usuario_idx on public.perfis (lower(usuario));
 
+-- Aprovação de cadastro (versão 3): conta nova fica pendente até o gerente ou coordenador aprovar.
+-- Contas que já existiam continuam ativas.
+alter table public.perfis add column if not exists status text;
+update public.perfis set status = 'ativo' where status is null;
+alter table public.perfis alter column status set default 'pendente';
+alter table public.perfis alter column status set not null;
+do $$ begin
+  if not exists (select 1 from pg_constraint where conname = 'perfis_status_ck') then
+    alter table public.perfis add constraint perfis_status_ck check (status in ('pendente','ativo','bloqueado'));
+  end if;
+end $$;
+
 -- 2) Avaliações de desempenho
 create table if not exists public.avaliacoes (
   id text primary key,
@@ -57,19 +69,26 @@ create index if not exists dine_owner_idx on public.dinamica_equipes(owner);
 create or replace function public.is_admin() returns boolean
 language sql stable security definer set search_path = public as $$
   select exists (select 1 from public.perfis
-                 where id = auth.uid() and cargo in ('Gerente','Coordenador'));
+                 where id = auth.uid() and status = 'ativo' and cargo in ('Gerente','Coordenador'));
+$$;
+
+-- Usuário aprovado (pode ver e lançar os próprios dados)
+create or replace function public.ativo() returns boolean
+language sql stable security definer set search_path = public as $$
+  select exists (select 1 from public.perfis where id = auth.uid() and status = 'ativo');
 $$;
 
 -- Toda conta nova ganha um perfil. A primeira conta criada vira Gerente.
 create or replace function public.novo_usuario() returns trigger
 language plpgsql security definer set search_path = public as $$
 begin
-  insert into public.perfis (id, nome, usuario, email, cargo)
+  insert into public.perfis (id, nome, usuario, email, cargo, status)
   values (new.id,
           coalesce(new.raw_user_meta_data->>'nome', ''),
           coalesce(new.raw_user_meta_data->>'usuario', split_part(new.email, '@', 1)),
           new.email,
-          case when exists (select 1 from public.perfis) then 'Assistente' else 'Gerente' end)
+          case when exists (select 1 from public.perfis) then 'Assistente' else 'Gerente' end,
+          case when exists (select 1 from public.perfis) then 'pendente' else 'ativo' end)
   on conflict (id) do nothing;
   return new;
 end $$;
@@ -81,12 +100,12 @@ create trigger ao_criar_usuario after insert on auth.users
 create or replace function public.protege_cargo() returns trigger
 language plpgsql security definer set search_path = public as $$
 begin
-  if new.cargo is distinct from old.cargo then
+  if new.cargo is distinct from old.cargo or new.status is distinct from old.status then
     if not public.is_admin() then
-      raise exception 'Somente gerente ou coordenador pode alterar cargos';
+      raise exception 'Somente gerente ou coordenador pode alterar cargo ou acesso';
     end if;
     if new.id = auth.uid() then
-      raise exception 'Você não pode alterar o próprio cargo';
+      raise exception 'Você não pode alterar o próprio cargo ou acesso';
     end if;
   end if;
   new.id := old.id;
@@ -115,13 +134,13 @@ declare t text;
 begin
   foreach t in array array['avaliacoes','dinamica_participantes','dinamica_equipes'] loop
     execute format('drop policy if exists %1$s_ler on public.%1$s', t);
-    execute format('create policy %1$s_ler on public.%1$s for select to authenticated using (owner = auth.uid() or public.is_admin())', t);
+    execute format('create policy %1$s_ler on public.%1$s for select to authenticated using ((public.ativo() and owner = auth.uid()) or public.is_admin())', t);
     execute format('drop policy if exists %1$s_criar on public.%1$s', t);
-    execute format('create policy %1$s_criar on public.%1$s for insert to authenticated with check (owner = auth.uid())', t);
+    execute format('create policy %1$s_criar on public.%1$s for insert to authenticated with check (public.ativo() and owner = auth.uid())', t);
     execute format('drop policy if exists %1$s_editar on public.%1$s', t);
-    execute format('create policy %1$s_editar on public.%1$s for update to authenticated using (owner = auth.uid() or public.is_admin()) with check (owner = auth.uid() or public.is_admin())', t);
+    execute format('create policy %1$s_editar on public.%1$s for update to authenticated using ((public.ativo() and owner = auth.uid()) or public.is_admin()) with check ((public.ativo() and owner = auth.uid()) or public.is_admin())', t);
     execute format('drop policy if exists %1$s_excluir on public.%1$s', t);
-    execute format('create policy %1$s_excluir on public.%1$s for delete to authenticated using (owner = auth.uid() or public.is_admin())', t);
+    execute format('create policy %1$s_excluir on public.%1$s for delete to authenticated using ((public.ativo() and owner = auth.uid()) or public.is_admin())', t);
   end loop;
 end $$;
 
