@@ -620,6 +620,16 @@ kbd{font:600 11.5px var(--f-mono);background:#fff;border:1px solid var(--line);b
 .auth-wait p{margin:0;font-size:14.5px;color:var(--muted)}
 .st-pill{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 9px;border-radius:20px}
 .st-ativo{background:var(--good-soft);color:var(--good)}.st-pendente{background:#FFF3C4;color:#8A6400}.st-bloqueado{background:var(--bad-soft);color:var(--bad)}
+.lists{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:18px}
+.lst{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:14px}
+.lst h3{font-size:15px;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chip-x{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid var(--line);border-radius:20px;padding:5px 6px 5px 12px;font-weight:600;font-size:14px}
+.chip-x button{width:22px;height:22px;border-radius:50%;border:0;background:var(--soft);color:var(--muted);cursor:pointer;font-size:15px;line-height:1}
+.chip-x button:hover:not([disabled]){background:var(--bad);color:#fff}
+.chip-x button[disabled]{opacity:.35;cursor:not-allowed}
+.lst-add{display:flex;gap:8px}
+.lst-add input{flex:1;min-width:0;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff}
 .req-card{border:2px solid var(--gold)!important;background:#FFFCF0!important}
 .req-act{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
 .side .tab .n.req{background:var(--bad);color:#fff}
@@ -867,8 +877,8 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
     <div class="card">
       <div class="grid">
         <div class="field"><label for="f_nome">Consultor avaliado *</label><input id="f_nome" data-k="info.nome" data-req="Informe o nome do consultor avaliado"></div>
-        <div class="field"><label for="f_cargo">Cargo / função *</label><input id="f_cargo" data-k="info.cargo" data-req="Informe o cargo"></div>
-        <div class="field"><label for="f_area">Área / setor</label><input id="f_area" data-k="info.area"></div>
+        <div class="field"><label for="f_cargo">Cargo / função *</label><select id="f_cargo" data-k="info.cargo" data-req="Informe o cargo"></select></div>
+        <div class="field"><label for="f_area">Área / setor</label><select id="f_area" data-k="info.area"></select></div>
         <div class="field"><label for="f_tempo">Tempo na função</label><input id="f_tempo" data-k="info.tempo"></div>
         <div class="field"><label for="f_avaliador">Avaliador *</label><input id="f_avaliador" data-k="info.avaliador" data-req="Informe o avaliador"></div>
         <div class="field"><label for="f_cargoav">Cargo do avaliador</label>
@@ -1222,7 +1232,7 @@ const KEY0='avaliacao-consultor-v2';let KEY=KEY0;
 function blank(){return{id:'av'+Date.now()+Math.random().toString(36).slice(2,6),info:{nome:'',cargo:'',area:'Inovação',tempo:'',avaliador:'',cargoAv:'Gerente',periodo:'',data:new Date().toISOString().slice(0,10),tipo:'Gestor avalia o consultor'},notas:{},disc:{},obs:{fortes:'',melhorar:'',metas:'',avaliado:'',parecer:'Manter na função com plano de desenvolvimento'}}}
 function exemplo(){
  const s=blank();s.id='exemplo';
- s.info={nome:'Mariana Costa (exemplo)',cargo:'Consultora de Inovação Pleno',area:'Inovação',tempo:'2 anos e 4 meses',avaliador:'Ricardo Almeida',cargoAv:'Gerente',periodo:'Janeiro a setembro de 2026',data:'2026-10-13',tipo:'Gestor avalia o consultor'};
+ s.info={nome:'Mariana Costa (exemplo)',cargo:'Consultor',area:'Inovação',tempo:'2 anos e 4 meses',avaliador:'Ricardo Almeida',cargoAv:'Gerente',periodo:'Janeiro a setembro de 2026',data:'2026-10-13',tipo:'Gestor avalia o consultor'};
  Object.assign(s.notas,{q1:4,q2:5,q3:5,q4:4,q5:4,q6:3,n1:3,n2:2,n3:3,n4:3,n5:2,n6:3,c1:4,c2:4,c3:3,c4:4,r1:4,r2:5,r3:4,r4:4,r5:4,m1:3,m2:4,m3:2,m4:3,m5:3,l1:3,l2:2,l3:4,l4:3,l5:4,e1:5,e2:5,e3:4,e4:5});
  const mais=['C','C','D','C','D','C','D','C','D','C','C','D'],menos=['I','I','I','I','I','I','I','I','S','S','S','S'];
  DISC_G.forEach((g,i)=>s.disc['g'+i]={mais:mais[i],menos:menos[i]});
@@ -1289,7 +1299,14 @@ function syncDisc(){
   g.forEach(([w,f])=>{const m=$('#dm'+i+f),l=$('#dl'+i+f);m.checked=a.mais===f;l.checked=a.menos===f;m.disabled=a.menos===f;l.disabled=a.mais===f});
   const ok=a.mais&&a.menos;$('#dg'+i).classList.toggle('done',!!ok);$('#dgs'+i).textContent=ok?'completo':''});
 }
+const LISTAS0={cargos:['Gerente','Coordenador','Analista','Supervisor','Assistente','Consultor'],areas:['CRM','Planejamento','Qualidade','Inovação','Treinamento']};
+const LKEY='avaliacao-listas';
+let LISTAS=(()=>{try{const v=JSON.parse(localStorage.getItem(LKEY)||'null');if(v&&v.cargos&&v.areas)return v}catch(e){}return JSON.parse(JSON.stringify(LISTAS0))})();
+function renderListas(){[['f_cargo','cargos','cargo','Selecione o cargo'],['f_area','areas','area','Selecione a área']].forEach(([id,k,f,ph])=>{const el=document.getElementById(id);if(!el)return;
+ const cur=state.info[f]||'',ops=[...LISTAS[k]];
+ el.innerHTML=`<option value="">${ph}</option>`+ops.map(o=>`<option>${esc(o)}</option>`).join('')+(cur&&!ops.includes(cur)?`<option>${esc(cur)}</option>`:'');})}
 function fill(){
+ renderListas();
  document.querySelectorAll('[data-k]').forEach(el=>{const[a,b]=el.dataset.k.split('.');el.value=state[a][b]??''});
  document.querySelectorAll('#compForm input[type=radio]').forEach(r=>r.checked=state.notas[r.name]===+r.value);
  syncDisc();progress();
@@ -2256,7 +2273,8 @@ async function dbLoad(){const sb=DB.sb;
  const res=await Promise.all(['avaliacoes','dinamica_participantes','dinamica_equipes'].map(t=>sb.from(t).select('*')));
  res.forEach(r=>{if(r.error)throw r.error});const[av,gp,ge]=res.map(r=>r.data||[]);
  const wrap=x=>({...x.registro,id:x.id,owner:x.owner,ownerNome:pName(x.owner)});
- DB.hist=av.map(wrap);DB.game=gp.map(wrap);DB.team=ge.map(wrap)}
+ DB.hist=av.map(wrap);DB.game=gp.map(wrap);DB.team=ge.map(wrap);
+ try{const c=await sb.from('configuracoes').select('*');const row=(c.data||[]).find(x=>x.chave==='listas');if(!c.error&&row&&row.valor&&row.valor.cargos)LISTAS=row.valor}catch(e){}}
 function histLoad(){if(DB.on)return DB.hist.map(r=>({...r}));try{return JSON.parse(localStorage.getItem(HK)||'[]')}catch(e){return[]}}
 function histSave(l){if(DB.on){const old=DB.hist;DB.hist=l.map(r=>({...r,owner:r.owner||DB.user.id,ownerNome:r.ownerNome||pName(r.owner||DB.user.id)}));
   syncTable('avaliacoes',old,DB.hist,r=>({id:r.id,consultor:r.nome||'',data:r.data||'',nota:r.nota??null,registro:noOwn(r)}));return true}
@@ -2349,6 +2367,9 @@ function renderAdmin(){
     <td><span class="st-pill st-${p.status||'ativo'}">${(p.status||'ativo')==='ativo'?'Ativo':'Bloqueado'}</span>${p.id!==DB.user.id?` <button class="auth-link" type="button" data-st="${p.id}" data-v="${(p.status||'ativo')==='ativo'?'bloqueado':'ativo'}">${(p.status||'ativo')==='ativo'?'Bloquear':'Reativar'}</button>`:''}</td>
     <td>${p.criado_em?new Date(p.criado_em).toLocaleDateString('pt-BR'):'-'}</td><td class="num">${l.length}</td><td>${u?dataBR(u.data):'-'}</td><td class="num">${l.length?fmt(mean(l.map(r=>r.nota).filter(v=>v!=null))):'-'}</td></tr>`}).join('')}
    </tbody></table></div></div>
+  <div class="t-card wide"><h2>Listas do formulário</h2><p class="sub">Opções que aparecem em “Cargo / função” e “Área / setor” na identificação da avaliação. As mudanças valem para todos os usuários. Avaliações antigas mantêm o valor que já tinham.</p>
+   <div class="lists">${[['cargos','Cargo / função'],['areas','Área / setor']].map(([k,l])=>`<div class="lst"><h3>${l}</h3><div class="chips">${LISTAS[k].map((o,i)=>`<span class="chip-x">${esc(o)}<button type="button" data-lrm="${k}" data-i="${i}" aria-label="Remover ${esc(o)}"${LISTAS[k].length<2?' disabled':''}>×</button></span>`).join('')}</div>
+    <div class="lst-add"><input id="ladd_${k}" placeholder="Nova opção" aria-label="Nova opção de ${l}" maxlength="60"><button class="btn primary" type="button" data-ladd="${k}">Adicionar</button></div></div>`).join('')}</div></div>
   <div class="t-card wide"><h2>Todas as avaliações</h2><p class="sub">Tudo o que foi lançado por todos os usuários.</p>
    <div class="adm-filt"><div class="field"><label for="admUser">Lançado por</label><select id="admUser"><option value="Todos">Todos os usuários</option>${P.map(p=>`<option value="${p.id}"${p.id===admUser?' selected':''}>${esc(p.nome||uLogin(p))}</option>`).join('')}</select></div>
     <div class="field"><label for="admBusca">Buscar consultor ou avaliador</label><input id="admBusca" value="${esc(admBusca)}" placeholder="Digite um nome"></div><span class="adm-count">${lista.length} avaliação(ões)</span></div>
@@ -2368,7 +2389,14 @@ $('#admin').addEventListener('change',async e=>{const t=e.target;
 $('#admin').addEventListener('input',e=>{if(e.target.id==='admBusca'){admBusca=e.target.value;const pos=e.target.selectionStart;renderAdmin();const i=$('#admBusca');i.focus();i.setSelectionRange(pos,pos)}});
 async function admUpd(id,v,msg){const p=DB.perfis.find(x=>x.id===id);const{error}=await DB.sb.from('perfis').update(v).eq('id',id);
  if(error){toast('Não foi possível salvar: '+error.message,'err');return}Object.assign(p,v);renderUser();renderAdmin();toast(msg(p),'ok')}
-$('#admin').addEventListener('click',async e=>{const pw=e.target.closest('[data-pw]'),ps=e.target.closest('[data-pwsave]'),ap=e.target.closest('[data-aprova]'),rc=e.target.closest('[data-recusa]'),st=e.target.closest('[data-st]');
+async function salvarListas(msg){try{localStorage.setItem(LKEY,JSON.stringify(LISTAS))}catch(e){}
+ if(DB.on){const{error}=await DB.sb.from('configuracoes').upsert({chave:'listas',valor:LISTAS});if(error){toast('Não foi possível salvar a lista: '+error.message,'err');return}}
+ renderListas();fill();renderAdmin();toast(msg,'ok')}
+$('#admin').addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.id&&e.target.id.startsWith('ladd_')){e.preventDefault();document.querySelector(`[data-ladd="${e.target.id.slice(5)}"]`).click()}});
+$('#admin').addEventListener('click',async e=>{const la=e.target.closest('[data-ladd]'),lr=e.target.closest('[data-lrm]');
+ if(la){const k=la.dataset.ladd,v=$('#ladd_'+k).value.trim();if(!v){$('#ladd_'+k).focus();return}if(LISTAS[k].some(x=>nkey(x)===nkey(v))){toast('Essa opção já existe.','err');return}
+  LISTAS[k]=[...LISTAS[k],v];await salvarListas(`“${v}” adicionado.`);const i=$('#ladd_'+k);i&&i.focus();return}
+ if(lr){const k=lr.dataset.lrm,i=+lr.dataset.i,v=LISTAS[k][i];if(LISTAS[k].length<2)return;LISTAS[k]=LISTAS[k].filter((_,j)=>j!==i);await salvarListas(`“${v}” removido.`);return}const pw=e.target.closest('[data-pw]'),ps=e.target.closest('[data-pwsave]'),ap=e.target.closest('[data-aprova]'),rc=e.target.closest('[data-recusa]'),st=e.target.closest('[data-st]');
  if(ap){const id=ap.dataset.aprova,c=$('#rq_'+id).value;ap.disabled=true;await admUpd(id,{status:'ativo',cargo:c},p=>`${p.nome||uLogin(p)} foi aprovado como ${c}.`);return}
  if(rc){rc.disabled=true;await admUpd(rc.dataset.recusa,{status:'bloqueado'},p=>`O cadastro de ${p.nome||uLogin(p)} foi recusado.`);return}
  if(st){st.disabled=true;await admUpd(st.dataset.st,{status:st.dataset.v},p=>st.dataset.v==='ativo'?`${p.nome||uLogin(p)} pode entrar de novo.`:`${p.nome||uLogin(p)} foi bloqueado.`);return}

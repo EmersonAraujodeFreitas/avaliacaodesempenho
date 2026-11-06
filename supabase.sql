@@ -172,3 +172,19 @@ begin
 end $$;
 revoke all on function public.admin_redefinir_senha(uuid, text) from public;
 grant execute on function public.admin_redefinir_senha(uuid, text) to authenticated;
+
+-- Listas do formulário (cargo/função e área/setor), editáveis em Administração
+create table if not exists public.configuracoes (
+  chave text primary key,
+  valor jsonb not null,
+  atualizado_em timestamptz not null default now()
+);
+alter table public.configuracoes enable row level security;
+drop policy if exists config_ler on public.configuracoes;
+create policy config_ler on public.configuracoes for select to authenticated using (public.ativo());
+drop policy if exists config_gravar on public.configuracoes;
+create policy config_gravar on public.configuracoes for all to authenticated
+  using (public.is_admin()) with check (public.is_admin());
+insert into public.configuracoes (chave, valor) values ('listas',
+  '{"cargos":["Gerente","Coordenador","Analista","Supervisor","Assistente","Consultor"],"areas":["CRM","Planejamento","Qualidade","Inovação","Treinamento"]}')
+on conflict (chave) do nothing;
