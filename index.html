@@ -606,6 +606,11 @@ kbd{font:600 11.5px var(--f-mono);background:#fff;border:1px solid var(--line);b
 .userbox .ut small{display:block;color:#A9CBEA;font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .userbox button{border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;border-radius:8px;padding:6px 10px;font:600 12.5px var(--f-body);cursor:pointer;flex:none}
 .userbox button:hover{border-color:#fff}
+.ubtns{display:flex;flex-direction:column;gap:4px}
+.ubtns button{padding:4px 8px!important;font-size:11.5px!important}
+.auth-help{display:flex;flex-direction:column;gap:12px}
+.adm-pw{display:flex;gap:6px;align-items:center;margin-top:6px}
+.adm-pw input{border:1.5px solid var(--line);border-radius:8px;padding:6px 8px;width:150px}
 .dbdot{position:absolute;right:-2px;bottom:-2px;width:11px;height:11px;border-radius:50%;border:2px solid #003158;background:#94A3B8}
 .dbdot.ok{background:#5DBE86}.dbdot.err{background:#E57369}.dbdot.busy{background:var(--gold)}
 .adm-filt{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-bottom:14px}
@@ -815,7 +820,7 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
     <button class="tab" role="tab" data-tab="admin" id="t_admin" hidden><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg><span>Administração</span></button>
   </nav>
   <div class="side-foot">
-    <div class="userbox" id="userBox" hidden><span class="uav"><span id="uAv"></span><i class="dbdot" id="dbDot"></i></span><span class="ut"><b id="uName"></b><small id="uRole"></small></span><button type="button" id="b_sair">Sair</button></div>
+    <div class="userbox" id="userBox" hidden><span class="uav"><span id="uAv"></span><i class="dbdot" id="dbDot"></i></span><span class="ut"><b id="uName"></b><small id="uRole"></small></span><span class="ubtns"><button type="button" id="b_senha" title="Trocar a minha senha">Senha</button><button type="button" id="b_sair">Sair</button></span></div>
     <button class="btn gold" id="b_limpar" type="button">+ Nova avaliação</button>
     <button class="btn ghost" id="b_exemplo" type="button">Ver exemplo preenchido</button>
   </div>
@@ -965,30 +970,29 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
     <div class="auth-tabs" id="authTabs" role="group" aria-label="Acesso"><button type="button" data-at="login" aria-pressed="true">Entrar</button><button type="button" data-at="cadastro" aria-pressed="false">Criar conta</button></div>
     <p class="auth-msg" id="authMsg" role="status" hidden></p>
     <form data-am="login" novalidate>
-      <div class="field"><label for="lgEmail">E-mail</label><input id="lgEmail" name="email" type="email" autocomplete="username" required></div>
+      <div class="field"><label for="lgUser">Usuário</label><input id="lgUser" name="usuario" autocomplete="username" autocapitalize="none" spellcheck="false" required></div>
       <div class="field"><label for="lgSenha">Senha</label><input id="lgSenha" name="senha" type="password" autocomplete="current-password" required></div>
       <button class="btn primary big" type="submit">Entrar</button>
       <button class="auth-link" type="button" data-go-auth="esqueci">Esqueci a senha</button>
     </form>
     <form data-am="cadastro" novalidate hidden>
       <div class="field"><label for="cdNome">Nome completo</label><input id="cdNome" name="nome" autocomplete="name" required></div>
-      <div class="field"><label for="cdEmail">E-mail</label><input id="cdEmail" name="email" type="email" autocomplete="username" required></div>
+      <div class="field"><label for="cdUser">Usuário (para entrar no site)</label><input id="cdUser" name="usuario" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="ex.: maria.silva" required></div>
       <div class="field"><label for="cdSenha">Senha (mínimo 6 caracteres)</label><input id="cdSenha" name="senha" type="password" autocomplete="new-password" required></div>
       <div class="field"><label for="cdSenha2">Repita a senha</label><input id="cdSenha2" name="senha2" type="password" autocomplete="new-password" required></div>
       <button class="btn primary big" type="submit">Criar conta</button>
       <p class="auth-note">Toda conta nova entra como assistente. O gerente ou o coordenador ajusta o cargo depois.</p>
     </form>
-    <form data-am="esqueci" novalidate hidden>
-      <p class="auth-note">Digite o seu e-mail. Vamos enviar um link para você criar uma nova senha.</p>
-      <div class="field"><label for="rcEmail">E-mail</label><input id="rcEmail" name="email" type="email" autocomplete="username" required></div>
-      <button class="btn primary big" type="submit">Enviar link</button>
+    <div data-am="esqueci" hidden class="auth-help">
+      <p class="auth-note">A senha é criada pela própria pessoa no cadastro. Se você esqueceu, peça ao gerente ou ao coordenador para criar uma nova senha para você na aba <b>Administração</b>.</p>
       <button class="auth-link" type="button" data-go-auth="login">Voltar para o login</button>
-    </form>
+    </div>
     <form data-am="nova" novalidate hidden>
-      <p class="auth-note">Crie a sua nova senha.</p>
+      <p class="auth-note">Digite a sua nova senha.</p>
       <div class="field"><label for="nvSenha">Nova senha</label><input id="nvSenha" name="senha" type="password" autocomplete="new-password" required></div>
       <div class="field"><label for="nvSenha2">Repita a nova senha</label><input id="nvSenha2" name="senha2" type="password" autocomplete="new-password" required></div>
       <button class="btn primary big" type="submit">Salvar nova senha</button>
+      <button class="auth-link" type="button" id="nvVoltar">Voltar sem alterar</button>
     </form>
   </div>
 </div>
@@ -1758,7 +1762,7 @@ function renderTeam(){
  }
  const tabs=[['geral','Visão geral'],['comp','Competências'],['evo','Evolução'],['perfis','Perfis e talentos'],['cmp','Comparar'],['tab','Tabela']];
  $('#team').innerHTML=`<div class="t-bar"><div class="seg" role="group" aria-label="Seções do painel">${tabs.map(([k,l])=>`<button type="button" data-tt="${k}" aria-pressed="${teamTab===k}">${l}</button>`).join('')}</div>
-   ${isAdmin()?`<div class="field"><label for="tOwner">Lançado por</label><select id="tOwner"><option value="Todos">Todos os usuários</option>${DB.perfis.map(p=>`<option value="${p.id}"${p.id===teamOwner?' selected':''}>${esc(p.nome||p.email)}</option>`).join('')}</select></div>`:''}<div class="field"><label for="tCargo">Filtrar por cargo</label><select id="tCargo"><option>Todos</option>${cargos.map(c=>`<option${c===teamCargo?' selected':''}>${esc(c)}</option>`).join('')}</select></div></div>
+   ${isAdmin()?`<div class="field"><label for="tOwner">Lançado por</label><select id="tOwner"><option value="Todos">Todos os usuários</option>${DB.perfis.map(p=>`<option value="${p.id}"${p.id===teamOwner?' selected':''}>${esc(p.nome||uLogin(p))}</option>`).join('')}</select></div>`:''}<div class="field"><label for="tCargo">Filtrar por cargo</label><select id="tCargo"><option>Todos</option>${cargos.map(c=>`<option${c===teamCargo?' selected':''}>${esc(c)}</option>`).join('')}</select></div></div>
   <div class="t-kpis">
    <div class="t-kpi"><span>Consultores</span><b>${P.length}</b><small>avaliados</small></div>
    <div class="t-kpi"><span>Avaliações</span><b>${P.reduce((a,p)=>a+p.ev.length,0)}</b><small>no histórico</small></div>
@@ -2244,11 +2248,14 @@ function tSave(l){if(DB.on){const old=DB.team;DB.team=l.map(r=>({...r,owner:r.ow
   syncTable('dinamica_equipes',old,DB.team,r=>({id:r.id,data:r.data||'',registro:noOwn(r)}));return}
  try{localStorage.setItem(TKEY,JSON.stringify(l.slice(-30)))}catch(e){}}
 /* login */
-const AUTHMSG={'Invalid login credentials':'E-mail ou senha incorretos.','Email not confirmed':'Confirme o seu e-mail antes de entrar. Procure a mensagem na caixa de entrada.','User already registered':'Este e-mail já tem cadastro. Use a opção Entrar.'};
-const authErr=e=>{const m=(e&&e.message)||String(e);if(/at least 6/i.test(m))return'A senha precisa ter pelo menos 6 caracteres.';if(/fetch|network/i.test(m))return'Sem conexão com o banco de dados. Verifique a internet.';return AUTHMSG[m]||m};
+const AUTHMSG={'Invalid login credentials':'Usuário ou senha incorretos.','Email not confirmed':'O cadastro está aguardando confirmação de e-mail. No Supabase, desligue “Confirm email” em Authentication.','User already registered':'Este nome de usuário já está em uso. Escolha outro.'};
+const UDOM='@avaliacao.local';
+function userKey(u){return String(u||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/\s+/g,'.')}
+function userEmail(u){const k=userKey(u);if(!/^[a-z0-9._-]{3,30}$/.test(k))throw new Error('USR');return k+UDOM}
+const authErr=e=>{const m=(e&&e.message)||String(e);if(m==='USR')return'O usuário deve ter de 3 a 30 caracteres, usando letras, números, ponto, traço ou sublinhado.';if(/email.*(invalid|valid)|invalid.*email/i.test(m))return'O banco recusou este nome de usuário. Tente outro, só com letras e números.';if(/at least 6/i.test(m))return'A senha precisa ter pelo menos 6 caracteres.';if(/fetch|network/i.test(m))return'Sem conexão com o banco de dados. Verifique a internet.';return AUTHMSG[m]||m};
 function showAuth(mode){const a=$('#auth');a.hidden=false;document.querySelector('.app').setAttribute('aria-hidden','true');
  a.querySelectorAll('[data-am]').forEach(f=>f.hidden=f.dataset.am!==mode);a.querySelectorAll('[data-at]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.at===mode));
- $('#authTabs').hidden=mode==='nova'||mode==='esqueci';$('#authMsg').hidden=true;const f=a.querySelector(`[data-am="${mode}"] input`);f&&f.focus()}
+ $('#authTabs').hidden=mode==='nova'||mode==='esqueci';$('#nvVoltar').hidden=!DB.user;$('#authMsg').hidden=true;const f=a.querySelector(`[data-am="${mode}"] input`);f&&f.focus()}
 function authMsg(t,ok){const m=$('#authMsg');m.textContent=t;m.className='auth-msg'+(ok?' ok':'');m.hidden=false}
 async function entrar(user){
  DB.user=user;KEY=KEY0+'-'+user.id;GSKEY=GSKEY0+'-'+user.id;state=norm(load());
@@ -2257,7 +2264,7 @@ async function entrar(user){
  $('#loading').hidden=true;G={phase:'setup'};fill();renderUser();show('home');
  toast(`Olá, ${(DB.perfil.nome||'').split(' ')[0]||'bem-vindo'}! Você entrou como ${DB.perfil.cargo}.`,'ok')}
 function renderUser(){const u=$('#userBox');if(!DB.on){u.hidden=true;$('#t_admin').hidden=true;return}
- u.hidden=false;$('#uName').textContent=DB.perfil.nome||DB.user.email;$('#uRole').textContent=DB.perfil.cargo+(isAdmin()?' · vê todos os dados':' · vê os próprios dados');$('#uAv').textContent=ini(DB.perfil.nome||DB.user.email);
+ u.hidden=false;$('#uName').textContent=DB.perfil.nome||DB.perfil.usuario||'';$('#uRole').textContent=DB.perfil.cargo+(isAdmin()?' · vê todos os dados':' · vê os próprios dados');$('#uAv').textContent=ini(DB.perfil.nome||DB.perfil.usuario||'?');
  $('#t_admin').hidden=!isAdmin()}
 async function sair(){try{await DB.sb.auth.signOut()}catch(e){}stopTimer&&stopTimer();DB.user=null;DB.perfil=null;DB.perfis=[];DB.hist=[];DB.game=[];DB.team=[];showAuth('login')}
 async function boot(){
@@ -2270,16 +2277,19 @@ async function boot(){
 $('#auth').addEventListener('click',e=>{const b=e.target.closest('[data-at],[data-go-auth]');if(!b)return;showAuth(b.dataset.at||b.dataset.goAuth)});
 $('#auth').addEventListener('submit',async e=>{e.preventDefault();const f=e.target,m=f.dataset.am,v=n=>(f.querySelector(`[name="${n}"]`).value||'').trim(),btn=f.querySelector('button[type=submit]');btn.disabled=true;
  try{
-  if(m==='login'){const{data,error}=await DB.sb.auth.signInWithPassword({email:v('email'),password:f.querySelector('[name=senha]').value});if(error)throw error;await entrar(data.user||data.session.user)}
+  if(m==='login'){const{data,error}=await DB.sb.auth.signInWithPassword({email:userEmail(v('usuario')),password:f.querySelector('[name=senha]').value});if(error)throw error;await entrar(data.user||data.session.user)}
   if(m==='cadastro'){if(!v('nome')){authMsg('Digite o seu nome.');return}const s1=f.querySelector('[name=senha]').value;if(s1!==f.querySelector('[name=senha2]').value){authMsg('As senhas não são iguais.');return}
-   const{data,error}=await DB.sb.auth.signUp({email:v('email'),password:s1,options:{data:{nome:v('nome')},emailRedirectTo:location.origin+location.pathname}});if(error)throw error;
-   if(data.session)await entrar(data.session.user);else{showAuth('login');authMsg('Cadastro feito! Enviamos um e-mail de confirmação para '+v('email')+'. Confirme e depois entre.',true)}}
-  if(m==='esqueci'){const{error}=await DB.sb.auth.resetPasswordForEmail(v('email'),{redirectTo:location.origin+location.pathname});if(error)throw error;authMsg('Se o e-mail tiver cadastro, enviamos um link para criar uma nova senha.',true)}
-  if(m==='nova'){const s1=f.querySelector('[name=senha]').value;if(s1!==f.querySelector('[name=senha2]').value){authMsg('As senhas não são iguais.');return}const{data,error}=await DB.sb.auth.updateUser({password:s1});if(error)throw error;history.replaceState(null,'',location.pathname);toast('Senha alterada.','ok');const{data:sd}=await DB.sb.auth.getSession();if(sd.session)await entrar(sd.session.user);else showAuth('login')}
+   const{data,error}=await DB.sb.auth.signUp({email:userEmail(v('usuario')),password:s1,options:{data:{nome:v('nome'),usuario:userKey(v('usuario'))}}});if(error)throw error;
+   if(data.session)await entrar(data.session.user);else{showAuth('login');authMsg('Cadastro feito, mas o Supabase está pedindo confirmação de e-mail. Desligue “Confirm email” em Authentication e tente entrar.')}}
+  if(m==='nova'){const s1=f.querySelector('[name=senha]').value;if(s1!==f.querySelector('[name=senha2]').value){authMsg('As senhas não são iguais.');return}if(s1.length<6){authMsg('A senha precisa ter pelo menos 6 caracteres.');return}const{error}=await DB.sb.auth.updateUser({password:s1});if(error)throw error;f.reset();fecharAuth();toast('Senha alterada.','ok')}
  }catch(err){authMsg(authErr(err))}finally{btn.disabled=false}});
 $('#b_sair').addEventListener('click',sair);
+function fecharAuth(){$('#auth').hidden=true;document.querySelector('.app').removeAttribute('aria-hidden')}
+$('#b_senha').addEventListener('click',()=>showAuth('nova'));
+$('#nvVoltar').addEventListener('click',()=>{if(DB.user)fecharAuth();else showAuth('login')});
 /* administração */
-let admUser='Todos',admBusca='',admDel=null;
+let admUser='Todos',admBusca='',admDel=null,admPw=null;
+const uLogin=p=>p.usuario||(p.email||'').replace(UDOM,'').split('@')[0];
 function renderAdmin(){
  if(!isAdmin()){$('#admin').innerHTML='<p class="empty">Esta área é só para gerente e coordenador.</p>';return}
  const H=DB.hist,P=DB.perfis,by=id=>H.filter(r=>r.owner===id);
@@ -2296,15 +2306,15 @@ function renderAdmin(){
   <div class="t-kpi"><span>Participantes</span><b>${new Set(DB.game.map(r=>nkey(r.nome))).size}</b><small>na dinâmica</small></div>
  </div>
  <div class="t-grid">
-  <div class="t-card wide"><h2>Usuários e cargos</h2><p class="sub">Gerente e coordenador veem todos os dados. Supervisor, analista e assistente veem só o que eles mesmos lançaram. Quem cria a conta entra como assistente.</p>
-   <div class="tbl-wrap"><table class="t"><thead><tr><th>Nome</th><th>E-mail</th><th>Cargo</th><th>Cadastro</th><th style="text-align:right">Avaliações</th><th>Última</th><th style="text-align:right">Média lançada</th></tr></thead><tbody>
+  <div class="t-card wide"><h2>Usuários e cargos</h2><p class="sub">Gerente e coordenador veem todos os dados. Supervisor, analista e assistente veem só o que eles mesmos lançaram. Quem cria a conta entra como assistente. Use “Redefinir senha” quando alguém esquecer a própria senha.</p>
+   <div class="tbl-wrap"><table class="t"><thead><tr><th>Nome</th><th>Usuário</th><th>Cargo</th><th>Cadastro</th><th style="text-align:right">Avaliações</th><th>Última</th><th style="text-align:right">Média lançada</th></tr></thead><tbody>
    ${P.slice().sort((a,b)=>CARGOS.indexOf(a.cargo)-CARGOS.indexOf(b.cargo)||(a.nome||'').localeCompare(b.nome||'')).map(p=>{const l=by(p.id),u=l.slice().sort((a,b)=>(b.data||'').localeCompare(a.data||''))[0];return`<tr>
-    <td><b>${esc(p.nome||'-')}</b>${p.id===DB.user.id?' <span class="pill p4">você</span>':''}</td><td>${esc(p.email||'-')}</td>
-    <td><select class="adm-cargo" data-uid="${p.id}"${p.id===DB.user.id?' disabled title="Você não pode alterar o próprio cargo"':''} aria-label="Cargo de ${esc(p.nome||p.email)}">${CARGOS.map(c=>`<option${c===p.cargo?' selected':''}>${c}</option>`).join('')}</select></td>
+    <td><b>${esc(p.nome||'-')}</b>${p.id===DB.user.id?' <span class="pill p4">você</span>':''}</td><td>${esc(uLogin(p)||'-')}${p.id!==DB.user.id?(admPw===p.id?`<div class="adm-pw"><input type="password" id="admPwIn" placeholder="Nova senha" autocomplete="new-password" aria-label="Nova senha de ${esc(p.nome)}"><button class="btn primary" type="button" data-pwsave="${p.id}">Salvar</button><button class="btn" type="button" data-pwx>Cancelar</button></div>`:` <button class="auth-link" type="button" data-pw="${p.id}">Redefinir senha</button>`):''}</td>
+    <td><select class="adm-cargo" data-uid="${p.id}"${p.id===DB.user.id?' disabled title="Você não pode alterar o próprio cargo"':''} aria-label="Cargo de ${esc(p.nome||uLogin(p))}">${CARGOS.map(c=>`<option${c===p.cargo?' selected':''}>${c}</option>`).join('')}</select></td>
     <td>${p.criado_em?new Date(p.criado_em).toLocaleDateString('pt-BR'):'-'}</td><td class="num">${l.length}</td><td>${u?dataBR(u.data):'-'}</td><td class="num">${l.length?fmt(mean(l.map(r=>r.nota).filter(v=>v!=null))):'-'}</td></tr>`}).join('')}
    </tbody></table></div></div>
   <div class="t-card wide"><h2>Todas as avaliações</h2><p class="sub">Tudo o que foi lançado por todos os usuários.</p>
-   <div class="adm-filt"><div class="field"><label for="admUser">Lançado por</label><select id="admUser"><option value="Todos">Todos os usuários</option>${P.map(p=>`<option value="${p.id}"${p.id===admUser?' selected':''}>${esc(p.nome||p.email)}</option>`).join('')}</select></div>
+   <div class="adm-filt"><div class="field"><label for="admUser">Lançado por</label><select id="admUser"><option value="Todos">Todos os usuários</option>${P.map(p=>`<option value="${p.id}"${p.id===admUser?' selected':''}>${esc(p.nome||uLogin(p))}</option>`).join('')}</select></div>
     <div class="field"><label for="admBusca">Buscar consultor ou avaliador</label><input id="admBusca" value="${esc(admBusca)}" placeholder="Digite um nome"></div><span class="adm-count">${lista.length} avaliação(ões)</span></div>
    ${lista.length?`<div class="tbl-wrap"><table class="t"><thead><tr><th>Data</th><th>Consultor</th><th>Avaliador</th><th>Lançado por</th><th style="text-align:right">Nota</th><th>Classificação</th><th></th></tr></thead><tbody>
    ${lista.map(r=>`<tr><td>${dataBR(r.data)}</td><td><b>${esc(r.nome)}</b></td><td>${esc(r.avaliador||'-')}</td><td>${esc(pName(r.owner)||'-')}</td><td class="num">${fmt(r.nota)}</td><td><span class="pill ${cls(r.nota)[1]}">${cls(r.nota)[0]}</span></td>
@@ -2318,9 +2328,14 @@ $('#admin').addEventListener('change',async e=>{const t=e.target;
  if(t.id==='admUser'){admUser=t.value;renderAdmin();return}
  if(t.classList.contains('adm-cargo')){const id=t.dataset.uid,c=t.value,p=DB.perfis.find(x=>x.id===id),old=p.cargo;t.disabled=true;
   const{error}=await DB.sb.from('perfis').update({cargo:c}).eq('id',id);
-  if(error){t.value=old;toast('Não foi possível alterar o cargo: '+error.message,'err')}else{p.cargo=c;toast(`${p.nome||p.email} agora é ${c}.`,'ok')}renderAdmin()}});
+  if(error){t.value=old;toast('Não foi possível alterar o cargo: '+error.message,'err')}else{p.cargo=c;toast(`${p.nome||uLogin(p)} agora é ${c}.`,'ok')}renderAdmin()}});
 $('#admin').addEventListener('input',e=>{if(e.target.id==='admBusca'){admBusca=e.target.value;const pos=e.target.selectionStart;renderAdmin();const i=$('#admBusca');i.focus();i.setSelectionRange(pos,pos)}});
-$('#admin').addEventListener('click',e=>{const o=e.target.closest('[data-aopen]'),d=e.target.closest('[data-adel]');
+$('#admin').addEventListener('click',async e=>{const pw=e.target.closest('[data-pw]'),ps=e.target.closest('[data-pwsave]');
+ if(pw){admPw=pw.dataset.pw;renderAdmin();const i=$('#admPwIn');i&&i.focus();return}
+ if(e.target.closest('[data-pwx]')){admPw=null;renderAdmin();return}
+ if(ps){const nova=$('#admPwIn').value,p=DB.perfis.find(x=>x.id===ps.dataset.pwsave);if(nova.length<6){toast('A senha precisa ter pelo menos 6 caracteres.','err');return}ps.disabled=true;
+  const{error}=await DB.sb.rpc('admin_redefinir_senha',{alvo:p.id,nova});if(error){ps.disabled=false;toast('Não foi possível redefinir: '+error.message,'err');return}admPw=null;renderAdmin();toast(`Nova senha definida para ${p.nome||uLogin(p)}. Passe a senha para a pessoa.`,'ok');return}
+ const o=e.target.closest('[data-aopen]'),d=e.target.closest('[data-adel]');
  if(o){const r=DB.hist.find(x=>x.id===o.dataset.aopen);if(r){state=norm(JSON.parse(JSON.stringify(noOwn(r).s)));save();fill();show('painel')}}
  if(d){const id=d.dataset.adel;if(admDel===id){histSave(DB.hist.filter(x=>x.id!==id));admDel=null;toast('Avaliação excluída.','ok')}else admDel=id;renderAdmin()}});
 

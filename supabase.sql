@@ -14,6 +14,10 @@ create table if not exists public.perfis (
   criado_em timestamptz not null default now()
 );
 
+-- Login por usuário (versão 2): guarda o nome de usuário de cada conta
+alter table public.perfis add column if not exists usuario text;
+create unique index if not exists perfis_usuario_idx on public.perfis (lower(usuario));
+
 -- 2) Avaliações de desempenho
 create table if not exists public.avaliacoes (
   id text primary key,
@@ -60,9 +64,10 @@ $$;
 create or replace function public.novo_usuario() returns trigger
 language plpgsql security definer set search_path = public as $$
 begin
-  insert into public.perfis (id, nome, email, cargo)
+  insert into public.perfis (id, nome, usuario, email, cargo)
   values (new.id,
           coalesce(new.raw_user_meta_data->>'nome', ''),
+          coalesce(new.raw_user_meta_data->>'usuario', split_part(new.email, '@', 1)),
           new.email,
           case when exists (select 1 from public.perfis) then 'Assistente' else 'Gerente' end)
   on conflict (id) do nothing;
@@ -126,3 +131,25 @@ begin new.atualizado_em := now(); return new; end $$;
 drop trigger if exists toca_atualizado on public.avaliacoes;
 create trigger toca_atualizado before update on public.avaliacoes
   for each row execute function public.toca_atualizado();
+
+-- Gerente ou coordenador cria uma nova senha para quem esqueceu
+create extension if not exists pgcrypto with schema extensions;
+create or replace function public.admin_redefinir_senha(alvo uuid, nova text) returns void
+language plpgsql security definer set search_path = public, extensions, auth as $$
+begin
+  if not public.is_admin() then
+    raise exception 'Somente gerente ou coordenador pode redefinir senhas';
+  end if;
+  if alvo = auth.uid() then
+    raise exception 'Para trocar a sua própria senha, use o botão Senha no menu';
+  end if;
+  if length(coalesce(nova, '')) < 6 then
+    raise exception 'A senha precisa ter pelo menos 6 caracteres';
+  end if;
+  update auth.users
+     set encrypted_password = extensions.crypt(nova, extensions.gen_salt('bf')),
+         updated_at = now()
+   where id = alvo;
+end $$;
+revoke all on function public.admin_redefinir_senha(uuid, text) from public;
+grant execute on function public.admin_redefinir_senha(uuid, text) to authenticated;
