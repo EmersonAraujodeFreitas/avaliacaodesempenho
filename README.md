@@ -23,3 +23,16 @@ Os dados ficam no Supabase, separados por usuário:
 5. Em **Project Settings → API Keys**, copie a **Project URL** e a chave **anon public** e coloque nas constantes `SUPA_URL` e `SUPA_KEY` do `index.html`.
 
 Sem essas duas constantes preenchidas, o site funciona como antes, guardando os dados só no navegador.
+
+## Dinâmica ao vivo (QR code)
+
+Página: `dinamica.html` (link no menu Dinâmica do site).
+
+1. Rode de novo o `supabase.sql` no SQL Editor do Supabase (ele cria as tabelas `salas`, `sala_jogadores` e `sala_respostas`).
+2. O organizador abre a página, entra com usuário e senha e cria uma sala.
+3. Projete o telão. As pessoas leem o QR code, digitam o nome e escolhem um avatar (não precisam de login).
+4. O contador mostra quantas pessoas entraram e quantas estão online. Monte os grupos clicando na pessoa e depois no grupo (ou arrastando).
+5. Clique em "Começar a dinâmica". Todos respondem ao mesmo tempo no celular; o ranking de equipes e o individual só aparecem no final.
+6. O resultado fica salvo no Painel da equipe.
+
+`qrcode.js`: QR Code Generator for JavaScript, (c) Kazuhiko Arase, licença MIT.
