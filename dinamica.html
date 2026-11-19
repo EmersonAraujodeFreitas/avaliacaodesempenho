@@ -474,7 +474,7 @@ async function O_start(){
  try{await rpc('din_agora')}catch(e){}
  const sid=params.get('abrir');if(sid)return O_open(sid);
  O_home()}
-function O_top(){return`<header class="top"><img src="${LOGO}" alt="Inovação Casa"><div class="tt">Dinâmica ao vivo<small>Inovação Casa</small></div><span class="sp"></span><a href="./">Voltar ao site</a>${O.user?'<button class="lnk" id="osair">Sair</button>':''}</header>`}
+function O_top(){return`<header class="top"><img src="${LOGO}" alt="Inovação Casa"><div class="tt">Dinâmica ao vivo<small>Inovação Casa</small></div><span class="sp"></span>${O.user?'<button class="lnk" id="osair">Sair</button>':''}</header>`}
 function O_bindTop(){const s=$('#osair');if(s)s.onclick=async()=>{await SB.auth.signOut();location.href=location.pathname}}
 function O_login(msg){document.body.className='';
  $('#app').innerHTML=`${O_top()}<div class="wrap"><div class="hero"><div><h1>Dinâmica ao vivo</h1><p>Cada pessoa joga no próprio celular. O organizador projeta o QR code, monta os grupos e comanda as perguntas pelo telão.</p></div></div>
