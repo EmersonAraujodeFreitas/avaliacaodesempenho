@@ -57,6 +57,7 @@ label.f{display:block;font-weight:600;font-size:14px;margin:14px 0 6px}
 .seg{display:flex;flex-wrap:wrap;gap:6px}
 .seg button{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 12px;font-weight:600;min-width:52px}
 .seg button[aria-pressed="true"]{background:var(--brand);color:#fff;border-color:var(--brand)}
+.segc{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--muted)}.segc input{width:78px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;font-weight:600}
 .list{display:grid;gap:10px;margin-top:10px}
 .salaitem{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}
 .salaitem b{font-family:var(--f-mono);font-size:15px;letter-spacing:.06em}
@@ -225,6 +226,46 @@ body.ph{background:#00213d;color:#fff;min-height:100vh;min-height:100dvh}
 .stat div{background:rgba(255,255,255,.1);border-radius:12px;padding:8px 14px;font-size:14px}
 .stat b{display:block;font-family:var(--f-display);font-size:20px}
 .posbig{font-family:var(--f-display);font-weight:800;font-size:84px;line-height:1;color:var(--gold);animation:pop .6s ease both}
+
+/* ===== painel admin ===== */
+body.adm{background:var(--bg)}
+.awrap{max-width:1240px}
+.awarn{background:#fff4d6;border:1px solid #f0d58a;color:#6b4e00;border-radius:12px;padding:10px 14px;font-weight:600;font-size:14px;margin-bottom:14px}
+.ahead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}.ahead .sp{flex:1}.ahead h1{font-size:26px}
+.mono{font-family:var(--f-mono)}.small{font-size:13.5px;margin:2px 0 12px}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px}
+@media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.kpi small{display:block;color:var(--muted);font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+.kpi b{display:block;font-family:var(--f-display);font-size:22px;margin:2px 0}.kpi span{font-size:13px;color:var(--muted)}
+.kpi.hl{border-color:#1b9a62;background:#e9f8f0}.kpi.hl span{color:#1b7a4f;font-weight:700}
+.okc{color:#1b8a58}.badc{color:#b0372f}
+.agrid{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media (max-width:900px){.agrid{grid-template-columns:1fr}}
+.cgrp{border-top:1px solid var(--line);padding:12px 0 4px}.cgrp:first-child{border-top:0;padding-top:0}
+.cgrp h3{font-size:13px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin-bottom:8px}
+.cbtns{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.cbtns .btn{padding:10px 14px;font-size:14px}
+.btn.on{background:#1b9a62;color:#fff}
+.btn.danger{color:#b0372f;border-color:#e3b2ad}
+.btn.sm{padding:6px 10px;font-size:13px}
+.allok{width:100%;background:#e9f8f0;color:#1b7a4f;font-weight:700;border-radius:10px;padding:8px 12px}
+.segc input{width:78px}
+.eqs{display:grid;gap:10px}
+.eqr{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--soft)}
+.eqp{font-family:var(--f-display);font-weight:800;width:28px;padding-top:1px}.eqr .sw{width:14px;height:14px;border-radius:4px;margin-top:4px;flex:none}
+.eqm{flex:1;min-width:0}.eqt{display:flex;justify-content:space-between;gap:8px}.eqt span{font-family:var(--f-mono);font-size:14px}
+.eqbar{height:8px;border-radius:99px;background:#e3e8ee;margin:6px 0;overflow:hidden}.eqbar i{display:block;height:100%;border-radius:99px;transition:width .6s}
+.eqs2{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;color:var(--muted)}
+.pbar2{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:12px}
+.tblw{overflow-x:auto}
+.atbl{width:100%;border-collapse:collapse;font-size:14.5px;min-width:720px}
+.atbl th{text-align:left;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);padding:8px;border-bottom:1px solid var(--line)}
+.atbl td{padding:8px;border-bottom:1px solid var(--line);vertical-align:middle}
+.atbl .r{text-align:right}.atbl .c{text-align:center}
+.atbl small{display:block;font-size:12px}
+.stt{display:inline-flex;align-items:center;gap:6px;font-weight:600;font-size:13.5px}.stt i{width:9px;height:9px;border-radius:50%;background:#2fbf71}.stt.off i{background:#c2c8d0}.stt.off{color:var(--muted)}
+.anm{display:inline-flex;align-items:center;gap:8px;font-weight:600}.anm .av{width:30px;height:30px;border-radius:50%;background:var(--soft);display:grid;place-items:center;font-size:19px}
+.asel{padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:#fff;max-width:170px}
 @media (prefers-reduced-motion: reduce){*{animation-duration:.01ms!important;animation-delay:0s!important;transition:none!important}.pd,.fgrid,.awards{opacity:1}}
 </style>
 </head>
@@ -417,8 +458,9 @@ async function P_poll(force){clearTimeout(P.poll);
 function P_group(){const s=P.st;if(!s||!s.eu.grupo)return null;return(s.grupos||[]).find(g=>g.id===s.eu.grupo)||null}
 function P_render(){
  const s=P.st,e=s.estado||{},f=e.fase||'lobby',g=P_group(),r=s.resposta;
+ const rl=e.reload||'';if(P.rl===undefined)P.rl=rl;else if(rl&&rl!==P.rl){P.rl=rl;location.reload();return}
  const expd=f==='pergunta'&&!r&&e.fim&&now()>Date.parse(e.fim)+500;
- const view=f+'|'+(e.idx??'')+'|'+(r?1:0)+'|'+(g?g.id+g.nome:'')+'|'+s.aberta+'|'+expd;
+ const view=f+'|'+(e.seq||0)+'|'+(e.idx??'')+'|'+(r?1:0)+'|'+(g?g.id+g.nome:'')+'|'+s.aberta+'|'+expd;
  if(view===P.lastView){if(f==='pergunta'&&!r&&!expd)P_timer();return}
  const changed=view!==P.lastView;P.lastView=view;
  const gp=g?`<span class="gpill" style="--gc:${g.cor}">${esc(g.nome)}</span>`:'';
@@ -464,7 +506,7 @@ async function P_answer(ev){const b=ev.target.closest('[data-a]');if(!b||P.sendi
 /* =====================================================================
    ORGANIZADOR (telão)
    ===================================================================== */
-const O={pend:{},user:null,perfil:null,sala:null,jog:[],resp:[],poll:null,tk:null,sel:null,busy:false,revealing:false,view:'',cats:CATS.map(c=>c.id),nq:15,seg:20};
+const O={mode:'tv',adopt:null,pend:{},user:null,perfil:null,sala:null,jog:[],resp:[],poll:null,tk:null,sel:null,busy:false,revealing:false,view:'',cats:CATS.map(c=>c.id),nq:15,seg:20};
 async function O_start(){
  const {data}=await SB.auth.getSession();
  if(!data||!data.session)return O_login();
@@ -472,6 +514,7 @@ async function O_start(){
  const {data:pf}=await SB.from('perfis').select('*').eq('id',O.user.id).maybeSingle();O.perfil=pf;
  if(!pf||pf.status!=='ativo')return O_login(pf&&pf.status==='pendente'?'Seu cadastro ainda aguarda aprovação do gerente ou coordenador.':pf&&pf.status==='bloqueado'?'Seu acesso está bloqueado. Fale com o gerente ou coordenador.':'');
  try{await rpc('din_agora')}catch(e){}
+ const aid=params.get('admin');if(aid)return A_open(aid);
  const sid=params.get('abrir');if(sid)return O_open(sid);
  O_home()}
 function O_top(){return`<header class="top"><img src="${LOGO}" alt="Inovação Casa"><div class="tt">Dinâmica ao vivo<small>Inovação Casa</small></div><span class="sp"></span>${O.user?'<button class="lnk" id="osair">Sair</button>':''}</header>`}
@@ -495,17 +538,19 @@ async function O_home(){document.body.className='';O_stop();O.sala=null;history.
  <div class="grid2"><div class="card"><h2>Nova dinâmica</h2>
   <form id="fnew"><label class="f" for="ntit">Nome da dinâmica</label><input class="inp" id="ntit" maxlength="60" value="Desafio do Conhecimento">
   <label class="f">Quantidade de perguntas</label><div class="seg" id="nq">${[5,10,15,20,30,40,50].map(n=>`<button type="button" data-n="${n}" aria-pressed="${n===O.nq}">${n}</button>`).join('')}</div>
-  <label class="f">Tempo por pergunta</label><div class="seg" id="ns">${[10,15,20,30,45].map(n=>`<button type="button" data-s="${n}" aria-pressed="${n===O.seg}">${n}s</button>`).join('')}</div>
+  <label class="f">Tempo por pergunta</label><div class="seg" id="ns">${[10,15,20,30,45,60].map(n=>`<button type="button" data-s="${n}" aria-pressed="${n===O.seg}">${n}s</button>`).join('')}<label class="segc">Outro: <input type="number" id="nsc" min="5" max="300" step="1" placeholder="seg" aria-label="Tempo personalizado em segundos"></label></div>
   <label class="f">Temas</label><div class="chips" id="nc">${CATS.map(c=>`<button type="button" class="chip" data-c="${c.id}" aria-pressed="${O.cats.includes(c.id)}">${esc(c.nome)}</button>`).join('')}</div>
   <p class="muted" id="npool" style="font-size:13.5px;margin:8px 0 0"></p>
   <button class="btn big gold" style="width:100%;margin-top:18px" id="ngo">Criar sala e mostrar QR code</button><div class="msg" id="nm"></div></form></div>
- <div class="card"><h2>Salas recentes</h2>${salas&&salas.length?`<div class="list">${salas.map(s=>`<div class="salaitem"><b>${esc(s.codigo)}</b><div class="sp">${esc(s.titulo)}<small>${new Date(s.criado_em).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})}</small></div><span class="tag${s.aberta?'':' off'}">${fase(s)}</span><button class="btn soft" data-open="${s.id}">Abrir</button></div>`).join('')}</div>`:'<p class="muted">Nenhuma sala criada ainda.</p>'}</div></div></div>`;
+ <div class="card"><h2>Salas recentes</h2>${salas&&salas.length?`<div class="list">${salas.map(s=>`<div class="salaitem"><b>${esc(s.codigo)}</b><div class="sp">${esc(s.titulo)}<small>${new Date(s.criado_em).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'})}</small></div><span class="tag${s.aberta?'':' off'}">${fase(s)}</span><button class="btn soft" data-open="${s.id}">Telão</button><button class="btn soft" data-admin="${s.id}" title="Painel do administrador">Admin</button></div>`).join('')}</div>`:'<p class="muted">Nenhuma sala criada ainda.</p>'}</div></div></div>`;
  O_bindTop();
  const upd=()=>{const p=POOLSIZE(O.cats);$('#npool').textContent=O.cats.length?`${p} perguntas disponíveis nesses temas.${p<O.nq?' A dinâmica terá '+p+' perguntas.':''}`:'Escolha pelo menos um tema.'};upd();
  $('#nq').onclick=e=>{const b=e.target.closest('[data-n]');if(!b)return;O.nq=+b.dataset.n;$$('#nq button').forEach(x=>x.setAttribute('aria-pressed',x===b));upd()};
- $('#ns').onclick=e=>{const b=e.target.closest('[data-s]');if(!b)return;O.seg=+b.dataset.s;$$('#ns button').forEach(x=>x.setAttribute('aria-pressed',x===b))};
+ $('#ns').onclick=e=>{const b=e.target.closest('[data-s]');if(!b)return;O.seg=+b.dataset.s;$('#nsc').value='';$$('#ns button').forEach(x=>x.setAttribute('aria-pressed',x===b))};
+ $('#nsc').oninput=e=>{const v=Math.round(+e.target.value);if(v>=5&&v<=300){O.seg=v;$$('#ns button').forEach(x=>x.setAttribute('aria-pressed','false'))}};
  $('#nc').onclick=e=>{const b=e.target.closest('[data-c]');if(!b)return;const c=b.dataset.c;O.cats=O.cats.includes(c)?O.cats.filter(x=>x!==c):[...O.cats,c];b.setAttribute('aria-pressed',O.cats.includes(c));upd()};
  $$('[data-open]').forEach(b=>b.onclick=()=>O_open(b.dataset.open));
+ $$('[data-admin]').forEach(b=>b.onclick=()=>window.open(location.pathname+'?admin='+b.dataset.admin,'_blank'));
  $('#fnew').onsubmit=async e=>{e.preventDefault();if(!O.cats.length){$('#nm').textContent='Escolha pelo menos um tema.';return}$('#ngo').disabled=true;
   const qs=buildQuestions(O.nq,O.cats);const grupos=GCOL.slice(0,2).map((c,i)=>({id:'g'+(i+1),nome:'Equipe '+c[0],cor:c[1]}));
   for(let tent=0;tent<5;tent++){const codigo=Array.from({length:5},()=>'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'[Math.floor(Math.random()*32)]).join('');
@@ -516,20 +561,31 @@ function O_stop(){clearTimeout(O.poll);clearInterval(O.tk);O.poll=null;O.tk=null
 async function O_open(id){O_stop();
  const {data:s,error}=await SB.from('salas').select('*').eq('id',id).single();
  if(error||!s){toast('Sala não encontrada.','err');return O_home()}
- O.sala=s;O.view='';O.revealing=false;history.replaceState(null,'',location.pathname+'?abrir='+id);document.body.className='tv';
+ O.mode='tv';O.sala=s;O.view='';O.revealing=false;history.replaceState(null,'',location.pathname+'?abrir='+id);document.body.className='tv';
  await O_fetch();O_route();O_loop()}
 const Q=()=>O.sala.perguntas.lista,SEG=()=>O.sala.perguntas.segundos||20,E=()=>O.sala.estado||{fase:'lobby'};
 async function O_fetch(){
  const {data:j0}=await SB.from('sala_jogadores').select('id,nome,avatar,grupo,pontos,acertos,sequencia,melhor_seq,visto_em,criado_em').eq('sala',O.sala.id).order('criado_em',{ascending:true});
  if(j0){const before=O.jog.length,tn=Date.now(),j=j0.filter(x=>!(O.pend[x.id]&&O.pend[x.id].del&&tn-O.pend[x.id].t<6000));j.forEach(x=>{const p=O.pend[x.id];if(p&&!p.del&&tn-p.t<6000)x.grupo=p.grupo});O.jog=j;if(E().fase==='lobby'&&j.length>before&&before>0)SFX.join()}
- const e=E();if(e.fase==='pergunta'){const {data:r}=await SB.from('sala_respostas').select('jogador,resposta').eq('sala',O.sala.id).eq('pergunta',e.idx);if(r)O.resp=r}}
-async function O_loop(){clearTimeout(O.poll);if(!O.sala)return;try{await O_fetch();O_refresh()}catch(e){}
- O.poll=setTimeout(O_loop,E().fase==='pergunta'?1000:E().fase==='lobby'?2000:4000)}
+ const {data:sx}=await SB.from('salas').select('estado,grupos,aberta').eq('id',O.sala.id).maybeSingle();
+ if(sx){O.sala.aberta=sx.aberta;if(((sx.estado||{}).seq||0)>(E().seq||0)){O.adopt=E().fase;O.sala.estado=sx.estado;O.sala.grupos=sx.grupos||[];O.boardSig=''}}
+ const e=E();if(e.fase==='pergunta'){const {data:r}=await SB.from('sala_respostas').select('jogador,resposta,correta').eq('sala',O.sala.id).eq('pergunta',e.idx);if(r)O.resp=r}else O.resp=[]}
+async function O_loop(){clearTimeout(O.poll);if(!O.sala)return;
+ try{await O_fetch();if(O.adopt!==null){const prev=O.adopt;O.adopt=null;
+   if(O.mode==='tv'){O_stop();O.revealing=false;if(E().fase==='fim'&&prev!=='fim')O_final(true);else O_route()}else A_render(true)}
+  else O_refresh()}catch(e){}
+ if(!O.sala)return;clearTimeout(O.poll);O.poll=setTimeout(O_loop,O.mode==='admin'?1500:E().fase==='pergunta'?1000:E().fase==='lobby'?2000:4000)}
 const online=j=>now()-Date.parse(j.visto_em)<15000;
-async function O_saveEstado(e){O.sala.estado=e;const {error}=await SB.from('salas').update({estado:e}).eq('id',O.sala.id);if(error)toast(errMsg(error),'err')}
+async function O_saveEstado(e){const o=E();e.seq=(o.seq||0)+1;['entrada','reload','auto'].forEach(k=>{if(e[k]===undefined&&o[k]!==undefined)e[k]=o[k]});
+ let qb=SB.from('salas').update({estado:e}).eq('id',O.sala.id);if(o.seq)qb=qb.eq('estado->>seq',String(o.seq));
+ const {data,error}=await qb.select('id');if(error){toast(errMsg(error),'err');return false}
+ if(o.seq&&(!data||!data.length)){const {data:sx}=await SB.from('salas').select('estado,grupos,aberta').eq('id',O.sala.id).maybeSingle();
+  if(sx){O.sala.estado=sx.estado;O.sala.grupos=sx.grupos||[];O.sala.aberta=sx.aberta}
+  if(O.mode==='tv'){O_stop();O.revealing=false;O_route();O_loop()}else toast('A sala mudou enquanto você clicava. Confira e tente de novo.','err');return false}
+ O.sala.estado=e;return true}
 function O_bar(extra){const s=O.sala;return`<div class="tvbar"><img src="${LOGO}" alt="Inovação Casa"><div class="tt">${esc(s.titulo)}<small>Sala ${esc(s.codigo)}</small></div><span class="sp"></span>${extra||''}
- <button class="tvbtn" id="tsom" title="Som">${SOUND?'🔊':'🔇'}</button><button class="tvbtn" id="tfull">Tela cheia</button><button class="tvbtn" id="tsair">Sair do telão</button></div>`}
-function O_bindBar(){$('#tsom').onclick=()=>{SOUND=!SOUND;$('#tsom').textContent=SOUND?'🔊':'🔇'};
+ <button class="tvbtn" id="tadm" title="Abre o painel do administrador em outra guia">Painel admin</button><button class="tvbtn" id="tsom" title="Som">${SOUND?'🔊':'🔇'}</button><button class="tvbtn" id="tfull">Tela cheia</button><button class="tvbtn" id="tsair">Sair do telão</button></div>`}
+function O_bindBar(){$('#tadm').onclick=()=>window.open(location.pathname+'?admin='+O.sala.id,'_blank');$('#tsom').onclick=()=>{SOUND=!SOUND;$('#tsom').textContent=SOUND?'🔊':'🔇'};
  $('#tfull').onclick=()=>{try{document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()}catch(e){}};
  $('#tsair').onclick=()=>O_home()}
 function O_route(){const f=E().fase;O.view=f+'|'+(E().idx??'');
@@ -540,7 +596,7 @@ function O_route(){const f=E().fase;O.view=f+'|'+(E().idx??'');
  if(f==='revelacao')return O_reveal();
  if(f==='apuracao')return O_apurar();
  if(f==='fim')return O_final(false)}
-function O_refresh(){const f=E().fase;if(f==='lobby')O_lobbyBoard();else if(f==='pergunta')O_qStatus()}
+function O_refresh(){if(O.mode==='admin')return A_render();const f=E().fase;if(f==='lobby')O_lobbyBoard();else if(f==='pergunta')O_qStatus()}
 
 /* ---------- lobby ---------- */
 function O_lobby(){
@@ -595,13 +651,18 @@ async function O_begin(){if(O.busy)return;if(!O.jog.length){toast('Ainda não en
 
 /* ---------- pergunta ---------- */
 async function O_intro(idx,resume){O_stop();const q=Q()[idx];
- if(!resume)await O_saveEstado({fase:'intro',idx,total:Q().length,cat:q.cat});
+ if(!resume&&!await O_saveEstado({fase:'intro',idx,total:Q().length,cat:q.cat}))return;
  $('#app').innerHTML=`${O_bar()}<div class="stage intro"><div><div class="c">Pergunta</div><div class="n">${idx+1}<span style="font-size:.4em;opacity:.6"> / ${Q().length}</span></div><div class="c">${esc(catNome(q.cat))} · ${esc(q.tipo)}</div><div class="go" id="tgo">Prepare-se!</div></div></div>`;O_bindBar();
  for(const t of['3','2','1']){await sleep(1000);const g=$('#tgo');if(!g||E().idx!==idx)return;g.textContent=t;SFX.tick()}
- await sleep(800);if(E().fase!=='intro'||E().idx!==idx)return;await O_openQ(idx)}
-async function O_openQ(idx){const q=Q()[idx];O.resp=[];O.revealing=false;
- try{const r=await rpc('din_abrir_pergunta',{p_sala:O.sala.id,p_publico:{idx,total:Q().length,cat:q.cat,tipo:q.tipo,t:q.t,opts:q.opts},p_certa:q.certa,p_segundos:SEG()});O.sala.estado=r.estado}
- catch(e){toast(errMsg(e),'err');return}
+ await sleep(800);if(E().fase!=='intro'||E().idx!==idx)return;
+ const {data:sx}=await SB.from('salas').select('estado').eq('id',O.sala.id).maybeSingle();
+ if(sx&&((sx.estado||{}).seq||0)>(E().seq||0)){O.sala.estado=sx.estado;O_route();O_loop();return}
+ await O_openQ(idx)}
+async function core_openQ(idx){const q=Q()[idx],o=E();O.resp=[];O.revealing=false;
+ const pub={idx,total:Q().length,cat:q.cat,tipo:q.tipo,t:q.t,opts:q.opts,seq:(o.seq||0)+1};['entrada','reload','auto'].forEach(k=>{if(o[k]!==undefined)pub[k]=o[k]});
+ const r=await rpc('din_abrir_pergunta',{p_sala:O.sala.id,p_publico:pub,p_certa:q.certa,p_segundos:SEG()});O.sala.estado=r.estado}
+async function O_openQ(idx){
+ try{await core_openQ(idx)}catch(e){toast(errMsg(e),'err');return}
  O.view='pergunta|'+idx;O_question();O_loop()}
 function O_question(){const e=E(),q=Q()[e.idx];
  $('#app').innerHTML=`${O_bar('<button class="tvbtn" id="tskip">Encerrar pergunta</button>')}<div class="stage"><div class="qhead"><span class="qnum">Pergunta ${e.idx+1} de ${e.total}</span><span class="qcat">${esc(catNome(q.cat))} · ${esc(q.tipo)}</span><span class="sp"></span><div class="ans"><b id="tans">0</b> de <span id="tjn">${O.jog.length}</span> responderam</div></div>
@@ -615,12 +676,13 @@ function O_question(){const e=E(),q=Q()[e.idx];
 function O_qStatus(){const a=$('#tans');if(!a)return;const ids=[...new Set(O.resp.map(r=>r.jogador))],n=ids.length;a.textContent=n;$('#tjn').textContent=O.jog.length;
  const av=$('#tavs');if(av){const have=new Set([...av.children].map(x=>x.dataset.id));ids.forEach(id=>{if(have.has(id))return;const j=O.jog.find(j=>j.id===id);if(!j)return;const s=document.createElement('span');s.dataset.id=id;s.title=j.nome;s.textContent=j.avatar;av.appendChild(s);SFX.join()})}
  if(O.jog.length&&n>=O.jog.length&&E().fase==='pergunta')O_doReveal()}
-async function O_doReveal(){if(O.revealing||E().fase!=='pergunta')return;O.revealing=true;clearInterval(O.tk);const e=E(),q=Q()[e.idx];
- await sleep(700);
+async function O_doReveal(){if(O.revealing||E().fase!=='pergunta')return;O.revealing=true;clearInterval(O.tk);
+ await sleep(700);if(E().fase!=='pergunta'){O.revealing=false;return}if(!await core_reveal())return;
+ SFX.end();O.view='revelacao|'+E().idx;O_reveal()}
+async function core_reveal(){const e=E(),q=Q()[e.idx];
  const {data:r}=await SB.from('sala_respostas').select('jogador,resposta,correta').eq('sala',O.sala.id).eq('pergunta',e.idx);const rs=r||[];
  const dist=q.opts.map((_,i)=>rs.filter(x=>x.resposta===i).length);
- await O_saveEstado({fase:'revelacao',idx:e.idx,total:e.total,cat:q.cat,tipo:q.tipo,t:q.t,opts:q.opts,certa:q.certa,exp:q.exp,dist,responderam:rs.length,acertaram:rs.filter(x=>x.correta).length});
- SFX.end();O.view='revelacao|'+e.idx;O_reveal()}
+ return O_saveEstado({fase:'revelacao',idx:e.idx,total:e.total,cat:q.cat,tipo:q.tipo,t:q.t,opts:q.opts,certa:q.certa,exp:q.exp,dist,responderam:rs.length,acertaram:rs.filter(x=>x.correta).length})}
 function O_reveal(){O_stop();const e=E(),max=Math.max(1,...e.dist),last=e.idx+1>=e.total;
  $('#app').innerHTML=`${O_bar()}<div class="stage"><div class="qhead"><span class="qnum">Pergunta ${e.idx+1} de ${e.total}</span><span class="qcat">${esc(catNome(e.cat))}</span><span class="sp"></span><div class="ans"><b>${e.acertaram}</b> de ${e.responderam} acertaram</div></div>
  <div class="qtext" style="font-size:clamp(20px,2.6vw,34px)">${esc(e.t)}</div>
@@ -628,16 +690,19 @@ function O_reveal(){O_stop();const e=E(),max=Math.max(1,...e.dist),last=e.idx+1>
  ${e.exp?`<div class="exp"><b>Você sabia?</b> ${esc(e.exp)}</div>`:''}
  <div class="foot"><span class="kb">Espaço ou Enter para continuar</span><button class="tvbtn gold" id="tnext">${last?'Ver o resultado final 🏆':'Próxima pergunta ▶'}</button></div></div>`;
  O_bindBar();requestAnimationFrame(()=>setTimeout(()=>$$('.opt .bar').forEach(b=>b.style.width=b.dataset.w+'%'),60));
- $('#tnext').onclick=O_next;O.poll=setTimeout(O_loop,4000)}
+ $('#tnext').onclick=O_next;O.poll=setTimeout(O_loop,1500);
+ if(e.auto&&e.fase==='revelacao'){const b=$('#tnext'),lbl=b.textContent;let n=+e.auto||8;b.textContent=lbl+' ('+n+'s)';clearInterval(O.tk);
+  O.tk=setInterval(()=>{if(!b.isConnected||E().fase!=='revelacao'){clearInterval(O.tk);return}n--;b.textContent=lbl+' ('+n+'s)';if(n<=0){clearInterval(O.tk);O_next()}},1000)}}
 async function O_next(){if(O.busy)return;O.busy=true;try{const e=E();if(e.idx+1>=e.total)await O_apurar(true);else await O_intro(e.idx+1)}finally{O.busy=false}}
 document.addEventListener('keydown',e=>{if(!O.sala||/input|textarea|select/i.test(e.target.tagName))return;if(e.key===' '||e.key==='Enter'){const b=$('#tnext');if(b){e.preventDefault();b.click()}}});
 
 /* ---------- resultado ---------- */
-async function O_apurar(start){O_stop();if(start)await O_saveEstado({fase:'apuracao',total:Q().length});
+async function O_apurar(start){O_stop();if(start&&!await O_saveEstado({fase:'apuracao',total:Q().length}))return;
  $('#app').innerHTML=`${O_bar()}<div class="stage suspense"><div><div class="drum">🥁</div><h1>Apurando o resultado…</h1><p style="font-size:20px;opacity:.8">Quem será que venceu?</p></div></div>`;O_bindBar();SFX.drum();
- const [j,r]=await Promise.all([SB.from('sala_jogadores').select('*').eq('sala',O.sala.id),SB.from('sala_respostas').select('jogador,pergunta,resposta,correta,pontos,tempo').eq('sala',O.sala.id)]);
- O.jog=j.data||O.jog;const resp=r.data||[];await sleep(start?3200:300);
- const fi=O_compute(resp);await O_saveEstado({fase:'fim',total:Q().length,final:fi});await O_record(fi,resp);O_final(true)}
+ if(await core_final(start?3200:300))O_final(true)}
+async function core_final(wait){const [j,r]=await Promise.all([SB.from('sala_jogadores').select('*').eq('sala',O.sala.id),SB.from('sala_respostas').select('jogador,pergunta,resposta,correta,pontos,tempo').eq('sala',O.sala.id)]);
+ O.jog=j.data||O.jog;const resp=r.data||[];if(wait)await sleep(wait);
+ const fi=O_compute(resp);if(!await O_saveEstado({fase:'fim',total:Q().length,final:fi}))return false;O.sala.registrado=false;await O_record(fi,resp);return true}
 function O_compute(resp){const qs=Q(),G=O.sala.grupos;
  const ind=O.jog.map(j=>{const mine=resp.filter(r=>r.jogador===j.id),ok=mine.filter(r=>r.correta);return{id:j.id,nome:j.nome,avatar:j.avatar,grupo:G.some(g=>g.id===j.grupo)?j.grupo:null,pontos:j.pontos,acertos:j.acertos,seq:j.melhor_seq,resp:mine.length,tOk:ok.length?mean(ok.map(r=>+r.tempo)):null}})
   .sort((a,b)=>b.pontos-a.pontos||b.acertos-a.acertos||(a.tOk??99)-(b.tOk??99));
@@ -675,6 +740,113 @@ function O_final(anim){O_stop();const fi=E().final;if(!fi)return O_apurar(false)
  const c=$('#tclose');if(c)c.onclick=async()=>{if(!c.dataset.sure){c.dataset.sure=1;c.textContent='Confirmar encerramento';return}await SB.from('salas').update({aberta:false}).eq('id',O.sala.id);O.sala.aberta=false;toast('Sala encerrada.');O_final(false)};
  if(anim){[800,2800].forEach(t=>setTimeout(SFX.tick,t));setTimeout(()=>{confetti();SFX.win()},5000)}
  else $$('.pd,.pd .col,.fgrid,.awards').forEach(x=>x.style.animation='none'),$$('.pd,.fgrid,.awards').forEach(x=>x.style.opacity=1)}
+
+/* =====================================================================
+   PAINEL DO ADMINISTRADOR (só para o organizador, não projetar)
+   ===================================================================== */
+const A={q:'',f:'todos',ctrlSig:'',tabSig:'',sure:{}};
+const FASE_NOME={lobby:'Sala de espera',intro:'Preparando pergunta',pergunta:'Pergunta aberta',revelacao:'Mostrando a resposta',apuracao:'Apurando resultado',fim:'Resultado final'};
+async function A_open(id){O_stop();const {data:s,error}=await SB.from('salas').select('*').eq('id',id).single();
+ if(error||!s){toast('Sala não encontrada.','err');return O_home()}
+ O.mode='admin';O.sala=s;document.body.className='adm';document.title='Admin · Sala '+s.codigo;
+ $('#app').innerHTML=`${O_top()}<div class="wrap awrap">
+ <div class="awarn">🔒 Painel do administrador. Só você vê. Não projete esta tela.</div>
+ <div class="ahead"><div><h1>Sala <span class="mono">${esc(s.codigo)}</span></h1><p class="muted" style="margin:2px 0 0">${esc(s.titulo)}</p></div><span class="sp"></span>
+  <button class="btn soft" id="aTv">Abrir telão</button><button class="btn soft" id="aHome">Minhas salas</button></div>
+ <div class="kpis" id="aKpi"></div>
+ <div class="agrid"><section class="card"><h2>Controles</h2><p class="muted small">Use se algo travar ou para comandar a dinâmica daqui.</p><div id="aCtl"></div></section>
+ <section class="card"><h2>Equipes em tempo real</h2><p class="muted small">Atualiza sozinho a cada 1,5 segundo. Posição pela média de pontos por pessoa.</p><div id="aEq"></div></section></div>
+ <section class="card" style="margin-top:16px"><div class="pbar2"><h2 style="margin-right:auto">Participantes</h2>
+  <input class="inp" id="aBusca" placeholder="Buscar nome" style="max-width:220px;padding:9px 12px">
+  <div class="seg" id="aFil">${['todos','online','offline','sem resposta'].map(f=>`<button type="button" data-f="${f}" aria-pressed="${A.f===f}">${f[0].toUpperCase()+f.slice(1)}</button>`).join('')}</div>
+  <button class="btn ghost danger" data-act="rm_off">Remover offline</button><button class="btn ghost danger" data-act="rm_all">Remover todos</button></div>
+  <div class="tblw"><table class="atbl"><thead><tr><th>Status</th><th>Participante</th><th>Grupo</th><th class="r">Pontos</th><th class="r">Acertos</th><th class="c">Pergunta atual</th><th></th></tr></thead><tbody id="aTb"></tbody></table></div></section></div>`;
+ O_bindTop();$('#aTv').onclick=()=>window.open(location.pathname+'?abrir='+id,'_blank');$('#aHome').onclick=()=>{location.href=location.pathname};
+ $('#aBusca').oninput=e=>{A.q=e.target.value;A.tabSig='';A_table()};
+ $('#aFil').onclick=e=>{const b=e.target.closest('[data-f]');if(!b)return;A.f=b.dataset.f;$$('#aFil button').forEach(x=>x.setAttribute('aria-pressed',x===b));A.tabSig='';A_table()};
+ $('.awrap').addEventListener('click',A_click);
+ $('#aTb').addEventListener('change',async e=>{const sel=e.target.closest('[data-grp]');if(!sel)return;const id=sel.dataset.grp,g=sel.value||null,j=O.jog.find(x=>x.id===id);if(j)j.grupo=g;pend(id,g);
+  const {error}=await SB.from('sala_jogadores').update({grupo:g}).eq('id',id);if(error)toast(errMsg(error),'err');else toast('Grupo alterado.');A.tabSig='';A_render()});
+ $('#aCtl').addEventListener('change',async e=>{if(e.target.id==='aSeg'){const v=Math.round(+e.target.value);if(!(v>=5&&v<=300)){toast('Use de 5 a 300 segundos.','err');return}
+   O.sala.perguntas.segundos=v;const {error}=await SB.from('salas').update({perguntas:O.sala.perguntas}).eq('id',O.sala.id);toast(error?errMsg(error):'Novo tempo: '+v+'s nas próximas perguntas.',error?'err':'')}});
+ try{await rpc('din_agora')}catch(e){}
+ await O_fetch();A_render(true);O_loop();clearInterval(O.tk);O.tk=setInterval(A_kpi,500)}
+function A_ago(j){const s=Math.max(0,Math.round((now()-Date.parse(j.visto_em))/1000));return s<60?'há '+s+'s':s<3600?'há '+Math.round(s/60)+' min':'há mais de 1 h'}
+function A_resp(id){return O.resp.find(r=>r.jogador===id)}
+function A_kpi(){const k=$('#aKpi');if(!k)return;const e=E(),on=O.jog.filter(online).length,ans=new Set(O.resp.map(r=>r.jogador)).size,ok=O.resp.filter(r=>r.correta).length;
+ let tempo='';if(e.fase==='pergunta'&&e.fim){const l=Math.ceil((Date.parse(e.fim)-now())/1000);tempo=l>0?l+'s':'esgotado'}
+ const todos=e.fase==='pergunta'&&O.jog.length>0&&ans>=O.jog.length;
+ k.innerHTML=`<div class="kpi"><small>Situação</small><b>${FASE_NOME[e.fase||'lobby']}${O.sala.aberta?'':' (encerrada)'}</b><span>${e.idx!=null&&e.fase!=='fim'&&e.fase!=='lobby'?'Pergunta '+(e.idx+1)+' de '+(e.total||Q().length):Q().length+' perguntas · '+SEG()+'s cada'}</span></div>
+ <div class="kpi"><small>Na sala</small><b>${O.jog.length}</b><span>${e.entrada==='livre'?'entrada liberada':e.fase==='lobby'?'entrada aberta':'entrada fechada'}</span></div>
+ <div class="kpi"><small>Online agora</small><b class="okc">${on}</b><span>${O.jog.length-on} sem sinal</span></div>
+ <div class="kpi${todos?' hl':''}"><small>Responderam</small><b>${e.fase==='pergunta'?ans+' / '+O.jog.length:'-'}</b><span>${e.fase==='pergunta'?(todos?'Todos responderam ✓':ok+' acertaram até agora'):'só durante a pergunta'}</span></div>
+ <div class="kpi"><small>Tempo</small><b>${tempo||'-'}</b><span>${e.auto?'avanço automático ligado':'avanço manual'}</span></div>`}
+function A_render(force){if(!$('#aCtl'))return;if(force){A.ctrlSig='';A.tabSig=''}A_kpi();A_ctrl();A_teams();A_table()}
+function A_btn(act,label,cls,hint){return`<button class="btn ${cls||'soft'}" data-act="${act}"${hint?` title="${esc(hint)}"`:''}>${label}</button>`}
+function A_ctrl(){const e=E(),f=e.fase||'lobby',ans=new Set(O.resp.map(r=>r.jogador)).size,todos=f==='pergunta'&&O.jog.length>0&&ans>=O.jog.length;
+ const last=(e.idx??-1)+1>=Q().length;const sig=[f,e.idx,e.seq,O.sala.aberta,todos,e.entrada,e.auto,SEG()].join('|');if(sig===A.ctrlSig)return;A.ctrlSig=sig;
+ const nextLbl=last?'Ir para o resultado 🏆':'Próxima pergunta ▶';let main='';
+ if(f==='lobby')main=A_btn('start','Começar a dinâmica ▶','gold');
+ else if(f==='intro')main=A_btn('open_now','Abrir a pergunta agora','gold');
+ else if(f==='pergunta')main=(todos?`<div class="allok">Todos responderam ✓</div>`:'')+A_btn('next',todos?nextLbl:'Pular para a '+(last?'resultado':'próxima pergunta')+' ▶','gold')+A_btn('reveal','Mostrar a resposta agora')+A_btn('plus','+15 segundos');
+ else if(f==='revelacao')main=A_btn('next',nextLbl,'gold');
+ else if(f==='apuracao')main=A_btn('final','Mostrar o resultado agora','gold');
+ else if(f==='fim')main=A_btn('final','Refazer o resultado','soft','Recalcula e mostra o pódio de novo');
+ $('#aCtl').innerHTML=`<div class="cgrp"><h3>Comandar</h3><div class="cbtns">${main}</div></div>
+ <div class="cgrp"><h3>Tempo e ritmo</h3><div class="cbtns"><label class="segc">Tempo por pergunta <input type="number" id="aSeg" min="5" max="300" value="${SEG()}"> s</label>
+  ${A_btn('auto',e.auto?'Avanço automático: ligado':'Avanço automático: desligado',e.auto?'on':'soft','Depois de mostrar a resposta, o telão passa sozinho para a próxima pergunta em 8 segundos')}</div></div>
+ <div class="cgrp"><h3>Destravar</h3><div class="cbtns">${A_btn('sync','Atualizar o telão','soft','Faz o telão ler de novo a situação da sala')}${A_btn('reload','Recarregar todos os celulares','soft','Os celulares recarregam a página e continuam de onde estavam')}${A_btn('recalc','Recalcular pontuação','soft','Refaz pontos, acertos e sequências a partir das respostas gravadas')}
+  ${f==='pergunta'||f==='revelacao'?A_btn('redo','Repetir esta pergunta','soft','Apaga as respostas desta pergunta e abre de novo com o tempo cheio'):''}
+  ${A_btn('entrada',e.entrada==='livre'?'Fechar entrada de novos':'Liberar entrada de novos','soft','Permite que quem chegou atrasado entre mesmo com a dinâmica em andamento')}</div></div>
+ <div class="cgrp"><h3>Sala</h3><div class="cbtns">${f!=='lobby'?A_btn('restart','Recomeçar do zero','ghost danger','Zera a pontuação e volta para a sala de espera, mantendo as pessoas'):''}
+  ${O.sala.aberta?A_btn('close','Encerrar sala','ghost danger'):A_btn('reopen','Reabrir sala')}</div></div>`}
+function A_teams(){const box=$('#aEq');if(!box)return;const G=O.sala.grupos||[],e=E(),qDone=e.fase==='fim'?Q().length:e.fase==='lobby'?0:(e.idx??-1)+(e.fase==='intro'?0:1);
+ const rows=G.map(g=>{const m=O.jog.filter(j=>j.grupo===g.id),tot=m.reduce((a,j)=>a+j.pontos,0),ac=m.reduce((a,j)=>a+j.acertos,0);
+  return{g,n:m.length,on:m.filter(online).length,tot,med:m.length?Math.round(tot/m.length):0,taxa:m.length&&qDone?Math.round(ac/(m.length*qDone)*100):0,resp:m.filter(j=>A_resp(j.id)).length}}).sort((a,b)=>b.med-a.med||b.taxa-a.taxa);
+ const sem=O.jog.filter(j=>!G.some(g=>g.id===j.grupo)).length,max=Math.max(1,...rows.map(r=>r.med));
+ box.innerHTML=rows.length?`<div class="eqs">${rows.map((r,i)=>`<div class="eqr"><span class="eqp">${i+1}º</span><span class="sw" style="background:${r.g.cor}"></span><div class="eqm"><div class="eqt"><b>${esc(r.g.nome)}</b><span>${r.med} pts/pessoa</span></div>
+  <div class="eqbar"><i style="width:${r.med/max*100}%;background:${r.g.cor}"></i></div>
+  <div class="eqs2"><span>${r.n} pessoa(s) · ${r.on} online</span><span>${r.tot} pts no total</span><span>${r.taxa}% de acertos</span>${e.fase==='pergunta'?`<span>${r.resp}/${r.n} responderam</span>`:''}</div></div></div>`).join('')}</div>${sem?`<p class="muted small">${sem} pessoa(s) sem grupo.</p>`:''}`:'<p class="muted">Nenhum grupo criado. O ranking será só individual.</p>'}
+function A_table(){const tb=$('#aTb');if(!tb)return;if(tb.contains(document.activeElement)&&document.activeElement.tagName==='SELECT')return;
+ const e=E(),G=O.sala.grupos||[],q=A.q.trim().toLowerCase();
+ let list=[...O.jog].sort((a,b)=>b.pontos-a.pontos||a.nome.localeCompare(b.nome));
+ if(q)list=list.filter(j=>j.nome.toLowerCase().includes(q));
+ if(A.f==='online')list=list.filter(online);else if(A.f==='offline')list=list.filter(j=>!online(j));else if(A.f==='sem resposta')list=list.filter(j=>e.fase==='pergunta'&&!A_resp(j.id));
+ const sig=JSON.stringify([list.map(j=>[j.id,j.grupo,j.pontos,j.acertos,online(j),Math.floor((now()-Date.parse(j.visto_em))/5000),(A_resp(j.id)||{}).correta]),G,e.fase,e.idx,A.sure]);if(sig===A.tabSig)return;A.tabSig=sig;
+ tb.innerHTML=list.length?list.map(j=>{const r=A_resp(j.id),st=e.fase!=='pergunta'?'<span class="muted">-</span>':!r?'<span class="muted">aguardando</span>':r.correta?'<span class="okc">✓ acertou</span>':'<span class="badc">✗ errou</span>';
+  return`<tr><td><span class="stt ${online(j)?'on':'off'}"><i></i>${online(j)?'Online':'Sem sinal'}</span><small class="muted">${A_ago(j)}</small></td><td><span class="anm"><span class="av">${esc(j.avatar)}</span>${esc(j.nome)}</span></td>
+  <td><select data-grp="${j.id}" class="asel"><option value="">Sem grupo</option>${G.map(g=>`<option value="${g.id}"${j.grupo===g.id?' selected':''}>${esc(g.nome)}</option>`).join('')}</select></td>
+  <td class="r mono">${j.pontos}</td><td class="r mono">${j.acertos}</td><td class="c">${st}</td><td class="r"><button class="btn ghost danger sm" data-rm="${j.id}">${A.sure['rm:'+j.id]?'Confirmar':'Remover'}</button></td></tr>`}).join('')
+  :`<tr><td colspan="7" class="muted" style="text-align:center;padding:22px">${O.jog.length?'Ninguém neste filtro.':'Ninguém entrou ainda.'}</td></tr>`}
+function A_confirm(key,btn,label){if(A.sure[key]&&Date.now()-A.sure[key]<4000){delete A.sure[key];return true}A.sure[key]=Date.now();if(btn){btn.dataset.lbl=btn.dataset.lbl||btn.textContent;btn.textContent=label||'Clique de novo para confirmar';setTimeout(()=>{if(btn.isConnected&&btn.dataset.lbl){btn.textContent=btn.dataset.lbl;delete btn.dataset.lbl}delete A.sure[key];A.tabSig=''},4000)}return false}
+async function A_fresh(){const {data}=await SB.from('salas').select('*').eq('id',O.sala.id).single();if(data){const reg=O.sala.registrado;O.sala=data;O.sala.registrado=reg}}
+async function A_click(ev){const rm=ev.target.closest('[data-rm]');
+ if(rm){const id=rm.dataset.rm,j=O.jog.find(x=>x.id===id);if(!A_confirm('rm:'+id,rm,'Confirmar'))return;pend(id,null,true);
+  const {error}=await SB.from('sala_jogadores').delete().eq('id',id);if(error)return toast(errMsg(error),'err');O.jog=O.jog.filter(x=>x.id!==id);toast((j?j.nome:'Participante')+' removido.');A.tabSig='';return A_render()}
+ const b=ev.target.closest('[data-act]');if(!b||b.disabled)return;const act=b.dataset.act;
+ const needSure={rm_all:'Remover todos? Clique de novo',rm_off:'Remover offline? Clique de novo',restart:'Zerar tudo? Clique de novo',close:'Encerrar? Clique de novo',redo:'Repetir? Clique de novo'};
+ if(needSure[act]&&!A_confirm(act,b,needSure[act]))return;
+ b.disabled=true;
+ try{await A_fresh();const e=E(),idx=e.idx??-1,last=idx+1>=Q().length;
+  if(act==='rm_all'){const {error}=await SB.from('sala_jogadores').delete().eq('sala',O.sala.id);if(error)throw error;O.jog.forEach(j=>pend(j.id,null,true));O.jog=[];toast('Todos foram removidos da sala.')}
+  else if(act==='rm_off'){const ids=O.jog.filter(j=>!online(j)).map(j=>j.id);if(!ids.length)toast('Ninguém offline.');else{const {error}=await SB.from('sala_jogadores').delete().in('id',ids);if(error)throw error;ids.forEach(i=>pend(i,null,true));O.jog=O.jog.filter(j=>!ids.includes(j.id));toast(ids.length+' pessoa(s) removida(s).')}}
+  else if(act==='start'){if(!O.jog.length){toast('Ainda não entrou ninguém.');return}const G=O.sala.grupos||[];if(G.length&&O.jog.some(j=>!G.some(g=>g.id===j.grupo)))await O_autoGroups();await core_openQ(0);toast('Dinâmica iniciada.')}
+  else if(act==='open_now'){await core_openQ(Math.max(0,idx))}
+  else if(act==='reveal'){if(e.fase==='pergunta'){await O_fetch();await core_reveal();toast('Resposta revelada.')}}
+  else if(act==='next'){if(e.fase==='pergunta')await core_reveal();if(last){await core_final(0);toast('Resultado no telão.')}else{await core_openQ(idx+1);toast('Pergunta '+(idx+2)+' aberta.')}}
+  else if(act==='plus'){const r=await rpc('din_admin',{p_sala:O.sala.id,p_acao:'mais_tempo',p_seg:15});O.sala.estado=r.estado;toast('+15 segundos.')}
+  else if(act==='final'){await core_final(0);toast('Resultado atualizado.')}
+  else if(act==='auto'){await O_saveEstado(Object.assign({},e,{auto:e.auto?0:8}));toast(E().auto?'O telão vai avançar sozinho 8s depois de mostrar a resposta.':'Avanço manual.')}
+  else if(act==='sync'){await O_saveEstado(Object.assign({},e));toast('Telão atualizado.')}
+  else if(act==='reload'){await O_saveEstado(Object.assign({},e,{reload:new Date().toISOString()}));toast('Os celulares vão recarregar em instantes.')}
+  else if(act==='recalc'){await rpc('din_admin',{p_sala:O.sala.id,p_acao:'recalcular'});toast('Pontuação recalculada.')}
+  else if(act==='redo'){await rpc('din_admin',{p_sala:O.sala.id,p_acao:'limpar_pergunta',p_idx:idx});await core_openQ(idx);toast('Pergunta reaberta com o tempo cheio.')}
+  else if(act==='entrada'){await O_saveEstado(Object.assign({},e,{entrada:e.entrada==='livre'?'':'livre'}));toast(E().entrada==='livre'?'Entrada liberada pelo QR code.':'Entrada fechada.')}
+  else if(act==='restart'){await rpc('din_admin',{p_sala:O.sala.id,p_acao:'zerar'});await O_saveEstado({fase:'lobby',total:Q().length});O.sala.registrado=false;toast('Tudo zerado. Sala de espera aberta.')}
+  else if(act==='close'){await SB.from('salas').update({aberta:false}).eq('id',O.sala.id);O.sala.aberta=false;toast('Sala encerrada.')}
+  else if(act==='reopen'){await SB.from('salas').update({aberta:true}).eq('id',O.sala.id);O.sala.aberta=true;toast('Sala reaberta.')}
+  await O_fetch();A_render(true)}
+ catch(err){toast(errMsg(err),'err')}finally{if(b.isConnected)b.disabled=false}}
 </script>
 </body>
 </html>

@@ -274,7 +274,7 @@ begin
   select * into s from public.salas where codigo = upper(trim(p_codigo));
   if not found then raise exception 'Sala não encontrada. Confira o código.'; end if;
   if not s.aberta then raise exception 'Esta dinâmica já foi encerrada.'; end if;
-  if coalesce(s.estado->>'fase','lobby') <> 'lobby' then raise exception 'A dinâmica já começou. Peça ao organizador para entrar na próxima rodada.'; end if;
+  if coalesce(s.estado->>'fase','lobby') <> 'lobby' and coalesce(s.estado->>'entrada','') <> 'livre' then raise exception 'A dinâmica já começou. Peça ao organizador para entrar na próxima rodada.'; end if;
   if length(trim(coalesce(p_nome,''))) < 2 then raise exception 'Digite o seu nome.'; end if;
   if (select count(*) from public.sala_jogadores where sala = s.id) >= 300 then raise exception 'A sala está cheia.'; end if;
   insert into public.sala_jogadores (sala, nome, avatar)
@@ -358,3 +358,39 @@ grant execute on function public.din_entrar(text, text, text) to anon, authentic
 grant execute on function public.din_estado(text, uuid, uuid) to anon, authenticated;
 grant execute on function public.din_responder(text, uuid, uuid, int) to anon, authenticated;
 grant execute on function public.din_abrir_pergunta(uuid, jsonb, int, int) to authenticated;
+
+-- Ferramentas do administrador da sala (destravar, recalcular, mais tempo)
+create or replace function public.din_admin(p_sala uuid, p_acao text, p_idx int default null, p_seg int default null) returns jsonb
+language plpgsql security definer set search_path = public as $$
+declare s public.salas; j record; r record; pts int; ac int; sq int; best int; novo_fim timestamptz;
+begin
+  if not public.dono_sala(p_sala) then raise exception 'Sem permissão para comandar esta sala.'; end if;
+  select * into s from public.salas where id = p_sala for update;
+  if p_acao = 'limpar_pergunta' then
+    delete from public.sala_respostas where sala = p_sala and pergunta = p_idx;
+  elsif p_acao = 'zerar' then
+    delete from public.sala_respostas where sala = p_sala;
+  elsif p_acao = 'mais_tempo' then
+    if s.gabarito is null or coalesce(s.estado->>'fase','') <> 'pergunta' then raise exception 'Não há pergunta aberta.'; end if;
+    novo_fim := greatest(now(), (s.gabarito->>'fim')::timestamptz) + make_interval(secs => coalesce(p_seg, 15));
+    update public.salas set
+      gabarito = s.gabarito || jsonb_build_object('fim', novo_fim),
+      estado = s.estado || jsonb_build_object('fim', novo_fim, 'seq', coalesce((s.estado->>'seq')::int, 0) + 1)
+    where id = p_sala returning * into s;
+    return jsonb_build_object('estado', s.estado, 'agora', now());
+  elsif p_acao <> 'recalcular' then
+    raise exception 'Ação desconhecida.';
+  end if;
+  -- recalcula pontos, acertos e sequências a partir das respostas gravadas
+  for j in select id from public.sala_jogadores where sala = p_sala loop
+    pts := 0; ac := 0; sq := 0; best := 0;
+    for r in select correta, pontos from public.sala_respostas where jogador = j.id order by pergunta loop
+      pts := pts + r.pontos;
+      if r.correta then ac := ac + 1; sq := sq + 1; best := greatest(best, sq); else sq := 0; end if;
+    end loop;
+    update public.sala_jogadores set pontos = pts, acertos = ac, sequencia = sq, melhor_seq = best where id = j.id;
+  end loop;
+  return jsonb_build_object('estado', s.estado, 'agora', now());
+end $$;
+revoke all on function public.din_admin(uuid, text, int, int) from public;
+grant execute on function public.din_admin(uuid, text, int, int) to authenticated;

@@ -34,5 +34,6 @@ Página: `dinamica.html` (link no menu Dinâmica do site).
 4. O contador mostra quantas pessoas entraram e quantas estão online. Monte os grupos clicando na pessoa e depois no grupo (ou arrastando).
 5. Clique em "Começar a dinâmica". Todos respondem ao mesmo tempo no celular; o ranking de equipes e o individual só aparecem no final.
 6. O resultado fica salvo no Painel da equipe.
+7. Painel do administrador: botão "Painel admin" no telão (abre em outra guia). Mostra quem está online, a performance de cada equipe em tempo real e tem controles para destravar (atualizar telão, recarregar celulares, recalcular pontos, repetir pergunta, +15 s, avanço automático, remover um ou todos).
 
 `qrcode.js`: QR Code Generator for JavaScript, (c) Kazuhiko Arase, licença MIT.
