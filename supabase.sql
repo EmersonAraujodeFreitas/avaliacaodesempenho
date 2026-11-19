@@ -262,6 +262,17 @@ create policy jog_excluir on public.sala_jogadores for delete to authenticated u
 drop policy if exists resp_ler on public.sala_respostas;
 create policy resp_ler on public.sala_respostas for select to authenticated using (public.dono_sala(sala));
 
+-- Colunas da versão com perguntas diferentes para cada pessoa
+alter table public.sala_jogadores add column if not exists ordem int not null default 0;
+alter table public.sala_respostas add column if not exists questao int;
+
+-- Qual pergunta do banco da sala cai para cada pessoa em cada rodada (sem repetir para a mesma pessoa)
+create or replace function public.din_questao(s public.salas, p_ordem int, p_idx int) returns int
+language sql immutable as $$
+  select mod(p_ordem * greatest(coalesce((s.perguntas->>'rodadas')::int, 1), 1) + p_idx,
+             greatest(jsonb_array_length(s.perguntas->'lista'), 1));
+$$;
+
 -- Hora do servidor (para todos os celulares contarem o mesmo tempo)
 create or replace function public.din_agora() returns timestamptz
 language sql stable as $$ select now() $$;
@@ -277,15 +288,16 @@ begin
   if coalesce(s.estado->>'fase','lobby') <> 'lobby' and coalesce(s.estado->>'entrada','') <> 'livre' then raise exception 'A dinâmica já começou. Peça ao organizador para entrar na próxima rodada.'; end if;
   if length(trim(coalesce(p_nome,''))) < 2 then raise exception 'Digite o seu nome.'; end if;
   if (select count(*) from public.sala_jogadores where sala = s.id) >= 300 then raise exception 'A sala está cheia.'; end if;
-  insert into public.sala_jogadores (sala, nome, avatar)
-  values (s.id, left(trim(p_nome), 40), left(coalesce(p_avatar,''), 16)) returning * into j;
+  insert into public.sala_jogadores (sala, nome, avatar, ordem)
+  values (s.id, left(trim(p_nome), 40), left(coalesce(p_avatar,''), 16),
+          (select coalesce(max(ordem), -1) + 1 from public.sala_jogadores where sala = s.id)) returning * into j;
   return jsonb_build_object('id', j.id, 'token', j.token);
 end $$;
 
 -- Celular do participante busca a situação da sala (e avisa que está online)
 create or replace function public.din_estado(p_codigo text, p_id uuid, p_token uuid) returns jsonb
 language plpgsql security definer set search_path = public as $$
-declare s public.salas; j public.sala_jogadores; r public.sala_respostas; fase text; revela boolean;
+declare s public.salas; j public.sala_jogadores; r public.sala_respostas; fase text; revela boolean; minha jsonb; pq jsonb;
 begin
   select * into s from public.salas where codigo = upper(trim(p_codigo));
   if not found then raise exception 'Sala não encontrada.'; end if;
@@ -297,8 +309,14 @@ begin
   fase := coalesce(s.estado->>'fase', 'lobby');
   revela := fase in ('revelacao', 'apuracao', 'fim');
   select * into r from public.sala_respostas where jogador = j.id and pergunta = coalesce((s.estado->>'idx')::int, -1);
+  -- modo "pergunta diferente para cada pessoa": manda só a pergunta desta pessoa
+  if s.estado->>'modo' = 'individual' and fase in ('pergunta', 'revelacao') then
+    pq := s.perguntas->'lista'->public.din_questao(s, j.ordem, (s.estado->>'idx')::int);
+    minha := jsonb_build_object('t', pq->'t', 'opts', pq->'opts', 'cat', pq->'cat', 'tipo', pq->'tipo')
+          || case when fase = 'revelacao' then jsonb_build_object('certa', pq->'certa', 'exp', pq->'exp') else '{}'::jsonb end;
+  end if;
   return jsonb_build_object(
-    'estado', s.estado, 'aberta', s.aberta, 'grupos', s.grupos, 'agora', now(),
+    'estado', s.estado, 'aberta', s.aberta, 'grupos', s.grupos, 'agora', now(), 'minha', minha,
     'eu', jsonb_build_object('nome', j.nome, 'avatar', j.avatar, 'grupo', j.grupo,
           'pontos', j.pontos - case when not revela and r.jogador is not null then r.pontos else 0 end,
           'acertos', j.acertos - case when not revela and r.correta then 1 else 0 end,
@@ -312,7 +330,7 @@ end $$;
 -- Participante responde (a pontuação é calculada no banco)
 create or replace function public.din_responder(p_codigo text, p_id uuid, p_token uuid, p_resposta int) returns jsonb
 language plpgsql security definer set search_path = public as $$
-declare s public.salas; j public.sala_jogadores; g jsonb; ok boolean; seg numeric; dur numeric; pts int; seq int;
+declare s public.salas; j public.sala_jogadores; g jsonb; ok boolean; seg numeric; dur numeric; pts int; seq int; qn int; certa int;
 begin
   select * into s from public.salas where codigo = upper(trim(p_codigo));
   if not found then raise exception 'Sala não encontrada.'; end if;
@@ -324,13 +342,19 @@ begin
   if now() > (g->>'fim')::timestamptz + interval '1 second' then raise exception 'O tempo acabou.'; end if;
   if exists (select 1 from public.sala_respostas where jogador = j.id and pergunta = (g->>'idx')::int) then
     raise exception 'Você já respondeu esta pergunta.'; end if;
-  ok := p_resposta = (g->>'certa')::int;
+  if g->>'modo' = 'individual' then
+    qn := public.din_questao(s, j.ordem, (g->>'idx')::int);
+    certa := (s.perguntas->'lista'->qn->>'certa')::int;
+  else
+    qn := (g->>'idx')::int; certa := (g->>'certa')::int;
+  end if;
+  ok := p_resposta = certa;
   dur := (g->>'segundos')::numeric;
   seg := least(dur, greatest(0, extract(epoch from now() - (g->>'inicio')::timestamptz)));
   seq := case when ok then j.sequencia + 1 else 0 end;
   pts := case when ok then 100 + round(50 * greatest(0, dur - seg) / dur) + least(100, greatest(0, seq - 1) * 20) else 0 end;
-  insert into public.sala_respostas (sala, jogador, pergunta, resposta, correta, pontos, tempo)
-  values (s.id, j.id, (g->>'idx')::int, p_resposta, ok, pts, round(seg, 2));
+  insert into public.sala_respostas (sala, jogador, pergunta, resposta, correta, pontos, tempo, questao)
+  values (s.id, j.id, (g->>'idx')::int, p_resposta, ok, pts, round(seg, 2), qn);
   update public.sala_jogadores set pontos = pontos + pts, acertos = acertos + case when ok then 1 else 0 end,
     sequencia = seq, melhor_seq = greatest(melhor_seq, seq), visto_em = now() where id = j.id;
   return jsonb_build_object('ok', true);
@@ -344,7 +368,7 @@ begin
   if not public.dono_sala(p_sala) then raise exception 'Sem permissão para comandar esta sala.'; end if;
   e := p_publico || jsonb_build_object('fase', 'pergunta', 'inicio', ini, 'fim', fim, 'segundos', p_segundos);
   update public.salas set estado = e,
-    gabarito = jsonb_build_object('certa', p_certa, 'idx', (p_publico->>'idx')::int, 'inicio', ini, 'fim', fim, 'segundos', p_segundos)
+    gabarito = jsonb_build_object('certa', p_certa, 'idx', (p_publico->>'idx')::int, 'inicio', ini, 'fim', fim, 'segundos', p_segundos, 'modo', coalesce(p_publico->>'modo', 'mesma'))
   where id = p_sala;
   return jsonb_build_object('estado', e, 'agora', now());
 end $$;
@@ -394,3 +418,14 @@ begin
 end $$;
 revoke all on function public.din_admin(uuid, text, int, int) from public;
 grant execute on function public.din_admin(uuid, text, int, int) to authenticated;
+
+-- Participante sai da sala pelo próprio celular
+create or replace function public.din_sair(p_codigo text, p_id uuid, p_token uuid) returns jsonb
+language plpgsql security definer set search_path = public as $$
+begin
+  delete from public.sala_jogadores j using public.salas s
+  where j.id = p_id and j.token = p_token and j.sala = s.id and s.codigo = upper(trim(p_codigo));
+  return jsonb_build_object('ok', true);
+end $$;
+revoke all on function public.din_sair(text, uuid, uuid) from public;
+grant execute on function public.din_sair(text, uuid, uuid) to anon, authenticated;
