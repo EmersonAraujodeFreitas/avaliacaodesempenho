@@ -2415,13 +2415,41 @@ const pendentes=()=>DB.perfis.filter(p=>p.status==='pendente');
 const noOwn=r=>{const o={...r};delete o.owner;delete o.ownerNome;return o};
 const pName=id=>(DB.perfis.find(p=>p.id===id)||{}).nome||'';
 function setSync(st){const d=document.getElementById('dbDot');if(d){d.className='dbdot '+st;d.title=st==='ok'?'Dados salvos no banco':st==='err'?'Falha ao salvar no banco':'Salvando…'}}
+/* fila de envio: nada se perde se a sessão expirar ou a internet cair */
+const PQK=()=>'avd-pend-'+(DB.user?DB.user.id:'x');
+function pqGet(){try{return JSON.parse(localStorage.getItem(PQK())||'{}')}catch(e){return{}}}
+function pqSet(q){try{localStorage.setItem(PQK(),JSON.stringify(q))}catch(e){}}
+const pqCount=()=>{const q=pqGet();return Object.values(q).reduce((a,t)=>a+Object.keys(t.up||{}).length+(t.del||[]).length,0)};
 async function syncTable(table,old,neu,map){
  const om=new Map(old.map(r=>[r.id,JSON.stringify(noOwn(r))])),nm=new Set(neu.map(r=>r.id));
  const up=neu.filter(r=>om.get(r.id)!==JSON.stringify(noOwn(r))).map(map),del=old.filter(r=>!nm.has(r.id)).map(r=>r.id);
- if(!up.length&&!del.length)return;setSync('busy');
- try{if(up.length){const{error}=await DB.sb.from(table).upsert(up);if(error)throw error}
-  if(del.length){const{error}=await DB.sb.from(table).delete().in('id',del);if(error)throw error}setSync('ok')}
- catch(e){setSync('err');toast('Não foi possível salvar no banco: '+(e.message||e),'err')}}
+ if(!up.length&&!del.length)return;
+ const q=pqGet(),t=q[table]||(q[table]={up:{},del:[]});
+ up.forEach(r=>{t.up[r.id]=r;t.del=t.del.filter(x=>x!==r.id)});del.forEach(id=>{delete t.up[id];if(!t.del.includes(id))t.del.push(id)});pqSet(q);
+ return flushQueue()}
+let FLUSHING=null,FLUSH_MSG=0;
+function flushQueue(){if(FLUSHING)return FLUSHING.then(()=>pqCount()?flushQueue():null);FLUSHING=doFlush().finally(()=>{FLUSHING=null});return FLUSHING}
+async function sessaoOk(){try{let {data}=await DB.sb.auth.getSession();if(!data.session){const r=await DB.sb.auth.refreshSession();data=r.data||{}}return!!(data&&data.session)}catch(e){return false}}
+async function doFlush(){if(!DB.on||!DB.sb||!DB.user)return;const q=pqGet();if(!pqCount())return;setSync('busy');
+ const send=async()=>{for(const [table,t] of Object.entries(q)){const ups=Object.values(t.up||{});
+   if(ups.length){const{error}=await DB.sb.from(table).upsert(ups);if(error)throw error;t.up={}}
+   if((t.del||[]).length){const{error}=await DB.sb.from(table).delete().in('id',t.del);if(error)throw error;t.del=[]}pqSet(q)}};
+ try{if(!await sessaoOk())throw{code:'SESSAO'};
+  try{await send()}catch(e){if(/row-level security|JWT|jwt|401|403/i.test((e&&e.message)||'')){await DB.sb.auth.refreshSession().catch(()=>{});await send()}else throw e}
+  setSync('ok');if(FLUSH_MSG){FLUSH_MSG=0;toast('Tudo certo: os dados pendentes foram salvos no banco.','ok')}}
+ catch(e){setSync('err');const n=pqCount();let msg;
+  if(e&&e.code==='SESSAO'||/JWT|jwt/i.test((e&&e.message)||''))msg='Sua sessão expirou. Saia e entre de novo para salvar no banco.';
+  else if(/row-level security/i.test((e&&e.message)||'')){let st='';try{const r=await DB.sb.from('perfis').select('status').eq('id',DB.user.id).maybeSingle();st=r.data&&r.data.status}catch(x){}
+   msg=st&&st!=='ativo'?(st==='bloqueado'?'Seu acesso foi bloqueado. Fale com o gerente ou o coordenador.':'Seu acesso ainda aguarda aprovação do gerente ou coordenador.'):st==='ativo'?'O banco recusou o salvamento. Saia e entre de novo; se continuar, avise o administrador.':'Sua sessão expirou. Saia e entre de novo para salvar no banco.'}
+  else if(/fetch|network|Failed/i.test((e&&e.message)||''))msg='Sem conexão com a internet.';
+  else msg='Não foi possível salvar no banco ('+((e&&e.message)||e)+').';
+  if(Date.now()-FLUSH_MSG>20000){FLUSH_MSG=Date.now();toast(msg+` ${n} registro(s) ficaram guardados neste navegador e serão enviados sozinhos assim que possível.`,'err')}}}
+window.addEventListener('online',()=>flushQueue());
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')flushQueue()});
+setInterval(()=>{if(DB.on&&pqCount())flushQueue()},45000);
+function pqApply(){const q=pqGet(),M={avaliacoes:'hist',dinamica_participantes:'game',dinamica_equipes:'team'};
+ Object.entries(q).forEach(([table,t])=>{const k=M[table];if(!k)return;const del=new Set(t.del||[]);let L=DB[k].filter(r=>!del.has(r.id));
+  Object.values(t.up||{}).forEach(row=>{const r={...row.registro,id:row.id,owner:DB.user.id,ownerNome:pName(DB.user.id)},i=L.findIndex(x=>x.id===row.id);if(i>=0)L[i]={...r,owner:L[i].owner,ownerNome:L[i].ownerNome};else L.push(r)});DB[k]=L})}
 async function dbLoad(){const sb=DB.sb;
  const r0=await sb.from('perfis').select('*');if(r0.error)throw r0.error;const pf=r0.data||[];
  DB.perfis=pf;DB.perfil=pf.find(p=>p.id===DB.user.id)||{id:DB.user.id,nome:'',email:DB.user.email,cargo:'Assistente',status:'pendente'};
@@ -2430,6 +2458,7 @@ async function dbLoad(){const sb=DB.sb;
  res.forEach(r=>{if(r.error)throw r.error});const[av,gp,ge]=res.map(r=>r.data||[]);
  const wrap=x=>({...x.registro,id:x.id,owner:x.owner,ownerNome:pName(x.owner)});
  DB.hist=av.map(wrap);DB.game=gp.map(wrap);DB.team=ge.map(wrap);
+ pqApply();
  try{const c=await sb.from('configuracoes').select('*');const row=(c.data||[]).find(x=>x.chave==='listas');if(!c.error&&row&&row.valor&&row.valor.cargos)LISTAS=row.valor}catch(e){}}
 function histLoad(){if(DB.on)return DB.hist.map(r=>({...r}));try{return JSON.parse(localStorage.getItem(HK)||'[]')}catch(e){return[]}}
 function histSave(l){if(DB.on){const old=DB.hist;DB.hist=l.map(r=>({...r,owner:r.owner||DB.user.id,ownerNome:r.ownerNome||pName(r.owner||DB.user.id)}));
@@ -2464,6 +2493,7 @@ async function entrar(user){
   $('#waitTxt').textContent=blk?'O seu acesso foi recusado ou bloqueado. Fale com o gerente ou o coordenador.':`Olá, ${(DB.perfil.nome||'').split(' ')[0]}! O seu cadastro foi enviado. Assim que o gerente ou o coordenador aprovar, você poderá entrar.`;
   showAuth('espera');return}
  G={phase:'setup'};fill();renderUser();show('home');
+ if(pqCount()){FLUSH_MSG=1;flushQueue()}
  toast(`Olá, ${(DB.perfil.nome||'').split(' ')[0]||'bem-vindo'}! Você entrou como ${DB.perfil.cargo}.`,'ok');
  if(isAdmin()&&pendentes().length)setTimeout(()=>toast(`${pendentes().length} cadastro(s) aguardando a sua aprovação em Administração.`),600)}
 $('#waitCheck').addEventListener('click',async()=>{const b=$('#waitCheck');b.disabled=true;b.textContent='Verificando…';try{await entrar(DB.user)}finally{b.disabled=false;b.textContent='Verificar de novo'}});
