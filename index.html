@@ -1383,7 +1383,8 @@ function progress(){
 const discDone=()=>DISC_G.filter((g,i)=>{const a=state.disc['g'+i];return a&&a.mais&&a.menos}).length;
 
 /* ---------- cálculos ---------- */
-function cls(m){if(m==null)return['Sem dados','p3'];if(m>=4.5)return['Excepcional','p5'];if(m>=3.75)return['Supera as expectativas','p4'];if(m>=2.75)return['Atende às expectativas','p3'];if(m>=1.75)return['Abaixo do esperado','p2'];return['Insatisfatório','p1']}
+const r1=m=>Math.round(m*10)/10;
+function cls(m){if(m==null||isNaN(m))return['Sem dados','p3'];const r=r1(m);if(r<=2)return['Abaixo da expectativa','p1'];if(r<=4)return['Dentro da expectativa','p3'];return['Acima da expectativa','p5']}
 const mean=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
 function calc(S=state){
  const dims=DIMS.map(d=>{const v=d.itens.map(([id])=>S.notas[id]).filter(x=>x>0);return{d,m:mean(v),n:v.length}});
@@ -1420,7 +1421,7 @@ function radar(dims){
   g+=`<text x="${lx}" y="${ly}" text-anchor="${an}">${s.d.curto} <tspan font-weight="700">${fmt(s.m)}</tspan></text>`});
  return `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Radar de competências">${g}</svg>`;
 }
-function barColor(m){return m==null?'var(--line)':m>=4.5?'var(--good)':m>=3.75?'var(--accent)':m>=2.75?'var(--muted)':m>=1.75?'var(--warn)':'var(--bad)'}
+function barColor(m){if(m==null)return'var(--line)';const r=r1(m);return r<=2?'var(--bad)':r<=4?'var(--accent)':'var(--good)'}
 function bars(dims){
  const sorted=[...dims].sort((a,b)=>(b.m||0)-(a.m||0));
  return `<div class="bars">${sorted.map(s=>`<div class="bar-row"><span>${s.d.curto}</span><div class="bar-track"><div class="bar-fill" style="width:${(s.m||0)/5*100}%;background:${barColor(s.m)}"></div><div class="bar-meta" style="left:80%"></div></div><b>${fmt(s.m)}</b></div>`).join('')}</div><div class="cap">Notas de 1 a 5. A linha tracejada é a meta (4,0).</div>`;
@@ -1554,7 +1555,7 @@ function report(){
   return`<section class="r-sec"><h2><i>08</i>Dinâmica gamificada</h2><div class="evo-top"><div><span>Índice</span><b>${gm.idx}/100</b><small>${GTITLE(gm.idx)}</small></div><div><span>Nível</span><b>${gm.nivel+1}</b><small>${LEVELS[gm.nivel]}</small></div><div><span>XP</span><b>${gm.xp}</b><small>em ${dataBR(gm.data)}</small></div><div><span>Conquistas</span><b>${gm.badges.length}/${BADGES.length}</b><small>${gm.badges.map(k=>(BADGES.find(b=>b[0]===k)||[0,k])[1]).join(', ')||'nenhuma'}</small></div></div>
   <div class="bars">${(CATS.some(c=>gm.dims[c.id]!=null)?CATS:DIMS).filter(d=>gm.dims[d.id]!=null).map(d=>`<div class="bar-row"><span>${d.curto}</span><div class="bar-track"><div class="bar-fill" style="width:${gm.dims[d.id]/5*100}%;background:${barColor(gm.dims[d.id])}"></div><div class="bar-meta" style="left:80%"></div></div><b>${fmt(gm.dims[d.id])}</b></div>`).join('')}</div><p class="cap">Resultado da última participação no Desafio do Conhecimento, na escala de 1 a 5.</p></section>`})()}
  <div class="sign"><div>${esc(I.avaliador||'Avaliador')}<br>Avaliador${I.cargoAv?' · '+esc(I.cargoAv):''}</div><div>${esc((I.nome||'Avaliado').replace(/ \(exemplo\)$/,''))}<br>Avaliado</div><div>Elinai Ramos<br>Gerente de Operações</div></div>
- <div class="foot"><span>Escala: 1 Insatisfatório · 2 Abaixo · 3 Atende · 4 Supera · 5 Excepcional</span><span>Documento confidencial</span></div></div>`;
+ <div class="foot"><span>Nota geral: até 2,0 abaixo · 2,1 a 4,0 dentro · 4,1 a 5,0 acima da expectativa</span><span>Documento confidencial</span></div></div>`;
  setRepView(REPVIEW);
  $('#x_out').value=JSON.stringify(state);
 }
@@ -1628,7 +1629,7 @@ function pdfDownload(){
 /* ---------- PDF padronizado ---------- */
 const PC={navy:[0,49,88],gold:[242,183,5],blue:[11,95,165],ink:[19,34,53],muted:[86,101,120],line:[213,221,231],soft:[244,247,251],good:[44,122,75],warn:[168,112,26],bad:[176,55,47],gray:[100,116,139],white:[255,255,255],
  D:[192,57,43],I:[201,151,26],S:[46,139,87],C:[44,108,176],goodS:[227,242,233],warnS:[248,238,220],badS:[248,228,226],blueS:[225,236,247]};
-const lvlC=m=>m==null?PC.line:m>=4.5?PC.good:m>=3.75?PC.blue:m>=2.75?PC.gray:m>=1.75?PC.warn:PC.bad;
+const lvlC=m=>{if(m==null)return PC.line;const r=Math.round(m*10)/10;return r<=2?PC.bad:r<=4?PC.blue:PC.good};
 function pdfFull(){
  if(!window.jspdf){alertMsg('O gerador de PDF não carregou. Verifique a conexão com a internet e tente de novo.');return}
  const st=calc(),dc=discCalc(),I=state.info,O=state.obs;
@@ -1750,8 +1751,8 @@ async function deliver(fn,blob,fallback,what){
 
 /* ---------- painel da equipe ---------- */
 const SER=['#2a78d6','#eb6834','#1baf7a','#eda100','#e87ba4','#008300','#6250d6','#e34948'],HEAT=['#cde2fb','#9ec5f4','#6da7ec','#3987e5','#1c5cab'];
-const LVC=['var(--bad)','var(--warn)','#64748B','var(--accent)','var(--good)'],LVN=['Insatisfatório','Abaixo do esperado','Atende','Supera','Excepcional'];
-const lvIdx=m=>m>=4.5?4:m>=3.75?3:m>=2.75?2:m>=1.75?1:0;
+const LVC=['var(--bad)','var(--accent)','var(--good)'],LVN=['Abaixo da expectativa','Dentro da expectativa','Acima da expectativa'];
+const lvIdx=m=>{const r=r1(m);return r<=2?0:r<=4?1:2};
 const lv=m=>m==null?'var(--line)':LVC[lvIdx(m)];
 const MN=['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'],mlab=m=>MN[+m.slice(5,7)-1]+'/'+m.slice(2,4);
 let teamOwner='Todos',teamTab='geral',teamCargo='Todos',cmpA=null,cmpB=null,hideL=new Set(),tSort={k:'m',dir:-1};
@@ -1859,7 +1860,7 @@ function renderTeam(){
  if(!T.all.length){$('#team').innerHTML='<p class="empty">Nenhuma avaliação com notas no histórico ainda.</p>';return}
  const cargos=[...new Set(T.all.map(p=>p.cargo))].sort();if(teamCargo!=='Todos'&&!cargos.includes(teamCargo))teamCargo='Todos';
  const P=T.all.filter(p=>teamCargo==='Todos'||p.cargo===teamCargo);
- const avg=mean(P.map(p=>p.c.m)),withPrev=P.filter(p=>p.d!=null),up=withPrev.filter(p=>p.d>=0.2),acima=P.filter(p=>p.c.m>=3.75).length;
+ const avg=mean(P.map(p=>p.c.m)),withPrev=P.filter(p=>p.d!=null),up=withPrev.filter(p=>p.d>=0.2),acima=P.filter(p=>p.c.m!=null&&r1(p.c.m)>4).length;
  const crit=P.reduce((a,p)=>a+p.c.items.filter(i=>i.v<=2).length,0);
  const dimAvg=DIMS.map((d,i)=>mean(P.map(p=>p.c.dims[i].m).filter(x=>x!=null)));
  const byNota=[...P].sort((a,b)=>b.c.m-a.c.m),dimRank=DIMS.map((d,i)=>({d,m:dimAvg[i]})).filter(x=>x.m!=null).sort((a,b)=>b.m-a.m),evoRank=[...withPrev].sort((a,b)=>b.d-a.d);
@@ -1873,8 +1874,8 @@ function renderTeam(){
    ['Área mais forte',`<b>${dimRank[0].d.nome}</b> (${fmt(dimRank[0].m)})`],['Área mais fraca',`<b>${dimRank[dimRank.length-1].d.nome}</b> (${fmt(dimRank[dimRank.length-1].m)})`],
    ['Mais evoluiu',evoRank.length?`<b>${esc(evoRank[0].nome)}</b> (${sgn(evoRank[0].d)})`:'Sem comparação ainda'],['Perfil DISC mais comum',topDisc[1].length?`<b>${DISC[topDisc[0]].nome}</b> (${topDisc[1].length} de ${P.length})`:'-']];
   const ranking=`<div class="rk">${byNota.map(p=>`<div class="rk-row" data-tip="${esc(p.nome)}: ${fmt(p.c.m)} (${cls(p.c.m)[0]})"><span class="nm"><i style="background:${p.color}"></i>${esc(p.nome)}</span><div class="rk-track"><div class="rk-fill" style="width:${(p.c.m-1)/4*100}%;background:${lv(p.c.m)}"></div><div class="rk-avg" style="left:${(avg-1)/4*100}%"></div></div><b>${fmt(p.c.m)}</b></div>`).join('')}</div><p class="cap">Cor da barra: nível da nota. Linha tracejada: média da equipe (${fmt(avg)}).</p>`;
-  const cnt=[0,0,0,0,0];P.forEach(p=>cnt[lvIdx(p.c.m)]++);
-  const dist=`<div class="dist">${cnt.map((c,i)=>c?`<div style="flex:${c};background:${LVC[i]}" data-tip="${LVN[i]}: ${c} consultor(es)">${c}</div>`:'').join('')}</div><div class="dist-lg">${LVN.map((n,i)=>`<span><i style="background:${LVC[i]}"></i>${n}<b>${cnt[i]}</b></span>`).join('')}</div><p class="cap">${acima} de ${P.length} consultores estão no nível “Supera” ou acima.</p>`;
+  const cnt=[0,0,0];P.forEach(p=>cnt[lvIdx(p.c.m)]++);
+  const dist=`<div class="dist">${cnt.map((c,i)=>c?`<div style="flex:${c};background:${LVC[i]}" data-tip="${LVN[i]}: ${c} consultor(es)">${c}</div>`:'').join('')}</div><div class="dist-lg">${LVN.map((n,i)=>`<span><i style="background:${LVC[i]}"></i>${n}<b>${cnt[i]}</b></span>`).join('')}</div><p class="cap">${acima} de ${P.length} consultores estão acima da expectativa (nota 4,1 ou mais).</p>`;
   body=`${card('Destaques','O principal da equipe em poucas linhas.',`<ul class="insights">${ins.map(([a,b])=>`<li><span>${a}</span>${b}</li>`).join('')}</ul>`,1)}
    ${card('Ranking por nota geral','Última avaliação de cada consultor.',ranking)}
    ${card('Distribuição por nível','Quantos consultores há em cada faixa de nota.',dist)}
@@ -1956,7 +1957,7 @@ function renderTeam(){
    <div class="t-kpi"><span>Consultores</span><b>${P.length}</b><small>avaliados</small></div>
    <div class="t-kpi"><span>Avaliações</span><b>${P.reduce((a,p)=>a+p.ev.length,0)}</b><small>no histórico</small></div>
    <div class="t-kpi"><span>Média da equipe</span><b>${fmt(avg)}</b><small>${cls(avg)[0]}</small></div>
-   <div class="t-kpi"><span>Na meta ou acima</span><b>${acima}/${P.length}</b><small>nota 3,75 ou mais</small></div>
+   <div class="t-kpi"><span>Acima da expectativa</span><b>${acima}/${P.length}</b><small>nota 4,1 ou mais</small></div>
    <div class="t-kpi"><span>Evoluíram</span><b>${up.length}/${withPrev.length}</b><small>desde a anterior</small></div>
    <div class="t-kpi${crit?' warn':''}"><span>Pontos críticos</span><b>${crit}</b><small>respostas com nota 1 ou 2</small></div>
   </div>
