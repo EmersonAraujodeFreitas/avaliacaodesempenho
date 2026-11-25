@@ -812,6 +812,43 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
 .foot{margin-top:28px;font-size:11px;color:var(--muted);font-family:var(--f-mono);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .empty{color:var(--muted);font-style:italic}
 
+/* ---------- versão do avaliado (1 página) ---------- */
+.rv-seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface)}
+.rv-seg button{border:0;background:transparent;padding:9px 14px;font:inherit;font-weight:600;font-size:14px;color:var(--muted);cursor:pointer}
+.rv-seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+#report[data-view="op"] #rep-full,#report[data-view="full"] #rep-op{display:none}
+#report[data-view="op"]{background:transparent;border:0;box-shadow:none;padding:0}
+.op{--opc:#003158;max-width:794px;margin:0 auto;background:#fff;color:#14202B;border:1px solid var(--line);border-radius:6px;box-shadow:0 10px 30px rgba(15,30,48,.08);padding:30px 34px;font-size:13px;line-height:1.4;display:flex;flex-direction:column;gap:12px}
+.op-h{display:flex;align-items:center;gap:16px;background:var(--opc);color:#fff;margin:-30px -34px 0;padding:16px 34px;border-radius:6px 6px 0 0;border-bottom:3px solid #F2B705}
+.op-h img{height:46px;width:auto}.op-t{flex:1;min-width:0}.op-t small{color:#F2B705;font-weight:600;font-size:11.5px;text-transform:uppercase;letter-spacing:.06em}
+.op-t h1{margin:2px 0 0;font-size:22px;color:#fff;line-height:1.15}.op-t p{margin:2px 0 0;opacity:.8;font-size:12.5px}
+.op-m{display:grid;gap:2px;font-size:11.5px;text-align:right;opacity:.9}.op-m b{font-weight:700}
+.op-k{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.op-k>div{border:1px solid #D6DDE4;border-top:3px solid var(--opc);border-radius:8px;padding:8px 10px;display:flex;flex-direction:column;gap:1px}
+.op-k span{font-size:10.5px;font-weight:700;color:#596673;text-transform:uppercase;letter-spacing:.05em}
+.op-k b{font-family:var(--f-display);font-size:22px;line-height:1.1}.op-k b small{font-size:12px;color:#596673;margin-left:2px}.op-k b em{font-style:normal}
+.op-k b.up{color:#2C7A4B}.op-k b.dn{color:#B0372F}.op-k i{font-style:normal;font-size:11px;color:#596673}.op-k i.pill{align-self:flex-start;margin-top:2px}
+.op-r{margin:0;background:#EEF4FA;border-left:3px solid #F2B705;border-radius:0 8px 8px 0;padding:9px 12px;font-size:13px}
+.op-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.op h2{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--opc);margin:0 0 7px;padding-bottom:4px;border-bottom:1px solid #D6DDE4}
+.op h3{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:#596673;margin:8px 0 3px}
+.op ul{margin:0;padding-left:16px}.op li{margin:1px 0}
+.op-bars{display:grid;gap:5px}.op-bars>div{display:grid;grid-template-columns:118px 1fr 28px;align-items:center;gap:8px;font-size:12px}
+.op-bars b{text-align:right;font-family:var(--f-mono);font-size:12px}
+.op-tr{position:relative;height:8px;background:#EEF1F4;border-radius:9px}.op-tr i{position:absolute;inset:0 auto 0 0;border-radius:9px}.op-tr u{position:absolute;left:80%;top:-3px;bottom:-3px;border-left:1.5px dashed #14202B;opacity:.55}
+.op-cap{margin:5px 0 0;font-size:11px;color:#596673}
+.op-disc{margin:0;font-size:12.5px;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}.op-mot{margin:0;font-size:12.5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.op-it{list-style:none;padding:0!important;display:grid;gap:6px}.op-it li{display:flex;gap:8px;align-items:flex-start}
+.op-it li>b{flex:none;width:22px;height:20px;border-radius:5px;display:grid;place-items:center;color:#fff;font-size:12px}
+.op-g .op-it li>b{background:#2C7A4B}.op-w .op-it li>b{background:#A8701A}
+.op-it div{font-size:12.5px;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}.op-it small{display:block;color:#596673;font-size:11px}
+.op-q p{margin:0;font-size:12.5px;white-space:pre-wrap;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.op-f{font-size:12.5px}
+.op-s{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:26px}
+.op-s div{border-top:1px solid #14202B;padding-top:5px;text-align:center;font-size:12px;font-weight:600}.op-s small{display:block;font-weight:400;color:#596673;font-size:11px}
+.op-ft{display:flex;justify-content:space-between;font-size:10.5px;color:#596673;border-top:1px solid #D6DDE4;padding-top:6px;margin-top:auto}
+@media (max-width:700px){.op{padding:20px 16px}.op-h{margin:-20px -16px 0;padding:14px 16px;flex-wrap:wrap}.op-m{text-align:left}.op-k{grid-template-columns:1fr 1fr}.op-2{grid-template-columns:1fr}.op-bars>div{grid-template-columns:100px 1fr 28px}}
+
 @media print{
   :root,:root[data-theme="dark"],:root:not([data-theme="light"]){
     --bg:#fff; --surface:#fff; --ink:#14202B; --muted:#596673; --line:#D6DDE4; --soft:#F5F7F9;
@@ -831,6 +868,11 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
   .r-sec>h2,.box-h{break-after:avoid}
   .kpi .pill{white-space:normal}
   .pb{break-before:page}
+  #rep-full{display:none!important}
+  #rep-op{display:block!important}
+  @page{size:A4;margin:9mm}
+  .op{max-width:none;border:0;box-shadow:none;border-radius:0;padding:0 2mm;height:277mm;overflow:hidden;font-size:12.2px;gap:10px}
+  .op-h{margin:0 -2mm;border-radius:0;padding:12px 6mm}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -979,8 +1021,10 @@ table.t tr.grp td{background:var(--soft);font-weight:700;font-size:12.5px}
   <section class="panel" id="tab-painel" hidden>
     <div class="toolbar">
       <button class="btn" data-go="dados" type="button">← Editar respostas</button>
-      <button class="btn primary" id="b_pdf" type="button">Baixar PDF</button>
-      <button class="btn" id="b_print" type="button">Imprimir</button>
+      <div class="rv-seg" role="group" aria-label="Versão do relatório"><button type="button" data-rv="op" aria-pressed="true">Versão do avaliado (1 página)</button><button type="button" data-rv="full" aria-pressed="false">Análise completa</button></div>
+      <button class="btn primary" id="b_pdf" type="button" title="PDF de 1 página para entregar ao avaliado">Baixar PDF</button>
+      <button class="btn" id="b_print" type="button" title="Imprime a versão de 1 página">Imprimir</button>
+      <button class="btn" id="b_pdffull" type="button" title="PDF com a análise completa, para o gestor">PDF completo</button>
       <span class="msg" id="pdfMsg" hidden style="color:var(--bad)"></span>
       <div class="note" id="printNote" hidden>Para baixar o PDF ou imprimir, use o site: <b>emersonaraujodefreitas.github.io/avaliacaodesempenho</b>. Esta pré-visualização não permite downloads. Para levar as respostas daqui para lá, use “Transferir respostas” no fim desta página.</div>
     </div>
@@ -1383,6 +1427,38 @@ function bars(dims){
 }
 
 /* ---------- relatório ---------- */
+let REPVIEW=(()=>{try{return localStorage.getItem('rep-view')||'op'}catch(e){return'op'}})();
+function setRepView(v){REPVIEW=v;try{localStorage.setItem('rep-view',v)}catch(e){}const r=$('#report');if(r)r.dataset.view=v;document.querySelectorAll('[data-rv]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.rv===v))}
+function opData(){const st=calc(),dc=discCalc(),I=state.info,O=state.obs,cmp=compare(state);
+ const fortes=[...st.items].filter(x=>x.v>=4).sort((a,b)=>b.v-a.v).slice(0,3);
+ const opp=[...st.items].filter(x=>x.v<4).sort((a,b)=>a.v-b.v||((st.dims.find(s=>s.d===a.dim).m||0)-(st.dims.find(s=>s.d===b.dim).m||0))).slice(0,3);
+ const ranked=st.dims.filter(s=>s.m!=null).sort((a,b)=>b.m-a.m),best=ranked[0],worst=ranked[ranked.length-1],[cl]=cls(st.m);
+ const nome=(I.nome||'Consultor').replace(/ \(exemplo\)$/,''),pn=nome.split(' ')[0];
+ const resumo=`${pn}, sua nota geral foi ${fmt(st.m)} de 5 (${fmt(st.pct,0)}%): ${cl.toLowerCase()}. `+(best?`Seu ponto mais forte é ${best.d.nome} (${fmt(best.m)})${ranked[1]?` e depois ${ranked[1].d.nome} (${fmt(ranked[1].m)})`:''}. `:'')+(worst&&worst!==best?`O foco para o próximo ciclo é ${worst.d.nome} (${fmt(worst.m)}). `:'')+(cmp?`Em relação à avaliação de ${dataBR(cmp.data)}, sua nota foi de ${fmt(cmp.ant)} para ${fmt(cmp.atu)}.`:'');
+ const prazo=v=>v<=2?'30 dias':v===3?'60 dias':'90 dias';
+ return{st,dc,I,O,cmp,fortes,opp,cl,nome,resumo,prazo,dataAv:I.data?dataBR(I.data):'-',hoje:new Date().toLocaleDateString('pt-BR')}}
+function opHTML(){const d=opData(),{st,dc,I,O,cmp}=d,col={D:'var(--d)',I:'var(--i)',S:'var(--s)',C:'var(--c)'};
+ const P=dc?DISC[dc.p]:null;const[,cp]=cls(st.m);
+ const metas=(O.metas||'').trim(),coment=(O.fortes||'').trim();
+ return`<div class="op">
+ <header class="op-h"><img src="${document.getElementById('logo').src}" alt="Inovação Casa"><div class="op-t"><small>Avaliação de desempenho · Inovação</small><h1>${esc(d.nome)}</h1><p>${esc([I.cargo,I.area].filter(Boolean).join(' · ')||'-')}</p></div>
+  <div class="op-m"><span>Avaliado em <b>${d.dataAv}</b></span><span>Período <b>${esc(I.periodo||'-')}</b></span><span>Avaliador <b>${esc(I.avaliador||'-')}</b></span></div></header>
+ <div class="op-k">
+  <div><span>Nota geral</span><b>${fmt(st.m)}<small>/5</small></b><i class="pill ${cp}">${d.cl}</i></div>
+  <div><span>Aproveitamento</span><b>${fmt(st.pct,0)}%</b><i>${st.items.length} de ${NITEMS} itens</i></div>
+  <div><span>Evolução</span>${cmp?`<b class="${cmp.d>=0.2?'up':cmp.d<=-0.2?'dn':''}">${sgn(cmp.d)}</b><i>${evo(cmp.d)[0]} desde ${dataBR(cmp.data)}</i>`:'<b>-</b><i>Primeira avaliação</i>'}</div>
+  <div><span>Perfil DISC</span><b>${dc?[dc.p,dc.s].filter(Boolean).map(f=>`<em style="color:${col[f]}">${f}</em>`).join(''):'-'}</b><i>${P?P.nome:'não respondido'}</i></div></div>
+ <p class="op-r">${esc(d.resumo)}</p>
+ <div class="op-2">
+  <section><h2>Notas por área</h2><div class="op-bars">${[...st.dims].sort((a,b)=>(b.m||0)-(a.m||0)).map(s=>`<div><span>${s.d.nome}</span><div class="op-tr"><i style="width:${(s.m||0)/5*100}%;background:${barColor(s.m)}"></i><u></u></div><b>${fmt(s.m)}</b></div>`).join('')}</div><p class="op-cap">De 1 a 5. A linha marca a meta (4,0).</p></section>
+  <section><h2>Seu jeito de trabalhar (DISC)</h2>${P?`<p class="op-disc"><b>${P.nome}</b>, perfil ${P.arq}. ${P.resumo}</p><h3>Seus pontos fortes</h3><ul>${P.fortes.slice(0,3).map(x=>`<li>${x}</li>`).join('')}</ul><h3>O que te motiva</h3><p class="op-mot">${P.motiva}</p>`:'<p class="op-cap">O questionário DISC não foi respondido.</p>'}</section></div>
+ <div class="op-2">
+  <section class="op-g"><h2>Onde você se destaca</h2>${d.fortes.length?`<ul class="op-it">${d.fortes.map(x=>`<li><b>${x.v}</b><div>${x.t}<small>${x.dim.nome}</small></div></li>`).join('')}</ul>`:'<p class="op-cap">Nenhum item com nota 4 ou 5 nesta avaliação.</p>'}</section>
+  <section class="op-w"><h2>Plano de desenvolvimento</h2>${d.opp.length?`<ul class="op-it">${d.opp.map(x=>`<li><b>${x.v}</b><div>${x.t}<small>${esc(x.a)} · prazo ${d.prazo(x.v)}</small></div></li>`).join('')}</ul>`:'<p class="op-cap">Todos os itens estão no nível esperado ou acima. Continue assim!</p>'}</section></div>
+ ${metas||coment?`<div class="op-2 op-q">${coment?`<section><h2>Reconhecimento</h2><p>${esc(coment)}</p></section>`:''}${metas?`<section><h2>Combinados para o próximo ciclo</h2><p>${esc(metas)}</p></section>`:''}</div>`:''}
+ <div class="op-f"><span>Parecer final: <b>${esc(O.parecer||'-')}</b></span></div>
+ <div class="op-s"><div>${esc(I.avaliador||'Avaliador')}<small>Avaliador${I.cargoAv?' · '+esc(I.cargoAv):''}</small></div><div>${esc(d.nome)}<small>Avaliado</small></div><div>Elinai Ramos<small>Gerente de Operações</small></div></div>
+ <footer class="op-ft"><span>Inovação Casa · Documento confidencial</span><span>Emitido em ${d.hoje}</span></footer></div>`}
 function report(){
  const st=calc(),dc=discCalc(),I=state.info,O=state.obs;
  if(!st.items.length){$('#report').innerHTML='<p class="empty">Ainda não há respostas. Avalie as competências na aba 2 para gerar o painel.</p>';return}
@@ -1440,7 +1516,7 @@ function report(){
 
  const detalhe=DIMS.map(d=>`<tr class="grp"><td colspan="2">${d.nome}</td></tr>`+d.itens.map(([id,t],k)=>{const v=state.notas[id];return`<tr><td>${d.id}${k+1}. ${t}</td><td class="num">${v>0?v:v===0?'N/A':'-'}</td></tr>`}).join('')).join('');
 
- $('#report').innerHTML=`
+ $('#report').innerHTML=`<div id="rep-op">${opHTML()}</div><div id="rep-full">
  <header class="r-head"><div class="r-logo"><img src="${document.getElementById('logo').src}" alt="Inovação Casa"></div><div style="flex:1 1 260px;min-width:0"><div class="eyebrow">Relatório de avaliação de desempenho · Inovação</div><h1>${esc(I.nome||'Consultor não identificado')}</h1></div>
   <div class="doc">${esc(I.tipo||'')}<br>Avaliado em ${dataAv}<br>Emitido em ${today}</div></header>
  <div class="meta">
@@ -1478,15 +1554,82 @@ function report(){
   return`<section class="r-sec"><h2><i>08</i>Dinâmica gamificada</h2><div class="evo-top"><div><span>Índice</span><b>${gm.idx}/100</b><small>${GTITLE(gm.idx)}</small></div><div><span>Nível</span><b>${gm.nivel+1}</b><small>${LEVELS[gm.nivel]}</small></div><div><span>XP</span><b>${gm.xp}</b><small>em ${dataBR(gm.data)}</small></div><div><span>Conquistas</span><b>${gm.badges.length}/${BADGES.length}</b><small>${gm.badges.map(k=>(BADGES.find(b=>b[0]===k)||[0,k])[1]).join(', ')||'nenhuma'}</small></div></div>
   <div class="bars">${(CATS.some(c=>gm.dims[c.id]!=null)?CATS:DIMS).filter(d=>gm.dims[d.id]!=null).map(d=>`<div class="bar-row"><span>${d.curto}</span><div class="bar-track"><div class="bar-fill" style="width:${gm.dims[d.id]/5*100}%;background:${barColor(gm.dims[d.id])}"></div><div class="bar-meta" style="left:80%"></div></div><b>${fmt(gm.dims[d.id])}</b></div>`).join('')}</div><p class="cap">Resultado da última participação no Desafio do Conhecimento, na escala de 1 a 5.</p></section>`})()}
  <div class="sign"><div>${esc(I.avaliador||'Avaliador')}<br>Avaliador${I.cargoAv?' · '+esc(I.cargoAv):''}</div><div>${esc((I.nome||'Avaliado').replace(/ \(exemplo\)$/,''))}<br>Avaliado</div><div>Elinai Ramos<br>Gerente de Operações</div></div>
- <div class="foot"><span>Escala: 1 Insatisfatório · 2 Abaixo · 3 Atende · 4 Supera · 5 Excepcional</span><span>Documento confidencial</span></div>`;
+ <div class="foot"><span>Escala: 1 Insatisfatório · 2 Abaixo · 3 Atende · 4 Supera · 5 Excepcional</span><span>Documento confidencial</span></div></div>`;
+ setRepView(REPVIEW);
  $('#x_out').value=JSON.stringify(state);
 }
 
+
+/* ---------- PDF de 1 página para o avaliado ---------- */
+function pdfDownload(){
+ if(!window.jspdf){alertMsg('O gerador de PDF não carregou. Verifique a conexão com a internet e tente de novo.');return}
+ const d=opData(),{st,dc,I,O,cmp}=d;
+ if(!st.items.length){alertMsg('Responda as competências antes de baixar o PDF.');return}
+ const doc=new window.jspdf.jsPDF({unit:'mm',format:'a4'});doc.setLineHeightFactor(1.3);
+ const W=210,M=13,CW=W-2*M;let y=0;
+ const F=c=>doc.setFillColor(...c),D=c=>doc.setDrawColor(...c),T=c=>doc.setTextColor(...c),Fo=(st,z)=>{doc.setFont('helvetica',st);doc.setFontSize(z)};
+ const lh=z=>z*0.3528*1.3;
+ const lines=(t,w,z,max)=>{Fo('normal',z);let ls=doc.splitTextToSize(String(t||''),w);if(max&&ls.length>max){ls=ls.slice(0,max);ls[max-1]=ls[max-1].replace(/\s*\S*$/,'')+'…'}return ls};
+ const h2=(t,x,w,yy)=>{Fo('bold',8.5);T(PC.navy);doc.text(t.toUpperCase(),x,yy);D(PC.line);doc.setLineWidth(.25);doc.line(x,yy+1.6,x+w,yy+1.6);return yy+6};
+ const logo=document.getElementById('logo').src;
+ // cabeçalho
+ F(PC.navy);doc.rect(0,0,W,30,'F');F(PC.gold);doc.rect(0,30,W,1.1,'F');
+ doc.addImage(logo,'PNG',M,3.5,33,22.7);
+ Fo('bold',7.5);T(PC.gold);doc.text('AVALIAÇÃO DE DESEMPENHO  ·  INOVAÇÃO',M+38,9.5);
+ Fo('bold',16);T(PC.white);doc.text(doc.splitTextToSize(d.nome,95)[0],M+38,17);
+ Fo('normal',9);T([200,215,232]);doc.text(doc.splitTextToSize([I.cargo,I.area].filter(Boolean).join('  ·  ')||'-',95)[0],M+38,23);
+ Fo('normal',8);T([220,230,242]);[['Avaliado em',d.dataAv],['Período',I.periodo||'-'],['Avaliador',I.avaliador||'-']].forEach(([k,v],i)=>{doc.text(`${k}: ${v}`.slice(0,48),W-M,11+i*5.2,{align:'right'})});
+ y=37;
+ // KPIs
+ const[cl]=cls(st.m),kw=(CW-9)/4,col={D:PC.D,I:PC.I,S:PC.S,C:PC.C};
+ const kp=[['NOTA GERAL',fmt(st.m)+' / 5',cl,lvlC(st.m)],['APROVEITAMENTO',fmt(st.pct,0)+'%',st.items.length+' de '+NITEMS+' itens',PC.navy],
+  ['EVOLUÇÃO',cmp?sgn(cmp.d).replace('−','-'):'-',cmp?evo(cmp.d)[0]+' desde '+dataBR(cmp.data):'Primeira avaliação',cmp?(cmp.d>=0.2?PC.good:cmp.d<=-0.2?PC.bad:PC.gray):PC.gray],
+  ['PERFIL DISC',dc?dc.p+(dc.s||''):'-',dc?DISC[dc.p].nome:'não respondido',dc?col[dc.p]:PC.gray]];
+ kp.forEach(([l,v,sub,c],i)=>{const x=M+i*(kw+3);F(PC.white);D(PC.line);doc.setLineWidth(.25);doc.roundedRect(x,y,kw,20,1.5,1.5,'FD');F(c);doc.rect(x,y,kw,1.3,'F');
+  Fo('bold',6.8);T(PC.muted);doc.text(l,x+3,y+6);Fo('bold',15);T(i===2&&cmp?c:PC.ink);doc.text(v,x+3,y+13);Fo('normal',7.3);T(c===PC.navy?PC.muted:c);doc.text(doc.splitTextToSize(sub,kw-6)[0],x+3,y+17.5)});
+ y+=25;
+ // resumo
+ {const ls=lines(d.resumo,CW-9,9.5,4),h=ls.length*lh(9.5)+6;F(PC.blueS);doc.roundedRect(M,y,CW,h,1.5,1.5,'F');F(PC.gold);doc.rect(M,y,1.4,h,'F');T(PC.ink);doc.text(ls,M+5,y+5);y+=h+6}
+ // notas | DISC
+ const cw2=(CW-8)/2,x2=M+cw2+8,yTop=y;
+ let yl=h2('Notas por área',M,cw2,y);
+ const lx=M+36,tw=cw2-36-9;
+ [...st.dims].sort((a,b)=>(b.m||0)-(a.m||0)).forEach(sd=>{Fo('normal',8.3);T(PC.ink);doc.text(doc.splitTextToSize(sd.d.curto||sd.d.nome,34)[0],M,yl+3);F(PC.soft);doc.roundedRect(lx,yl+0.6,tw,3.4,1.2,1.2,'F');
+  if(sd.m){F(lvlC(sd.m));doc.roundedRect(lx,yl+0.6,tw*sd.m/5,3.4,1.2,1.2,'F')}D(PC.ink);doc.setLineDashPattern([0.7,0.7],0);doc.setLineWidth(.25);doc.line(lx+tw*.8,yl-0.4,lx+tw*.8,yl+5);doc.setLineDashPattern([],0);
+  Fo('bold',8.3);doc.text(fmt(sd.m),M+cw2,yl+3,{align:'right'});yl+=6.3});
+ Fo('normal',6.8);T(PC.muted);doc.text('De 1 a 5. A linha tracejada marca a meta (4,0).',M,yl+1.5);yl+=4;
+ let yr=h2('Seu jeito de trabalhar (DISC)',x2,cw2,y);
+ if(dc){const P=DISC[dc.p];Fo('bold',9);T(col[dc.p]);doc.text(`${P.nome}  ·  perfil ${P.arq}`,x2,yr+1);yr+=4.5;
+  const ls=lines(P.resumo,cw2,8.6,4);T(PC.ink);doc.text(ls,x2,yr+1);yr+=ls.length*lh(8.6)+3;
+  Fo('bold',7);T(PC.muted);doc.text('SEUS PONTOS FORTES',x2,yr+1);yr+=4;
+  P.fortes.slice(0,3).forEach(f=>{const l=lines('•  '+f,cw2-2,8.6,2);T(PC.ink);doc.text(l,x2,yr+1);yr+=l.length*lh(8.6)+0.6});
+  yr+=1.5;Fo('bold',7);T(PC.muted);doc.text('O QUE TE MOTIVA',x2,yr+1);yr+=4;const lm=lines(P.motiva,cw2,8.6,2);T(PC.ink);doc.text(lm,x2,yr+1);yr+=lm.length*lh(8.6)}
+ else{Fo('italic',8.6);T(PC.muted);doc.text('O questionário DISC não foi respondido.',x2,yr+1);yr+=5}
+ y=Math.max(yl,yr)+5;
+ // destaques | plano
+ const itemCol=(list,x,title,c,empty,sub)=>{let yy=h2(title,x,cw2,y);
+  if(!list.length){const l=lines(empty,cw2,8.6,2);Fo('italic',8.6);T(PC.muted);doc.text(l,x,yy+1);return yy+l.length*lh(8.6)+2}
+  list.forEach(it=>{F(c);doc.roundedRect(x,yy-2.6,6,4.8,1,1,'F');Fo('bold',8.5);T(PC.white);doc.text(String(it.v),x+3,yy+0.8,{align:'center'});
+   const l=lines(it.t,cw2-9,8.6,2);T(PC.ink);doc.text(l,x+8.5,yy+0.6);let h=l.length*lh(8.6);const sl=lines(sub(it),cw2-9,7.4,2);T(PC.muted);doc.text(sl,x+8.5,yy+h+0.4);yy+=h+sl.length*lh(7.4)+2.6});return yy};
+ const ya=itemCol(d.fortes,M,'Onde você se destaca',PC.good,'Nenhum item com nota 4 ou 5 nesta avaliação.',it=>it.dim.nome);
+ const yb=itemCol(d.opp,x2,'Plano de desenvolvimento',PC.warn,'Todos os itens estão no nível esperado ou acima. Continue assim!',it=>`${it.a} · prazo ${d.prazo(it.v)}`);
+ y=Math.max(ya,yb)+3;
+ // comentários
+ const qs=[['Reconhecimento',(O.fortes||'').trim()],['Combinados para o próximo ciclo',(O.metas||'').trim()]].filter(q=>q[1]);
+ if(qs.length){const w=qs.length===2?cw2:CW;let ym=y;qs.forEach(([t,c],i)=>{const x=i?x2:M;let yy=h2(t,x,w,y);const l=lines(c,w,8.6,4);T(PC.ink);doc.text(l,x,yy+1);ym=Math.max(ym,yy+l.length*lh(8.6))});y=ym+4}
+ Fo('bold',9);T(PC.ink);doc.text('Parecer final: ',M,y+2);const pw=doc.getTextWidth('Parecer final: ');Fo('normal',9);doc.text(String(O.parecer||'-'),M+pw,y+2);
+ // assinaturas e rodapé fixos no fim da página
+ const ys=Math.max(y+18,268),sw=(CW-16)/3;
+ [[I.avaliador||'Avaliador','Avaliador'+(I.cargoAv?' · '+I.cargoAv:'')],[d.nome,'Avaliado'],['Elinai Ramos','Gerente de Operações']].forEach(([n,r],i)=>{const x=M+i*(sw+8);D(PC.ink);doc.setLineWidth(.3);doc.line(x,ys,x+sw,ys);Fo('bold',8.3);T(PC.ink);doc.text(doc.splitTextToSize(n,sw)[0],x+sw/2,ys+4,{align:'center'});Fo('normal',7.3);T(PC.muted);doc.text(r,x+sw/2,ys+7.8,{align:'center'})});
+ D(PC.line);doc.setLineWidth(.3);doc.line(M,286,W-M,286);Fo('normal',7.3);T(PC.muted);doc.text('Inovação Casa  ·  Avaliação de Desempenho  ·  Documento confidencial',M,290.5);doc.text('Emitido em '+d.hoje,W-M,290.5,{align:'right'});
+ const slug=d.nome.normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/[^\w]+/g,'_').replace(/^_|_$/g,'');
+ const fn=`Avaliacao_${slug||'Consultor'}.pdf`;deliver(fn,doc.output('blob'),()=>doc.save(fn),'PDF');
+}
 /* ---------- PDF padronizado ---------- */
 const PC={navy:[0,49,88],gold:[242,183,5],blue:[11,95,165],ink:[19,34,53],muted:[86,101,120],line:[213,221,231],soft:[244,247,251],good:[44,122,75],warn:[168,112,26],bad:[176,55,47],gray:[100,116,139],white:[255,255,255],
  D:[192,57,43],I:[201,151,26],S:[46,139,87],C:[44,108,176],goodS:[227,242,233],warnS:[248,238,220],badS:[248,228,226],blueS:[225,236,247]};
 const lvlC=m=>m==null?PC.line:m>=4.5?PC.good:m>=3.75?PC.blue:m>=2.75?PC.gray:m>=1.75?PC.warn:PC.bad;
-function pdfDownload(){
+function pdfFull(){
  if(!window.jspdf){alertMsg('O gerador de PDF não carregou. Verifique a conexão com a internet e tente de novo.');return}
  const st=calc(),dc=discCalc(),I=state.info,O=state.obs;
  if(!st.items.length){alertMsg('Responda as competências antes de baixar o PDF.');return}
@@ -1861,11 +2004,13 @@ document.querySelectorAll('.tab[data-tab]').forEach(b=>b.addEventListener('click
 document.querySelectorAll('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 
 const framed=(()=>{try{return window.self!==window.top}catch(e){return true}})();
-if(framed){$('#b_print').hidden=true;$('#b_pdf').hidden=true;$('#printNote').hidden=false;
+if(framed){$('#b_print').hidden=true;$('#b_pdf').hidden=true;$('#b_pdffull').hidden=true;$('#printNote').hidden=false;
  if(window.claude&&window.claude.use)window.claude.use('downloads').then(dl=>{if(dl){$('#b_pdf').hidden=false;$('#b_bkp').hidden=false;$('#printNote').innerHTML='Use <b>Baixar PDF</b> para salvar uma cópia do relatório. A impressão direta funciona no site: <b>emersonaraujodefreitas.github.io/avaliacaodesempenho</b>.'}}).catch(()=>{})}
 $('#b_pdf').addEventListener('click',async()=>{const b=$('#b_pdf'),tx=b.textContent;b.disabled=true;b.textContent='Gerando PDF…';try{await loadJsPDF();await pdfDownload()}catch(e){alertMsg('Não foi possível carregar o gerador de PDF. Verifique a internet e tente de novo.')}finally{b.disabled=false;b.textContent=tx}});
 $('#b_pend').addEventListener('click',()=>{const it=[...document.querySelectorAll('#compForm .item')].find(x=>state.notas[x.dataset.id]==null);if(!it){toast('Todas as perguntas foram respondidas','ok');return}it.scrollIntoView({behavior:'smooth',block:'center'});(it.querySelector('input')).focus({preventScroll:true})});
 $('#b_print').addEventListener('click',()=>{report();window.print()});
+document.querySelectorAll('[data-rv]').forEach(b=>b.addEventListener('click',()=>setRepView(b.dataset.rv)));
+$('#b_pdffull').addEventListener('click',async()=>{const b=$('#b_pdffull'),tx=b.textContent;b.disabled=true;b.textContent='Gerando PDF…';try{await loadJsPDF();await pdfFull()}catch(e){alertMsg('Não foi possível gerar o PDF. Verifique a conexão e tente de novo.')}finally{b.disabled=false;b.textContent=tx}});
 window.addEventListener('beforeprint',report);
 
 $('#b_exemplo').addEventListener('click',()=>{toast('Exemplo carregado. Ele não entra no histórico.');state=exemplo();save();fill();document.querySelectorAll('.miss').forEach(x=>x.classList.remove('miss'));document.querySelectorAll('.errbox').forEach(x=>x.hidden=true);show('painel')});
